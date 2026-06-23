@@ -185,7 +185,6 @@ const quotes = [
   { text: "I don't do fashion. I am fashion.", author: "Coco Chanel", prompt: "There's a difference between following fashion and embodying it. Do you think that kind of confidence is something you're born with, or can you actually build it?" }
 ];
 
-// FIX 2: Full provocation text + example context for the modal
 const provocations = [
   {
     text: "Harry Styles in a dress = brave. Drag queens = threat. Why?",
@@ -242,6 +241,7 @@ function openModal(type, index) {
         <p style="color:var(--dim); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem; font-family:'Inter',sans-serif;">${item.designer}</p>
         <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; text-transform:uppercase; margin-bottom:1rem;">${item.name}</h2>
         <p style="line-height:1.6; color:#bbb; font-family:'Inter',sans-serif; font-size:0.95rem; margin-bottom:1.5rem;">${item.desc}</p>
+        <span class="bring-label">Discuss it with your partner or bring it to the table</span>
         <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; line-height:1.6; color:var(--white);">${item.prompt}</p>
       </div>`;
   } else if (type === 'quote') {
@@ -250,11 +250,10 @@ function openModal(type, index) {
       <div class="modal-content-box" style="padding-top:3rem;">
         <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.6rem; line-height:1.4; margin-bottom:1rem;">"${item.text}"</h2>
         <p style="color:var(--dim); font-family:'Inter',sans-serif;">— ${item.author}</p>
-        <span class="bring-label">Bring to the table</span>
+        <span class="bring-label">Discuss it with your partner or bring it to the table</span>
         <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem;">${item.prompt}</p>
       </div>`;
   } else {
-    // FIX 3: Provocation with full text + example
     const item = provocations[index];
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:3rem;">
@@ -263,6 +262,7 @@ function openModal(type, index) {
           <strong>For example</strong>
           ${item.example}
         </div>
+        <span class="bring-label">Discuss it with your partner or bring it to the table</span>
       </div>`;
   }
   document.getElementById('item-modal').classList.add('open');
