@@ -190,7 +190,7 @@
 
   .choice-btn:hover .choice-arrow { color: var(--white); }
 
-  /* PROVOCATION STRIP — full-width, set apart from the choice grid above */
+  /* PROVOCATION STRIP */
   .provoke-row {
     border-top: 1px solid #1a1a1a;
   }
@@ -334,18 +334,13 @@
     overflow: hidden;
   }
 
+  /* This ensures the image covers the frame fully by default */
   .look-image-area img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    cursor: pointer;
-  }
-
-  /* Toggle class to see full image without cropping */
-  .look-image-area img.contain {
-    object-fit: contain;
-    background: var(--black);
+    cursor: zoom-in;
   }
 
   .look-image-area .placeholder {
@@ -400,7 +395,7 @@
     justify-content: center;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.55rem;
-    color: #aaa; /* Made numbers significantly lighter to see */
+    color: #aaa;
     letter-spacing: 0.1em;
   }
 
@@ -534,7 +529,7 @@
     max-width: 400px;
   }
 
-  /* ── PROVOCATION SCREEN — stark, no image, no author, no cushioning ── */
+  /* ── PROVOCATION SCREEN ── */
   #provocation-screen {
     background: var(--black);
   }
@@ -578,6 +573,31 @@
     font-size: 0.65rem;
     letter-spacing: 0.05em;
     color: #444;
+  }
+
+  /* ── FULLSCREEN LIGHTBOX ── */
+  #lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+
+  #lightbox.active {
+    display: flex;
+  }
+
+  #lightbox img {
+    max-width: 100vw;
+    max-height: 100vh;
+    object-fit: contain;
   }
 </style>
 </head>
@@ -639,7 +659,7 @@
   <div class="scroll-content">
     <div class="look-image-area">
       <div class="placeholder" id="look-main-placeholder">Image loading…</div>
-      <img id="look-main-img" src="" alt="" style="display:none" onclick="this.classList.toggle('contain')" title="Tap to toggle full image view">
+      <img id="look-main-img" src="" alt="" style="display:none" onclick="openLightbox()" title="Tap for full screen">
     </div>
     <div class="look-thumbnails" id="look-thumbs"></div>
     <div class="look-info">
@@ -687,6 +707,11 @@
   </div>
 </div>
 
+<!-- FULLSCREEN LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <script>
 const looks = [
   {
@@ -730,13 +755,6 @@ const looks = [
     desc: "Guest-edited by Meghan Markle, this British Vogue cover famously highlighted 15 trailblazing women, ranging from activists to actors, arranged in a grid with an empty 16th mirror intended to reflect the reader.",
     images: ["enninful-1.jpg", "enninful-2.jpg", "enninful-3.jpg"],
     question: "When fashion explicitly reflects the reader rather than an unattainable ideal, does it change the purpose of the magazine?"
-  },
-  {
-    designer: "Edward Enninful",
-    name: "The \"Farewell\" Cover (March 2024)",
-    desc: "Enninful’s final British Vogue cover went down in history for uniting 40 of the world's most legendary women—including Oprah Winfrey, Jane Fonda, Naomi Campbell, and Anya Taylor-Joy. Photographed by Steven Meisel, the image is a masterclass in modern styling and star power.",
-    images: ["enninful-4.jpg", "enninful-5.jpg", "enninful-6.jpg"],
-    question: "What does true legacy in the fashion industry look like when you finally step away from the center of it?"
   }
 ];
 
@@ -873,12 +891,10 @@ function updateMainImage(look, i) {
   const img = document.getElementById('look-main-img');
   const ph = document.getElementById('look-main-placeholder');
   
-  // reset contain class if switching images
-  img.classList.remove('contain');
-  
   img.src = look.images[i];
   img.style.display = 'block';
   ph.style.display = 'none';
+  
   img.onerror = () => {
     img.style.display = 'none';
     ph.style.display = 'flex';
@@ -886,17 +902,15 @@ function updateMainImage(look, i) {
   };
 }
 
-function renderQuote() {
-  const q = quotes[currentQuote];
-  document.getElementById('quote-text').textContent = `"${q.text}"`;
-  document.getElementById('quote-author').textContent = `— ${q.author}`;
-  document.getElementById('quote-prompt').textContent = q.prompt;
+/* Lightbox Functions */
+function openLightbox() {
+  const mainImgSrc = document.getElementById('look-main-img').src;
+  document.getElementById('lightbox-img').src = mainImgSrc;
+  document.getElementById('lightbox').classList.add('active');
 }
 
-function renderProvocation() {
-  document.getElementById('provocation-count').textContent =
-    String(currentProvocation + 1).padStart(2, '0') + ' / ' + String(provocations.length).padStart(2, '0');
-  document.getElementById('provocation-text').textContent = provocations[currentProvocation];
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
 }
 </script>
 </body>
