@@ -81,6 +81,49 @@
     margin-bottom: 0.5rem;
     display: block;
   }
+
+    /* ── OUTFIT CTA ── */
+  #outfit-cta {
+    background: #080808;
+    padding: 5rem 1.8rem 6rem;
+    border-top: 1px solid #111;
+  }
+  .cta-eyebrow {
+    color: var(--dim);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .cta-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 10vw, 5rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 1.2rem;
+  }
+  .cta-sub {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 280px;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 1rem 1.8rem;
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 3px;
+  }
 </style>
 </head>
 <body>
@@ -104,6 +147,15 @@
   <div class="row-container">
     <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick your PROVOCATION.</h3></div>
     <div class="carousel-row" id="row-provocations"></div>
+  </div>
+</section>
+
+<section id="outfit-cta">
+  <div class="cta-inner">
+    <span class="cta-eyebrow">Your turn</span>
+    <h3 class="cta-title">Create your<br>dream outfit.</h3>
+    <p class="cta-sub">Pick your pieces. Build your look. Find out what it says about you.</p>
+    <a href="outfit.html" class="cta-btn">Create your dream outfit →</a>
   </div>
 </section>
 
@@ -225,6 +277,7 @@ function switchImage(src, thumbEl) {
 function closeModal() {
   document.getElementById('item-modal').classList.remove('open');
 }
+
 </script>
 </body>
 </html>
