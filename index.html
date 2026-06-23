@@ -33,9 +33,54 @@
   .modal.open { top: 0; }
   .modal-nav { padding: 1.5rem; border-bottom: 1px solid #1a1a1a; cursor: pointer; color: var(--dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; }
   .modal-content-box { padding: 2rem 1.5rem; }
+
+  /* FIX 1: Look image - contained, not massive */
+  .look-image-area {
+    width: 100%;
+    max-height: 55vw;       /* roughly square on phone, never taller than viewport */
+    overflow: hidden;
+    background: #111;
+  }
+  .look-image-area img {
+    width: 100%;
+    height: 100%;
+    max-height: 55vw;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Thumbnails */
   .look-thumbnails { display: flex; gap: 2px; margin-top: 2px; }
-  .look-thumb { flex: 1; height: 60px; background: #141414; opacity: 0.4; }
+  .look-thumb { flex: 1; height: 60px; background: #141414; opacity: 0.4; overflow: hidden; cursor: pointer; }
+  .look-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .look-thumb.active { opacity: 1; border-bottom: 2px solid white; }
+
+  /* FIX 3: Provocation modal styling */
+  .provocation-example {
+    border-left: 2px solid #333;
+    padding: 1rem 1.2rem;
+    margin-top: 1.5rem;
+    color: var(--dim);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .provocation-example strong {
+    display: block;
+    color: #888;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+  }
+  .bring-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--dim);
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -69,25 +114,47 @@
 
 <script>
 const looks = [
-  { designer: "Yves Saint Laurent", name: "Le Smoking, 1966", desc: "A tuxedo suit designed for women. Stores refused to sell it. Women were turned away from restaurants for wearing it.", images: ["ysl-1.jpg", "ysl-2.jpg", "ysl-3.jpg"], prompt: "Who owns public space?" },
-  { designer: "Alexander McQueen", name: "Bumster Trousers, 1994", desc: "Cut low, exposing the spine. The press called it obscene; others saw art.", images: ["mcqueen-1.jpg", "mcqueen-2.jpg", "mcqueen-3.jpg"], prompt: "Who decides what a body is allowed to show?" },
-  { designer: "David Bowie", name: "Ziggy Stardust, 1972", desc: "A costume that became a person. Fashion as alter ego.", images: ["bowie-1.jpg", "bowie-2.jpg", "bowie-3.jpg"], prompt: "Is your style a mask or an honest self?" },
-  { designer: "RuPaul", name: "Supermodel Era, 1993", desc: "RuPaul brought drag firmly into mainstream MTV, making the invisible visible.", images: ["rupaul-1.jpg", "rupaul-2.jpg", "rupaul-3.jpg"], prompt: "Inspiration vs. erasure: Where is the line?" },
-  { designer: "Patricia Field", name: "Style on Screen", desc: "Mixing the 'wrong' things until they become right. Confidence makes the fashion.", images: ["field-1.jpg", "field-2.jpg", "field-3.jpg"], prompt: "What would you wear if you didn't care who was watching?" },
-  { designer: "Edward Enninful", name: "Forces for Change", desc: "British Vogue cover featuring 15 trailblazing women with an empty mirror for the reader.", images: ["enninful-1.jpg", "enninful-2.jpg", "enninful-3.jpg"], prompt: "Does fashion reflecting the reader change the magazine's purpose?" }
+  { designer: "Yves Saint Laurent", name: "Le Smoking, 1966", desc: "A tuxedo suit designed for women. Stores refused to sell it. Women were turned away from restaurants for wearing it.", images: ["ysl-1.jpg", "ysl-2.jpg", "ysl-3.jpg"], prompt: "A woman in a suit got banned from restaurants in 1966. In 2025 a man in a skirt still gets stared at. Why does clothing worn 'by the wrong gender' still feel like a provocation to so many people — and do you think that will ever actually change?" },
+  { designer: "Alexander McQueen", name: "Bumster Trousers, 1994", desc: "Cut low, exposing the spine. The press called it obscene; others saw art.", images: ["mcqueen-1.jpg", "mcqueen-2.jpg", "mcqueen-3.jpg"], prompt: "The same amount of skin can be 'obscene' on one person and 'artistic' on another. Who gets to draw that line — and have you ever felt like your body was being judged by a rule that didn't apply to everyone equally?" },
+  { designer: "David Bowie", name: "Ziggy Stardust, 1972", desc: "A costume that became a person. Fashion as alter ego.", images: ["bowie-1.jpg", "bowie-2.jpg", "bowie-3.jpg"], prompt: "Bowie invented a character and then lived inside him until the character became real. Have you ever dressed as a version of yourself you weren't quite yet — and did it help you become that person, or did it feel like lying?" },
+  { designer: "RuPaul", name: "Supermodel Era, 1993", desc: "RuPaul brought drag firmly into mainstream MTV, making the invisible visible.", images: ["rupaul-1.jpg", "rupaul-2.jpg", "rupaul-3.jpg"], prompt: "RuPaul made drag mainstream — but a lot of the queer community felt that mainstream success came at the cost of the subculture's edge and politics. Can something stay radical once it's on prime time TV, or does visibility always cost something?" },
+  { designer: "Patricia Field", name: "Style on Screen", desc: "Mixing the 'wrong' things until they become right. Confidence makes the fashion.", images: ["field-1.jpg", "field-2.jpg", "field-3.jpg"], prompt: "Patricia Field's whole thing was that there are no rules — just commitment. But is that actually true, or is 'wear anything with confidence' advice that only works if you already have the right body, race, or social standing to get away with it?" },
+  { designer: "Edward Enninful", name: "Forces for Change", desc: "British Vogue cover featuring 15 trailblazing women with an empty mirror for the reader.", images: ["enninful-1.jpg", "enninful-2.jpg", "enninful-3.jpg"], prompt: "Vogue put a mirror on its cover and said 'you belong here too'. Sweet gesture — or is it hollow when the magazine still sells £4,000 handbags on the next page? Can a fashion magazine genuinely be inclusive, or is exclusivity the whole point?" }
 ];
+
 const quotes = [
-  { text: "We are all born naked. The rest is drag.", author: "RuPaul", prompt: "Performance vs. identity?" },
-  { text: "I want people to be afraid of the women I dress.", author: "Alexander McQueen", prompt: "When has an outfit been your weapon?" },
-  { text: "Fashions fade, style is eternal.", author: "Yves Saint Laurent", prompt: "Which do you have?" },
-  { text: "Clothing is a form of self-expression.", author: "Marc Jacobs", prompt: "What are you saying right now?" },
-  { text: "Fashion is in the sky, in the street.", author: "Coco Chanel", prompt: "Are you making a statement?" },
-  { text: "Fashion is the armor to survive reality.", author: "Bill Cunningham", prompt: "What are you protecting?" },
-  { text: "Style is saying who you are without speaking.", author: "Rachel Zoe", prompt: "What has your style said?" },
-  { text: "I don't do fashion. I am fashion.", author: "Coco Chanel", prompt: "What would it take to feel that?" }
+  { text: "We are all born naked. The rest is drag.", author: "RuPaul", prompt: "If all clothing is performance, does that mean nobody is ever just 'being themselves' — or does performing a self eventually make it real?" },
+  { text: "I want people to be afraid of the women I dress.", author: "Alexander McQueen", prompt: "Is there something powerful about making people uncomfortable with how you look? Have you ever dressed to intimidate — or been intimidated by someone's outfit?" },
+  { text: "Fashions fade, style is eternal.", author: "Yves Saint Laurent", prompt: "Can you actually tell the difference between someone with style and someone who's just wearing the right thing at the right time? What does 'having style' even mean?" },
+  { text: "Clothing is a form of self-expression.", author: "Marc Jacobs", prompt: "We say this like it's obvious — but how much of what you wear is actually chosen, versus what your job, your budget, your body, or other people expect of you?" },
+  { text: "Fashion is in the sky, in the street.", author: "Coco Chanel", prompt: "If fashion comes from real life, why does high fashion so rarely look like real life? Who actually gets to set the terms of what's considered fashionable?" },
+  { text: "Fashion is the armor to survive reality.", author: "Bill Cunningham", prompt: "Think about a time you got dressed specifically to get through something hard. What did you reach for — and why did it help?" },
+  { text: "Style is saying who you are without speaking.", author: "Rachel Zoe", prompt: "Has your style ever been misread — did someone see you completely differently to how you meant to come across? What does it feel like when your clothes say the wrong thing?" },
+  { text: "I don't do fashion. I am fashion.", author: "Coco Chanel", prompt: "There's a difference between following fashion and embodying it. Do you think that kind of confidence is something you're born with, or can you actually build it?" }
 ];
+
+// FIX 2: Full provocation text + example context for the modal
 const provocations = [
-  "Harry Styles in a dress = brave. Drag queens = threat. Why?", "Is 'ethical fashion' a real category, or a price tag for guilt?", "Are models art, or are they product?", "If everyone saw what your outfit cost, would you still wear it?", "Who actually owns a trend?"
+  {
+    text: "Harry Styles in a dress = brave. Drag queens = threat. Why?",
+    example: "Harry Styles wore a lace gown on Vogue's cover in 2020 and was widely praised for 'breaking gender norms'. That same year, legislation in multiple US states targeted drag performers in public spaces. Same dress. Very different reaction."
+  },
+  {
+    text: "Is 'ethical fashion' a real category, or a price tag for guilt?",
+    example: "A £300 'sustainable' linen shirt from a London brand. A £6 linen shirt from Shein. Both are linen. One is marketed as conscious consumption. Who can afford a conscience?"
+  },
+  {
+    text: "Are models art, or are they product?",
+    example: "A model walks a Balenciaga show in a destroyed sneaker worth £1,450. Her face is blank. Her body is the backdrop. The shoe is the subject. Does she know that going in?"
+  },
+  {
+    text: "If everyone could see what your outfit cost, would you still wear it?",
+    example: "Imagine your price tag floating above you at a party. £12 jeans from Primark. £400 trainers. A vintage find for £3. Which number embarrasses you — and which direction does it go?"
+  },
+  {
+    text: "Who actually owns a trend?",
+    example: "Cornrows were 'urban' on Black women, 'edgy' on Kylie Jenner, and 'boxer braids' in Vogue. Lo-fi workwear was poverty on the working class, then 'normcore' on fashion week runways. The look stays the same. The credit moves."
+  }
 ];
 
 function populateRow(containerId, data, type) {
@@ -95,10 +162,11 @@ function populateRow(containerId, data, type) {
   data.forEach((item, index) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'card-wrapper';
+    const displayText = type === 'provocation' ? item.text : (type === 'quote' ? '"' + item.text + '"' : item.name);
     if (type === 'look') {
       wrapper.innerHTML = `<div class="item-card" onclick="openModal('look', ${index})"><img src="${item.images[0]}" style="width:100%; height:100%; object-fit:cover;"><div class="look-label">${item.name}</div></div>`;
     } else {
-      wrapper.innerHTML = `<div class="item-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div style="font-family:Playfair Display; font-style:italic;">${type === 'quote' ? '"'+item.text+'"' : item}</div></div>`;
+      wrapper.innerHTML = `<div class="item-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div style="font-family:'Playfair Display'; font-style:italic; font-size:0.95rem; line-height:1.5;">${displayText}</div></div>`;
     }
     container.appendChild(wrapper);
   });
@@ -112,16 +180,51 @@ function openModal(type, index) {
   const c = document.getElementById('modal-body-container');
   if (type === 'look') {
     const item = looks[index];
-    const thumbs = item.images.map((img, i) => `<div class="look-thumb ${i===0?'active':''}" onclick="document.getElementById('m-img').src='${img}'"><img src="${img}" style="width:100%; height:100%; object-fit:cover;"></div>`).join('');
-    c.innerHTML = `<div class="look-image-area"><img id="m-img" src="${item.images[0]}"></div><div class="look-thumbnails">${thumbs}</div><div class="modal-content-box"><h2>${item.name}</h2><p>${item.desc}</p><br><strong>Bring to the table:</strong><p>${item.prompt}</p></div>`;
+    const thumbs = item.images.map((img, i) =>
+      `<div class="look-thumb ${i===0?'active':''}" onclick="switchImage('${img}', this)"><img src="${img}"></div>`
+    ).join('');
+    c.innerHTML = `
+      <div class="look-image-area"><img id="m-img" src="${item.images[0]}"></div>
+      <div class="look-thumbnails">${thumbs}</div>
+      <div class="modal-content-box">
+        <p style="color:var(--dim); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem; font-family:'Inter',sans-serif;">${item.designer}</p>
+        <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; text-transform:uppercase; margin-bottom:1rem;">${item.name}</h2>
+        <p style="line-height:1.6; color:#bbb; font-family:'Inter',sans-serif; font-size:0.95rem; margin-bottom:1.5rem;">${item.desc}</p>
+        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; line-height:1.6; color:var(--white);">${item.prompt}</p>
+      </div>`;
   } else if (type === 'quote') {
-    c.innerHTML = `<div class="modal-content-box"><h2>"${quotes[index].text}"</h2><p>— ${quotes[index].author}</p><br><strong>Bring to the table:</strong><p>${quotes[index].prompt}</p></div>`;
+    const item = quotes[index];
+    c.innerHTML = `
+      <div class="modal-content-box" style="padding-top:3rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.6rem; line-height:1.4; margin-bottom:1rem;">"${item.text}"</h2>
+        <p style="color:var(--dim); font-family:'Inter',sans-serif;">— ${item.author}</p>
+        <span class="bring-label">Bring to the table</span>
+        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem;">${item.prompt}</p>
+      </div>`;
   } else {
-    c.innerHTML = `<div class="modal-content-box"><h2>${provocations[index]}</h2></div>`;
+    // FIX 3: Provocation with full text + example
+    const item = provocations[index];
+    c.innerHTML = `
+      <div class="modal-content-box" style="padding-top:3rem;">
+        <h2 style="font-family:'Barlow Condensed'; font-size:1.8rem; text-transform:uppercase; line-height:1.15; margin-bottom:1.5rem;">${item.text}</h2>
+        <div class="provocation-example">
+          <strong>For example</strong>
+          ${item.example}
+        </div>
+      </div>`;
   }
   document.getElementById('item-modal').classList.add('open');
 }
-function closeModal() { document.getElementById('item-modal').classList.remove('open'); }
+
+function switchImage(src, thumbEl) {
+  document.getElementById('m-img').src = src;
+  document.querySelectorAll('.look-thumb').forEach(t => t.classList.remove('active'));
+  thumbEl.classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('item-modal').classList.remove('open');
+}
 </script>
 </body>
 </html>
