@@ -3,380 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Queer Fashion — Build A Conversation</title>
+<title>Queer Fashion — Speaking Club</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg-color: #f8f8f8;
-    --text-main: #111;
-    --text-dim: #666;
+    --black: #060606;
+    --white: #f0ede8;
+    --grey: #1a1a1a;
+    --dim: #666;
   }
 
-  body {
-    background: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    overflow: hidden; 
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+  /* ── MAGAZINE COVER ── */
+  #hero-cover {
     height: 100vh;
     display: flex;
     flex-direction: column;
-  }
-
-  /* ── HEADER ── */
-  header {
-    background: #fff;
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-    z-index: 10;
-  }
-  .header-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-  .header-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 0.8rem;
-    font-size: 0.85rem;
-    color: #999;
-  }
-  .tab.active {
-    color: #000;
-    font-weight: 600;
-    border-bottom: 2px solid #000;
-    padding-bottom: 0.2rem;
-  }
-
-  /* ── CAROUSEL AREA ── */
-  .wardrobe-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding: 1rem 0;
-    overflow: hidden;
-  }
-
-  .carousel-row {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    height: 28vh; 
-    align-items: center;
-  }
-  
-  .carousel-row::-webkit-scrollbar { display: none; }
-  .carousel-row { -ms-overflow-style: none; scrollbar-width: none; }
-
-  .card-wrapper {
-    flex: 0 0 100vw;
-    height: 90%;
-    scroll-snap-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 2rem;
-  }
-
-  .item-card {
-    width: 100%;
-    max-width: 320px;
-    height: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 1.5rem;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.1s;
-  }
-  .item-card:active { transform: scale(0.98); }
-
-  /* Look specific */
-  .item-card.look { padding: 0; overflow: hidden; background: transparent; box-shadow: none; }
-  .item-card.look img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    mix-blend-mode: multiply; 
-  }
-  .look-label {
-    position: absolute;
-    bottom: 0px;
-    background: rgba(255,255,255,0.9);
-    padding: 0.2rem 0.5rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .tap-hint {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    background: #000;
-    color: #fff;
-    font-size: 0.5rem;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* Quote specific */
-  .item-card.quote { background: #fdfbf7; border: 1px solid #eae8e3; }
-  .quote-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    line-height: 1.4;
-  }
-  .quote-author {
-    margin-top: 0.8rem;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-  }
-
-  /* Provocation specific */
-  .item-card.provocation { background: #111; color: #fff; }
-  .provocation-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    line-height: 1.2;
-  }
-
-  /* ── BOTTOM NAV & SHUFFLE ── */
-  .bottom-nav {
-    background: #fff;
-    padding: 1rem 1.5rem 2rem;
-    border-top: 1px solid #eee;
-    display: flex;
-    justify-content: center;
-    position: relative;
-  }
-
-  .shuffle-btn {
-    background: #222;
-    color: #fff;
-    border: none;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 1.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    position: absolute;
-    top: -30px;
-  }
-  .shuffle-btn:active { transform: scale(0.95); }
-
-  /* ── DETAIL MODAL ── */
-  .modal {
-    position: fixed;
-    top: 100%;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0d0d0d;
-    color: #f0ede8;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow-y: auto;
-  }
-  .modal.open { top: 0; }
-
-  .modal-nav {
-    position: sticky;
-    top: 0;
-    display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 1.5rem;
-    background: rgba(13, 13, 13, 0.95);
-    z-index: 101;
+    position: relative;
+    background-image: url('cover.jpg'); /* REPLACE WITH YOUR FILENAME */
+    background-size: cover;
+    background-position: center;
   }
-  .btn-close {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    background: none;
-    border: none;
-    color: #888;
-    cursor: pointer;
+  #hero-cover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
   }
-  .btn-close:active { color: #fff; }
+  .home-top, .home-center, .scroll-indicator { z-index: 1; position: relative; }
+  .home-top { padding: 2.2rem 1.8rem 0; display: flex; justify-content: space-between; }
+  .masthead { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .home-center { padding: 0 1.8rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(3.5rem, 18vw, 8rem); line-height: 0.85; text-transform: uppercase; }
+  .cover-title-italic { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 3rem); margin-top: 0.5rem; display: block; }
+  .cover-rule { width: 100%; height: 1px; background: rgba(255,255,255,0.2); margin: 1.5rem 0; }
+  .cover-deck { font-weight: 300; font-size: 0.72rem; color: #ccc; max-width: 280px; }
+  .scroll-indicator { padding: 2rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.1); }
 
-  .modal-content { padding: 2rem 1.5rem 4rem; flex: 1; display: flex; flex-direction: column;}
-  .modal-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 0.5rem;
-  }
-  .modal-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 2.2rem;
-    line-height: 1.0;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
-  }
-  .modal-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.7;
-    color: #aaa;
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-  }
-  .question-block {
-    background: #1a1a1a;
-    padding: 1.5rem;
-    border-left: 2px solid #f0ede8;
-  }
-  .question-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 0.8rem;
-  }
-  .question-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-style: italic;
-    line-height: 1.4;
-  }
+  /* ── THE CLOSET ── */
+  #closet-section { padding: 3rem 0 6rem 0; background: #0a0a0a; }
+  .row-header { padding: 0 1.8rem; margin-bottom: 1rem; margin-top: 2rem; }
+  .row-header h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.4rem; text-transform: uppercase; }
+  .row-header span { font-size: 0.65rem; color: var(--dim); text-transform: uppercase; display: block; }
+  .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 300px; align-items: center; padding-bottom: 1rem; }
+  .card-wrapper { flex: 0 0 85vw; height: 100%; scroll-snap-align: center; padding: 0 0.5rem; }
+  .card-wrapper:first-child { margin-left: 1.3rem; }
+  .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; cursor: pointer; overflow: hidden; }
   
-  .quote-mark {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 5rem;
-    font-weight: 900;
-    color: #222;
-    line-height: 0.5;
-    margin-top: 2rem;
-  }
+  /* Details */
+  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; text-align: left; }
+  .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; padding: 1rem; }
+  .provocation-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.3rem; text-transform: uppercase; padding: 1rem; }
+
+  /* Modal */
+  .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s; overflow-y: auto; }
+  .modal.open { top: 0; }
+  .modal-nav { padding: 1rem 1.5rem; border-bottom: 1px solid #1a1a1a; cursor: pointer; }
+  .modal-content-box { padding: 2rem 1.5rem; }
+  .look-image-area { width: 100%; height: 50vh; background: var(--grey); }
+  .look-image-area img { width: 100%; height: 100%; object-fit: cover; }
+  .look-thumb { height: 60px; background: #141414; flex: 1; opacity: 0.4; }
+  .look-thumb.active { opacity: 1; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-title">Discuss</div>
-  <div class="header-tabs">
-    <div class="tab active">Build Combo</div>
-    <div class="tab" style="opacity: 0.5;">Pairs</div>
+<section id="hero-cover">
+  <div class="home-top"><div class="masthead">Queer Fashion</div></div>
+  <div class="home-center">
+    <h1 class="cover-title">Flip the<br>Script.</h1>
+    <span class="cover-title-italic">Question the default.</span>
+    <div class="cover-rule"></div>
+    <p class="cover-deck">A look that changed things. A quote that still holds. A question with no easy answer. Pick whichever pulls you — then tell us why.</p>
   </div>
-</header>
+  <div class="scroll-indicator"><span>Scroll Down</span><span>↓</span></div>
+</section>
 
-<div class="wardrobe-container">
+<section id="closet-section">
+  <div class="row-header"><span>Iconic Moments</span><h3>You could discuss A LOOK,</h3></div>
   <div class="carousel-row" id="row-looks"></div>
+  <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
   <div class="carousel-row" id="row-quotes"></div>
+  <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick your PROVOCATION.</h3></div>
   <div class="carousel-row" id="row-provocations"></div>
+</section>
+
+<div class="fixed-bottom" style="position:fixed; bottom:20px; right:20px; z-index:50;">
+  <button onclick="shuffleAll()" style="width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;">🎲</button>
 </div>
 
-<div class="bottom-nav">
-  <button class="shuffle-btn" onclick="shuffleAll()">🎲</button>
-</div>
-
-<!-- ITEM DETAIL MODAL -->
 <div class="modal" id="item-modal">
-  <div class="modal-nav">
-    <button class="btn-close" onclick="closeModal()">↓ Close</button>
-  </div>
-  <div class="modal-content" id="modal-body"></div>
+  <div class="modal-nav" onclick="closeModal()">↓ Back to Closet</div>
+  <div id="modal-body-container"></div>
 </div>
 
 <script>
-// --- FULL ORIGINAL DATA ---
 const looks = [
-  { designer: "Yves Saint Laurent", name: "Le Smoking, 1966", desc: "A tuxedo suit designed for women. Stores refused to sell it. Women were turned away from restaurants for wearing it. YSL kept making it for 40 years. It didn't just change fashion — it changed what women were allowed to look like in public.", img: "ysl-1.jpg", prompt: "If a piece of clothing can be dangerous enough to get you turned away from a restaurant — what does that tell you about who owns public space?" },
-  { designer: "Alexander McQueen", name: "Bumster Trousers, 1994", desc: "Cut so low they exposed the base of the spine — what McQueen called 'the most erotic part of the body.' The press called it obscene. Designers copied it within two years. McQueen said he wanted to elongate the body and create something new. He did.", img: "mcqueen-1.jpg", prompt: "Who gets to decide what a body is allowed to show — and have you ever felt that line drawn around you?" },
-  { designer: "David Bowie", name: "Ziggy Stardust, 1972", desc: "A lightning bolt across the face. Platform boots. A costume that became a person. Bowie didn't just dress differently — he became someone else entirely. He said Ziggy allowed him to do things David couldn't. Fashion as alter ego.", img: "bowie-1.jpg", prompt: "Have you ever put on something and felt like a different version of yourself — and was that version more honest or less?" },
-  { designer: "RuPaul", name: "Supermodel Era, 1993", desc: "With the release of 'Supermodel (You Better Work)', RuPaul brought drag firmly into mainstream MTV and global pop culture. The fashion world had ignored drag for decades while quietly stealing from it. This cultural reset made that impossible to pretend.", img: "rupaul-1.jpg", prompt: "Fashion has been taking from queer culture for decades — what's the difference between inspiration and erasure?" },
-  { designer: "Patricia Field", name: "Style on Screen", desc: "From Carrie Bradshaw's iconic $5 costume shop tutu worn with a designer top, to the masterful high-fashion metamorphosis in The Devil Wears Prada. Field's entire approach is about mixing the 'wrong' things until they become right. The wrong thing, worn with total confidence, becomes fashion.", img: "field-1.jpg", prompt: "Is there something you'd wear if you had more — or less — of something? More money, more nerve, fewer people watching?" },
-  { designer: "Edward Enninful", name: "Forces for Change", desc: "Guest-edited by Meghan Markle, this British Vogue cover famously highlighted 15 trailblazing women, ranging from activists to actors, arranged in a grid with an empty 16th mirror intended to reflect the reader.", img: "enninful-1.jpg", prompt: "When fashion explicitly reflects the reader rather than an unattainable ideal, does it change the purpose of the magazine?" }
+  { designer: "Yves Saint Laurent", name: "Le Smoking, 1966", desc: "A tuxedo suit designed for women. Stores refused to sell it. Women were turned away from restaurants for wearing it.", images: ["ysl-1.jpg", "ysl-2.jpg", "ysl-3.jpg"], prompt: "If a piece of clothing can be dangerous enough to get you turned away from a restaurant — what does that tell you about who owns public space?" },
+  { designer: "Alexander McQueen", name: "Bumster Trousers", desc: "Cut so low they exposed the base of the spine — what McQueen called 'the most erotic part of the body.'", images: ["mcqueen-1.jpg", "mcqueen-2.jpg", "mcqueen-3.jpg"], prompt: "Who gets to decide what a body is allowed to show?" }
 ];
-
-const quotes = [
-  { text: "We are all born naked. The rest is drag.", author: "RuPaul", prompt: "Do you agree — or is there a difference between performance and identity?" },
-  { text: "I want people to be afraid of the women I dress.", author: "Alexander McQueen", prompt: "What does it mean to dress with the intention of being feared — and have you ever done it?" },
-  { text: "Fashions fade, style is eternal.", author: "Yves Saint Laurent", prompt: "What's the difference between fashion and style — and which one do you have?" },
-  { text: "Clothing is a form of self-expression. There are hints about who you are in what you wear.", author: "Marc Jacobs", prompt: "What are you saying right now — with what you're wearing tonight?" },
-  { text: "Fashion is not something that exists in dresses only. Fashion is in the sky, in the street. Fashion has to do with ideas, the way we live, what is happening.", author: "Coco Chanel", prompt: "If fashion is everywhere — are you making a statement right now whether you want to or not?" },
-  { text: "Fashion is the armor to survive the reality of everyday life.", author: "Bill Cunningham", prompt: "What are you protecting yourself from — or projecting — with what you wear?" },
-  { text: "Style is a way to say who you are without having to speak.", author: "Rachel Zoe", prompt: "What has your style said about you that you never said out loud?" },
-  { text: "I don't do fashion. I am fashion.", author: "Coco Chanel", prompt: "What would it take for you to feel that way about yourself?" }
-];
-
-const provocations = [
-  "Harry Styles wore a dress on a magazine cover and got called brave. Drag queens have been doing it for decades and got called a threat. What's the actual difference?",
-  "Your $8 t-shirt was made by someone who'll never earn in a month what you spent on dinner tonight. Does that bother you, or did you train yourself to stop noticing?",
-  "Are models art, or are they product?",
-  "A straight-size model walks the runway. A plus-size model does a 'campaign.' Is that the industry's taste, or its training?",
-  "Luxury houses have burned unsold stock rather than discount it. Is that protecting the brand — or admitting the customer was never really the point?",
-  "If a queer subculture invents a look and a straight celebrity gets the magazine cover for it, who actually owns a trend?",
-  "Would you still be wearing this outfit if no one here was watching you wear it?",
-  "Runways are full of bodies under 25. Where did everyone older go — and would fashion actually want them back if they returned?",
-  "Is 'ethical fashion' a real category, or a price tag for guilt?",
-  "If everyone at this table could see exactly what your outfit cost — all of it — would you still have worn it tonight?"
-];
+const quotes = [{ text: "We are all born naked. The rest is drag.", author: "RuPaul", prompt: "Do you agree?" }];
+const provocations = ["Harry Styles wore a dress on a magazine cover and got called brave. What's the difference?"];
 
 function populateRow(containerId, data, type) {
   const container = document.getElementById(containerId);
   data.forEach((item, index) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'card-wrapper';
-    
-    let innerHTML = '';
     if (type === 'look') {
-      innerHTML = `<div class="item-card look" onclick="openModal('look', ${index})">
-                     <div class="tap-hint">Tap to read</div>
-                     <img src="${item.img}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' fill=\\'%23ddd\\' viewBox=\\'0 0 24 24\\'><rect width=\\'24\\' height=\\'24\\'/></svg>'" alt="">
-                     <div class="look-label">${item.name}</div>
-                   </div>`;
+      wrapper.innerHTML = `<div class="item-card look" onclick="openModal('look', ${index})"><img src="${item.images[0]}"><div class="look-label">${item.name}</div></div>`;
     } else if (type === 'quote') {
-      innerHTML = `<div class="item-card quote" onclick="openModal('quote', ${index})">
-                     <div class="tap-hint" style="background:#ddd; color:#111;">Tap to read</div>
-                     <div class="quote-text">"${item.text}"</div>
-                     <div class="quote-author">${item.author}</div>
-                   </div>`;
-    } else if (type === 'provocation') {
-      innerHTML = `<div class="item-card provocation">
-                     <div class="provocation-text">${item}</div>
-                   </div>`;
+      wrapper.innerHTML = `<div class="item-card quote" onclick="openModal('quote', ${index})"><div class="quote-text">"${item.text}"</div><div class="quote-author">${item.author}</div></div>`;
+    } else {
+      wrapper.innerHTML = `<div class="item-card provocation" onclick="openModal('provocation', ${index})"><div class="provocation-text">${item}</div></div>`;
     }
-    
-    wrapper.innerHTML = innerHTML;
     container.appendChild(wrapper);
   });
 }
@@ -386,57 +131,24 @@ populateRow('row-quotes', quotes, 'quote');
 populateRow('row-provocations', provocations, 'provocation');
 
 function shuffleAll() {
-  const rows = [
-    { el: document.getElementById('row-looks'), count: looks.length },
-    { el: document.getElementById('row-quotes'), count: quotes.length },
-    { el: document.getElementById('row-provocations'), count: provocations.length }
-  ];
-
-  rows.forEach(row => {
-    const randomIdx = Math.floor(Math.random() * row.count);
-    const scrollPos = randomIdx * window.innerWidth;
-    row.el.scrollTo({ left: scrollPos, behavior: 'smooth' });
-  });
+  document.querySelectorAll('.carousel-row').forEach(row => row.scrollTo({ left: Math.random() * 500, behavior: 'smooth' }));
 }
-
-// Modal Logic
-const modal = document.getElementById('item-modal');
-const modalBody = document.getElementById('modal-body');
 
 function openModal(type, index) {
-  let content = '';
+  const modalContainer = document.getElementById('modal-body-container');
   if (type === 'look') {
     const item = looks[index];
-    content = `
-      <div class="modal-tag">${item.designer}</div>
-      <div class="modal-title">${item.name}</div>
-      <div class="modal-desc">${item.desc}</div>
-      <div class="question-block">
-        <div class="question-label">Bring to the table</div>
-        <div class="question-text">${item.prompt}</div>
-      </div>
-    `;
+    modalContainer.innerHTML = `<div class="look-image-area"><img src="${item.images[0]}"></div><div class="modal-content-box"><h2>${item.name}</h2><p>${item.desc}</p><br><strong>Bring to the table:</strong><p>${item.prompt}</p></div>`;
   } else if (type === 'quote') {
     const item = quotes[index];
-    content = `
-      <div class="quote-mark">"</div>
-      <div class="question-text" style="font-size: 2rem; margin-bottom: 1rem;">${item.text}</div>
-      <div class="modal-tag" style="margin-bottom: 3rem;">— ${item.author}</div>
-      <div class="question-block">
-        <div class="question-label">Bring to the table</div>
-        <div class="question-text">${item.prompt}</div>
-      </div>
-    `;
+    modalContainer.innerHTML = `<div class="modal-content-box"><h2>"${item.text}"</h2><p>— ${item.author}</p><br><strong>Bring to the table:</strong><p>${item.prompt}</p></div>`;
+  } else {
+    modalContainer.innerHTML = `<div class="modal-content-box"><h2>${provocations[index]}</h2></div>`;
   }
-  
-  modalBody.innerHTML = content;
-  modal.classList.add('open');
+  document.getElementById('item-modal').classList.add('open');
 }
 
-function closeModal() {
-  modal.classList.remove('open');
-}
+function closeModal() { document.getElementById('item-modal').classList.remove('open'); }
 </script>
 </body>
 </html>
-
