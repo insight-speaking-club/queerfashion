@@ -44,7 +44,6 @@
     align-items: flex-start;
   }
 
-  /* MASTHEAD — the editorial label */
   .masthead {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 900;
@@ -65,17 +64,6 @@
     display: block;
   }
 
-  .issue-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 400;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--dim);
-    text-align: right;
-    line-height: 1.5;
-  }
-
   /* COVER TITLE */
   .home-center {
     padding: 0 1.8rem;
@@ -83,16 +71,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  .cover-vol {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 400;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 0.8rem;
   }
 
   .cover-title {
@@ -260,6 +238,7 @@
     display: none;
     min-height: 100vh;
     flex-direction: column;
+    background: var(--black);
   }
 
   .screen.active { display: flex; }
@@ -334,7 +313,6 @@
     overflow: hidden;
   }
 
-  /* This ensures the image covers the frame fully by default */
   .look-image-area img {
     width: 100%;
     height: 100%;
@@ -434,7 +412,6 @@
     border-bottom: 1px solid #181818;
   }
 
-  /* Single question — the conversation starter */
   .question-block {
     position: relative;
   }
@@ -459,18 +436,12 @@
   }
 
   /* ── QUOTE SCREEN ── */
-  #quote-screen {
-    justify-content: center;
-    align-items: flex-start;
-    padding: 3rem 1.8rem 4rem;
-    min-height: 100vh;
-  }
-
   .quote-inner {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0 1.8rem 4rem;
   }
 
   .quote-mark {
@@ -530,10 +501,6 @@
   }
 
   /* ── PROVOCATION SCREEN ── */
-  #provocation-screen {
-    background: var(--black);
-  }
-
   .provocation-inner {
     flex: 1;
     display: flex;
@@ -610,7 +577,6 @@
       Queer Fashion
       <span class="masthead-sub">Speaking Club</span>
     </div>
-
   </div>
 
   <div class="home-center">
@@ -624,12 +590,12 @@
   </div>
 
   <div class="choice-row">
-    <button class="choice-btn" onclick="showLooks()">
+    <button class="choice-btn" onclick="openLooksScreen()">
       <span class="choice-btn-label">A Look</span>
       <span class="choice-btn-sub">Iconic moments</span>
       <span class="choice-arrow">→</span>
     </button>
-    <button class="choice-btn" onclick="showQuotes()">
+    <button class="choice-btn" onclick="openQuotesScreen()">
       <span class="choice-btn-label">A Quote</span>
       <span class="choice-btn-sub">Words that land</span>
       <span class="choice-arrow">→</span>
@@ -637,7 +603,7 @@
   </div>
 
   <div class="provoke-row">
-    <button class="provoke-btn" onclick="showProvocations()">
+    <button class="provoke-btn" onclick="openProvocationsScreen()">
       <span class="provoke-text">
         <span class="provoke-label">A Provocation</span>
         <span class="provoke-sub">No image. No cushioning. Just the question.</span>
@@ -713,7 +679,7 @@
 </div>
 
 <script>
-const looks = [
+const fashionLooks = [
   {
     designer: "Yves Saint Laurent",
     name: "Le Smoking, 1966",
@@ -758,7 +724,7 @@ const looks = [
   }
 ];
 
-const quotes = [
+const fashionQuotes = [
   {
     text: "We are all born naked. The rest is drag.",
     author: "RuPaul",
@@ -801,7 +767,7 @@ const quotes = [
   }
 ];
 
-const provocations = [
+const fashionProvocations = [
   "Harry Styles wore a dress on a magazine cover and got called brave. Drag queens have been doing it for decades and got called a threat. What's the actual difference?",
   "Your $8 t-shirt was made by someone who'll never earn in a month what you spent on dinner tonight. Does that bother you, or did you train yourself to stop noticing?",
   "Are models art, or are they product?",
@@ -824,44 +790,44 @@ function goHome() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
 }
 
-function showLooks() {
-  currentLook = Math.floor(Math.random() * looks.length);
+function openLooksScreen() {
+  currentLook = Math.floor(Math.random() * fashionLooks.length);
   renderLook();
   document.getElementById('home').style.display = 'none';
   document.getElementById('look-screen').classList.add('active');
 }
 
-function showQuotes() {
-  currentQuote = Math.floor(Math.random() * quotes.length);
+function openQuotesScreen() {
+  currentQuote = Math.floor(Math.random() * fashionQuotes.length);
   renderQuote();
   document.getElementById('home').style.display = 'none';
   document.getElementById('quote-screen').classList.add('active');
 }
 
-function showProvocations() {
-  currentProvocation = Math.floor(Math.random() * provocations.length);
+function openProvocationsScreen() {
+  currentProvocation = Math.floor(Math.random() * fashionProvocations.length);
   renderProvocation();
   document.getElementById('home').style.display = 'none';
   document.getElementById('provocation-screen').classList.add('active');
 }
 
 function shuffleLook() {
-  currentLook = (currentLook + 1) % looks.length;
+  currentLook = (currentLook + 1) % fashionLooks.length;
   renderLook();
 }
 
 function shuffleQuote() {
-  currentQuote = (currentQuote + 1) % quotes.length;
+  currentQuote = (currentQuote + 1) % fashionQuotes.length;
   renderQuote();
 }
 
 function shuffleProvocation() {
-  currentProvocation = (currentProvocation + 1) % provocations.length;
+  currentProvocation = (currentProvocation + 1) % fashionProvocations.length;
   renderProvocation();
 }
 
 function renderLook() {
-  const look = looks[currentLook];
+  const look = fashionLooks[currentLook];
   currentThumb = 0;
 
   document.getElementById('look-designer').textContent = look.designer;
@@ -884,7 +850,7 @@ function selectThumb(i) {
   document.querySelectorAll('.look-thumb').forEach((t, idx) => {
     t.classList.toggle('active', idx === i);
   });
-  updateMainImage(looks[currentLook], i);
+  updateMainImage(fashionLooks[currentLook], i);
 }
 
 function updateMainImage(look, i) {
@@ -902,6 +868,19 @@ function updateMainImage(look, i) {
   };
 }
 
+function renderQuote() {
+  const q = fashionQuotes[currentQuote];
+  document.getElementById('quote-text').textContent = `"${q.text}"`;
+  document.getElementById('quote-author').textContent = `— ${q.author}`;
+  document.getElementById('quote-prompt').textContent = q.prompt;
+}
+
+function renderProvocation() {
+  document.getElementById('provocation-count').textContent =
+    String(currentProvocation + 1).padStart(2, '0') + ' / ' + String(fashionProvocations.length).padStart(2, '0');
+  document.getElementById('provocation-text').textContent = fashionProvocations[currentProvocation];
+}
+
 /* Lightbox Functions */
 function openLightbox() {
   const mainImgSrc = document.getElementById('look-main-img').src;
@@ -915,4 +894,3 @@ function closeLightbox() {
 </script>
 </body>
 </html>
-
