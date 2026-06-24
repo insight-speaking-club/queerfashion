@@ -4,21 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Queer Fashion — Flip the Script</title>
-<script>
-(function(){
-  function tryLoad(urls, i) {
-    if (i >= urls.length) return;
-    var s = document.createElement('script');
-    s.src = urls[i];
-    s.onerror = function(){ tryLoad(urls, i+1); };
-    document.head.appendChild(s);
-  }
-  tryLoad([
-    'https://cdn.ably.com/lib/ably.min-1.js',
-    'https://cdn.jsdelivr.net/npm/ably@1.2/ably.min.js',
-    'https://unpkg.com/ably@1/ably.min.js'
-  ], 0);
-})();
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getDatabase, ref, onValue, set } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+  const app = initializeApp({
+    databaseURL: 'https://speaking-13ce0-default-rtdb.firebaseio.com'
+  });
+  const db = getDatabase(app);
+  const questionRef = ref(db, 'current-question');
+
+  // Listen for new questions
+  onValue(questionRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data && data.question) {
+      showNotification(data.question);
+    }
+  });
+
+  // Share to everyone
+  window.shareWithEveryone = function(question, type, btnEl) {
+    set(questionRef, { question, type, ts: Date.now() });
+    btnEl.textContent = '✓ Shared with everyone';
+    btnEl.classList.add('sent');
+    btnEl.disabled = true;
+    showNotification(question);
+  };
 </script>
 
 <style>
@@ -290,28 +301,12 @@
 </div>
 
 <script>
-// ── ABLY SETUP ──
-const ABLY_KEY = '963W4g.X8W4pw:iD31_BpmAzDLCl23fLRUu8CccM1jJv1zULtB5mUkqGQ';
-let channel = null;
+// ── REALTIME SETUP (Firebase) ──
 let currentSharedQuestion = null;
 let notifTimeout = null;
 
-function initAbly() {
-  if (typeof Ably === 'undefined') {
-    setTimeout(initAbly, 300);
-    return;
-  }
-  const ably = new Ably.Realtime({ key: ABLY_KEY });
-  channel = ably.channels.get('table-question');
-  channel.subscribe('share', (msg) => {
-    const { question, type } = msg.data;
-    showNotification(question, type);
-  });
-}
-window.addEventListener('load', initAbly);
-
 function showNotification(question, type) {
-  currentSharedQuestion = { question, type };
+  currentSharedQuestion = { question: question, type: type || '' };
   document.getElementById('notif-text').textContent = question;
   document.getElementById('notif-banner').classList.add('show');
   clearTimeout(notifTimeout);
@@ -342,16 +337,7 @@ function closeLightbox() {
   document.getElementById('lightbox').classList.remove('show');
 }
 
-// Publish — the person who chose shares it
-function shareWithEveryone(question, type, btnEl) {
-  if (channel) {
-    channel.publish('share', { question, type });
-  }
-  btnEl.textContent = '✓ Shared with everyone';
-  btnEl.classList.add('sent');
-  btnEl.disabled = true;
-  showNotification(question, type);
-}
+// shareWithEveryone is defined in the Firebase module above
 
 // ── DATA ──
 const looks = [
