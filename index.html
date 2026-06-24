@@ -401,6 +401,20 @@ document.getElementById('secret-close-zone').addEventListener('click', () => {
   }
 });
 
+// Tap the final stage overlay itself 5 times to go back
+let stageTaps = 0, stageTimer = null;
+document.getElementById('final-stage').addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') return; // don't intercept the CTA button
+  stageTaps++;
+  clearTimeout(stageTimer);
+  if (stageTaps >= 5) {
+    stageTaps = 0;
+    if (finalStageActive) pushFinalStage(false);
+  } else {
+    stageTimer = setTimeout(() => { stageTaps = 0; }, 1200);
+  }
+});
+
 function pushFinalStage(active) {
   fetch(STAGE_URL, {
     method: 'PUT',
@@ -565,7 +579,7 @@ function renderModalContent(type, index) {
           <strong>${isUA ? 'Наприклад' : 'For example'}</strong>
           ${isUA ? item.example_ua : item.example_en}
         </div>
-        <span class="bring-label">${isUA ? 'Винесіть це на стіл' : 'Bring it to the table'}</span>
+        <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
         <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
       </div>`;
   }
