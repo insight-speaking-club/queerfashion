@@ -32,23 +32,13 @@
   /* ── NOTIFICATION BANNER ── */
   #notif-banner { position: fixed; bottom: -120px; left: 0; right: 0; z-index: 9999; padding: 0 1rem 2rem; transition: bottom 0.4s cubic-bezier(0.32, 0.72, 0, 1); }
   #notif-banner.show { bottom: 0; }
-  #notif-inner { background: #1a1612; border: 1px solid #2e2a26; border-radius: 4px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.8); max-width: 480px; margin: 0 auto; cursor: pointer; }
+  #notif-inner { background: #1a1612; border: 1px solid #2e2a26; border-radius: 4px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.8); max-width: 480px; margin: 0 auto; cursor: pointer; transition: border-color 0.2s; }
+  #notif-inner:hover { border-color: var(--accent); }
   #notif-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; color: var(--accent); }
   #notif-content { flex: 1; min-width: 0; }
-  #notif-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.4rem; }
+  #notif-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
   #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--white); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.2rem; cursor: pointer; flex-shrink: 0; padding: 0 0 0 0.5rem; }
-
-  /* ── QUESTION FULLSCREEN ── */
-  #question-screen { display: none; position: fixed; inset: 0; background: rgba(6, 6, 6, 0.98); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 2rem; text-align: center; backdrop-filter: blur(10px); }
-  #question-screen.show { display: flex; animation: fadeIn 0.3s ease; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  #question-eyebrow { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 2rem; }
-  #question-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.4rem, 6vw, 2.5rem); line-height: 1.45; color: var(--white); max-width: 600px; margin-bottom: 3rem; }
-  
-  .qs-actions { display: flex; gap: 1rem; align-items: center; justify-content: center; }
-  #question-close { background: none; border: 1px solid #2e2a26; color: var(--dim); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.6rem 1.4rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
-  #question-close:hover { border-color: var(--accent); color: var(--accent); }
 
   /* ── LIGHTBOX ── */
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 800; align-items: center; justify-content: center; cursor: zoom-out; }
@@ -74,6 +64,31 @@
   .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
   .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid #1a1a1a; }
   .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; text-align: left; }
+
+  /* Surprise me */
+  .surprise-block { padding: 0 1.8rem; }
+  .surprise-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 1.15rem 1.5rem;
+    background: transparent;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    border-radius: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .surprise-btn:hover { background: var(--accent); color: var(--black); }
+  .surprise-btn .dice { font-size: 1.1rem; transition: transform 0.3s; }
+  .surprise-btn:active .dice { transform: rotate(25deg); }
 
   /* Modal */
   .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s cubic-bezier(0.32, 0.72, 0, 1); overflow-y: auto; }
@@ -108,22 +123,16 @@
 <body>
 
 <div id="notif-banner">
-  <div id="notif-inner" onclick="openQuestionScreen()">
+  <div id="notif-inner" onclick="openSharedModal()">
     <div id="notif-icon">✦</div>
     <div id="notif-content">
-      <div id="notif-label">Brought to the table</div>
+      <div id="notif-label">
+        <span>Brought to the table</span>
+        <span style="opacity: 0.5;">Tap to view →</span>
+      </div>
       <div id="notif-text"></div>
     </div>
     <button id="notif-dismiss" onclick="dismissNotif(event)">✕</button>
-  </div>
-</div>
-
-<div id="question-screen">
-  <div id="question-eyebrow">The Committee is discussing</div>
-  <div id="question-text"></div>
-  <div class="qs-actions">
-    <button id="question-close" onclick="closeQuestionScreen()">Close</button>
-    <button class="lang-toggle" onclick="toggleLang(event)">[ UA ] Translate</button>
   </div>
 </div>
 
@@ -152,6 +161,12 @@
     <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick your PROVOCATION.</h3></div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
+  <div class="row-container" style="margin-bottom: 0;">
+    <div class="row-header"><span>No thinking required</span><h3>Or just let fate pick for you.</h3></div>
+    <div class="surprise-block">
+      <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> I don't wanna choose — pick for me</button>
+    </div>
+  </div>
 </section>
 
 <section id="outfit-cta">
@@ -177,6 +192,7 @@
 // ── LANGUAGE STATE ──
 let isUA = false;
 let currentModalData = null; 
+let currentSharedItem = null;
 
 function toggleLang(e) {
   if (e) e.stopPropagation();
@@ -191,9 +207,8 @@ function toggleLang(e) {
     renderModalContent(currentModalData.type, currentModalData.index);
   }
   
-  if (currentSharedQuestion) {
-    document.getElementById('notif-text').textContent = isUA ? currentSharedQuestion.ua : currentSharedQuestion.en;
-    document.getElementById('question-text').textContent = isUA ? currentSharedQuestion.ua : currentSharedQuestion.en;
+  if (currentSharedItem) {
+    document.getElementById('notif-text').textContent = isUA ? currentSharedItem.ua : currentSharedItem.en;
   }
 }
 
@@ -258,7 +273,22 @@ const quotes = [
     prompt_en: "We say this like it's obvious — but how much of what you wear is actually chosen, versus what your job, your budget, your body, or other people expect of you?", prompt_ua: "Скільки з того, що ви носите, насправді є вашим вибором, а не тим, чого вимагає ваша робота, бюджет, тіло чи інші люди?" },
   { author: "Coco Chanel", 
     text_en: "Fashion is in the sky, in the street.", text_ua: "Мода в небі, на вулиці.", 
-    prompt_en: "If fashion comes from real life, why does high fashion so rarely look like real life? Who actually gets to set the terms of what's considered fashionable?", prompt_ua: "Якщо мода береться з реального життя, чому висока мода так рідко схожа на нього? Хто насправді встановлює правила моди?" }
+    prompt_en: "If fashion comes from real life, why does high fashion so rarely look like real life? Who actually gets to set the terms of what's considered fashionable?", prompt_ua: "Якщо мода береться з реального життя, чому висока мода так рідко схожа на нього? Хто насправді встановлює правила моди?" },
+  { author: "Quentin Crisp",
+    text_en: "Fashion is what you adopt when you don't know who you are.", text_ua: "Мода — це те, що ти обираєш, коли не знаєш, хто ти.",
+    prompt_en: "Crisp suggests we dress up most when we're least sure of ourselves. Do you think the way you dress right now says who you are — or who you're still trying to become?", prompt_ua: "Крісп натякає, що ми найбільше вбираємось, коли найменше впевнені в собі. Чи каже спосіб, яким ви одягаєтесь зараз, хто ви — чи хто ви ще намагаєтесь стати?" },
+  { author: "Karl Lagerfeld",
+    text_en: "Trendy is the last stage before tacky.", text_ua: "Модне — це останній етап перед несмаком.",
+    prompt_en: "Lagerfeld drew a hard line between trend-chasing and taste. Is there a real difference, or is 'good taste' just trends that have had time to feel respectable?", prompt_ua: "Лагерфельд провів чітку межу між гонитвою за трендами та смаком. Чи є реальна різниця, чи 'добрий смак' — це просто тренди, які встигли стати респектабельними?" },
+  { author: "Iris Apfel",
+    text_en: "More is more and less is a bore.", text_ua: "Більше — це більше, а менше — це нудно.",
+    prompt_en: "Minimalism gets treated as 'tasteful' and maximalism as 'too much.' Why do we trust restraint more than excess — and is that fair?", prompt_ua: "Мінімалізм вважають 'зі смаком', а максималізм — 'занадто'. Чому ми довіряємо стриманості більше, ніж надмірності — і чи справедливо це?" },
+  { author: "Tim Gunn",
+    text_en: "Style is a way to say who you are without having to speak.", text_ua: "Стиль — це спосіб сказати, хто ти, без слів.",
+    prompt_en: "If clothes speak before you do, what do you think your everyday outfit says about you to a stranger — and is that the message you actually want to send?", prompt_ua: "Якщо одяг говорить раніше за вас, що, на вашу думку, ваш повсякденний образ каже про вас незнайомцю — і чи це те повідомлення, яке ви насправді хочете передати?" },
+  { author: "Marlene Dietrich",
+    text_en: "I dress for the image. Not for myself, not for the public, not for fashion, not for men.", text_ua: "Я одягаюся для образу. Не для себе, не для публіки, не для моди, не для чоловіків.",
+    prompt_en: "Dietrich, who built a career on androgynous tailoring, says she dressed for none of the usual reasons. Who or what do you actually dress for?", prompt_ua: "Дітріх, яка зробила кар'єру на андрогінному крої, каже, що не одягалася з жодної зі звичних причин. Для кого чи для чого насправді одягаєтесь ви?" }
 ];
 
 const provocations = [
@@ -267,7 +297,17 @@ const provocations = [
   { text_en: "Is 'ethical fashion' a real category, or a price tag for guilt?", text_ua: "Чи 'етична мода' — це реальна категорія, чи просто цінник за провину?",
     example_en: "A £300 'sustainable' linen shirt. A £6 linen shirt from Shein. One is marketed as conscious consumption. Who can afford a conscience?", example_ua: "Екологічна лляна сорочка за £300. Лляна сорочка за £6. Хто може дозволити собі совість?" },
   { text_en: "Who actually owns a trend?", text_ua: "Кому насправді належить тренд?",
-    example_en: "Cornrows were 'urban' on Black women, 'edgy' on Kylie Jenner. The look stays the same. The credit moves.", example_ua: "Косички були 'урбаністичними' на чорношкірих жінках, 'модними' на Кайлі Дженнер. Вигляд залишається тим самим. Визнання переходить до інших." }
+    example_en: "Cornrows were 'urban' on Black women, 'edgy' on Kylie Jenner. The look stays the same. The credit moves.", example_ua: "Косички були 'урбаністичними' на чорношкірих жінках, 'модними' на Кайлі Дженнер. Вигляд залишається тим самим. Визнання переходить до інших." },
+  { text_en: "'Unisex' lines are usually just menswear with no curves cut out. Why does gender-neutral default to male?", text_ua: "Лінії 'унісекс' зазвичай — це просто чоловічий одяг без жіночих форм. Чому гендерно-нейтральне за замовчуванням означає чоловіче?",
+    example_en: "Major retailers label oversized, straight-cut basics 'unisex,' while anything shaped for a fuller chest or hip stays filed under 'womenswear.' Gender-neutral rarely means clothes built for a range of bodies — it means defaulting to one.", example_ua: "Великі мережі позначають об'ємні, прямі базові речі як 'унісекс', тоді як усе, що враховує жіночі форми, залишається у розділі 'жіночий одяг'. Гендерно-нейтральне рідко означає одяг для різних тіл — воно означає одяг за замовчуванням для одного типу." },
+  { text_en: "Rainbow logos appear every June and vanish every July. What's actually changed?", text_ua: "Кожного червня з'являються веселкові логотипи, кожного липня вони зникають. Що насправді змінилося?",
+    example_en: "Pride collections sell out in weeks, donate a small share of profits to LGBTQ+ causes, and quietly disappear from shelves by August — sometimes from brands headquartered where being queer is still criminalized.", example_ua: "Pride-колекції розкуповують за тижні, частина прибутку йде на ЛГБТК+ ініціативи, а до серпня вони тихо зникають з полиць — іноді від брендів, штаб-квартири яких знаходяться там, де бути квір досі є злочином." },
+  { text_en: "Ballroom culture created voguing, 'reading,' and 'shade' decades before fashion claimed them. Who got the credit?", text_ua: "Бальна культура створила вогінг, 'reading' та 'shade' за десятиліття до того, як мода це привласнила. Кому дісталося визнання?",
+    example_en: "Madonna's 1990 hit 'Vogue' brought ball culture's moves to a global audience, while the Black and Latino trans and queer performers who built the House scene remained largely uncredited and unpaid.", example_ua: "Хіт Мадонни 'Vogue' 1990 року показав рухи бальної культури всьому світу, тоді як чорношкірі та латино трансгендерні й квір виконавці, що створили цю культуру Будинків, залишилися здебільшого без визнання й оплати." },
+  { text_en: "A man in heels is fashion-forward on a runway and a punchline on a sidewalk. What changes between those two spaces?", text_ua: "Чоловік на підборах — це авангард на подіумі і привід для жартів на вулиці. Що змінюється між цими двома просторами?",
+    example_en: "Designers have sent male models down runways in heeled boots for seasons, yet the same shoe on a man walking down the street still draws stares, jokes, or worse.", example_ua: "Дизайнери вже багато сезонів випускають чоловічі моделі на підборах на подіумі, але те саме взуття на чоловікові на вулиці й досі викликає погляди, жарти чи гірше." },
+  { text_en: "Plus-size queer style barely exists outside niche brands. Why does 'body positive' marketing still mean straight-size models?", text_ua: "Plus-size квір-стиль майже не існує поза нішевими брендами. Чому 'body positive' маркетинг досі означає моделей стандартних розмірів?",
+    example_en: "Most major body-positive campaigns top out around a size 14–16, leaving fat queer people — who've built entire aesthetics out of thrifting and DIY — invisible in an industry that claims to champion them.", example_ua: "Більшість великих body-positive кампаній обмежуються розміром 44–46, залишаючи повних квір-людей — які створили цілі естетики із секонд-хенду та DIY — невидимими в індустрії, що нібито їх підтримує." }
 ];
 
 // ── RENDER ROWS ──
@@ -348,7 +388,8 @@ function renderModalContent(type, index) {
       </div>`;
   }
 
-  document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, this); };
+  // Pass the exact index to Firebase so everyone else can open this exact card
+  document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 }
 
 function switchImage(src, thumbEl) {
@@ -362,9 +403,20 @@ function closeModal() {
   currentModalData = null;
 }
 
+// ── SURPRISE ME ──
+function surpriseMe() {
+  const pools = [
+    { type: 'look', items: looks },
+    { type: 'quote', items: quotes },
+    { type: 'provocation', items: provocations }
+  ];
+  const pool = pools[Math.floor(Math.random() * pools.length)];
+  const index = Math.floor(Math.random() * pool.items.length);
+  openModal(pool.type, index);
+}
+
 // ── FIREBASE & SYNC LOGIC ──
 const DB_URL = 'https://speaking-13ce0-default-rtdb.firebaseio.com/current-question.json';
-let currentSharedQuestion = null;
 let lastTs = null;
 let isFirstLoad = true;
 
@@ -379,27 +431,29 @@ setInterval(async () => {
       lastTs = data.ts;
       const enText = data.question_en || data.question;
       const uaText = data.question_ua || data.question;
-      showNotification({ en: enText, ua: uaText });
+      // Read the type and index from the database
+      showNotification({ en: enText, ua: uaText }, data.type, data.index);
     }
   } catch (err) {}
 }, 2000);
 
-function shareWithEveryone(textEN, textUA, type, btnEl) {
+function shareWithEveryone(textEN, textUA, type, index, btnEl) {
   fetch(DB_URL, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question_en: textEN, question_ua: textUA, type: type, ts: Date.now() })
+    // Push the index to the database so others know which card to open
+    body: JSON.stringify({ question_en: textEN, question_ua: textUA, type: type, index: index, ts: Date.now() })
   });
   
   btnEl.textContent = isUA ? '✓ Надіслано на стіл' : '✓ Sent to the table';
   btnEl.classList.add('sent');
   btnEl.disabled = true;
   
-  showNotification({ en: textEN, ua: textUA });
+  showNotification({ en: textEN, ua: textUA }, type, index);
 }
 
-function showNotification(questionObj) {
-  currentSharedQuestion = questionObj;
+function showNotification(questionObj, type, index) {
+  currentSharedItem = { type: type, index: index, en: questionObj.en, ua: questionObj.ua };
   document.getElementById('notif-text').textContent = isUA ? questionObj.ua : questionObj.en;
   document.getElementById('notif-banner').classList.add('show');
   if (navigator.vibrate) navigator.vibrate(100);
@@ -410,14 +464,13 @@ function dismissNotif(e) {
   document.getElementById('notif-banner').classList.remove('show');
 }
 
-function openQuestionScreen() {
-  if (!currentSharedQuestion) return;
+// When the user taps the banner, it opens the exact card directly
+function openSharedModal() {
+  if (!currentSharedItem || currentSharedItem.index === undefined) return;
   dismissNotif();
-  document.getElementById('question-text').textContent = isUA ? currentSharedQuestion.ua : currentSharedQuestion.en;
-  document.getElementById('question-screen').classList.add('show');
+  openModal(currentSharedItem.type, currentSharedItem.index);
 }
 
-function closeQuestionScreen() { document.getElementById('question-screen').classList.remove('show'); }
 function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('show'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('show'); }
 </script>
