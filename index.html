@@ -15,7 +15,7 @@
     --black: #030303; 
     --white: #f4f4f4; 
     --grey: #0a0a0a; 
-    --dim: #999999; /* Increased contrast for readability */
+    --dim: #999999; 
     --accent: #e3ded8; 
     --border: #222222;
   }
@@ -26,8 +26,8 @@
     font-family: 'Inter', sans-serif; 
     overflow-x: hidden; 
     -webkit-font-smoothing: antialiased; 
-    overscroll-behavior: none; /* Prevents iOS rubber-banding */
-    touch-action: manipulation; /* Prevents double-tap zooming */
+    overscroll-behavior: none; 
+    touch-action: manipulation; 
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -246,18 +246,18 @@
   <span class="club-label">Queer Fashion Speaking Club</span>
   <h1 class="cover-title" id="secret-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
-  <p class="hero-instructions">Tap a card. <span>Share</span> with the table. Discuss.</p>
+  <p class="hero-instructions">Tap a card. Discuss with your partner or <span>share</span> with the table.</p>
 </header>
 
 <section id="closet-section">
   
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()">Pick for me</button>
+    <button class="surprise-btn" onclick="surpriseMe()">Pick a question for me</button>
     <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
   <div class="row-container">
-    <div class="row-header"><span>A1-A2 Level</span><h3>The Essentials.</h3></div>
+    <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -265,7 +265,7 @@
   </div>
 
   <div class="row-container">
-    <div class="row-header"><span>The Icons</span><h3>A Look.</h3></div>
+    <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -273,7 +273,7 @@
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Words that land</span><h3>A Quote.</h3></div>
+    <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -281,7 +281,7 @@
   </div>
   
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>No cushioning</span><h3>A Provocation.</h3></div>
+    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -308,6 +308,7 @@
 let isUA = false;
 let currentModalData = null;
 let currentSharedItem = null;
+let isCurrentlyDiscussingNotif = false; // Tracks if the popup is for a pre-existing active question
 
 function toggleLang(e) {
   if (e) e.stopPropagation();
@@ -316,15 +317,23 @@ function toggleLang(e) {
     btn.classList.toggle('active', isUA);
     btn.textContent = isUA ? 'Translate' : 'Перекласти';
   });
+  
   document.getElementById('fs-sub-text').textContent = isUA ? 'Твій образ, твої правила. Правильних відповідей немає.' : 'Your outfit, your rules. No right answers.';
   document.getElementById('fs-cta-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
   document.querySelector('.fs-heading').textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
   document.querySelector('.fs-body').innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
-  
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
-  if (currentSharedItem) document.getElementById('notif-text').textContent = isUA ? currentSharedItem.ua : currentSharedItem.en;
+  
+  // Handle translation of the notification banner text and label if it's open
+  if (currentSharedItem) {
+    document.getElementById('notif-text').textContent = isUA ? currentSharedItem.ua : currentSharedItem.en;
+    const labelEl = document.getElementById('notif-label');
+    labelEl.textContent = isCurrentlyDiscussingNotif 
+      ? (isUA ? "Зараз обговорюють" : "Currently discussing")
+      : (isUA ? "Винесено на стіл" : "Brought to the table");
+  }
 }
 
 // Hide scroll indicator on scroll
@@ -353,7 +362,7 @@ function playNotifSound() {
   if (!audioUnlocked) return;
   const sound = new Audio('notification.mp3');
   sound.volume = 0.7;
-  sound.play().catch(e => console.log("Audio play failed:", e));
+  sound.play().catch(e => console.log("Audio play failed (browser block):", e));
 }
 
 // ── SECRET HOST BUTTON LOGIC ──
@@ -386,7 +395,7 @@ function applyFinalStage(active) {
   document.getElementById('final-stage').classList.toggle('show', active);
 }
 
-// ── SURPRISE ME (EXCLUDES BEGINNERS) ──
+// ── SURPRISE ME ──
 function surpriseMe() {
   const pools = [
     { type: 'look', items: looks },
@@ -639,7 +648,13 @@ Promise.all([
   fetch(DB_URL).then(r => r.json()).catch(() => null),
   fetch(STAGE_URL).then(r => r.json()).catch(() => null)
 ]).then(([qData, stageData]) => {
-  if (qData) lastTs = qData.ts;
+  if (qData) {
+    lastTs = qData.ts;
+    // Check if the question was shared within the last 3 hours (10800000 ms)
+    if (Date.now() - qData.ts < 10800000) {
+      showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index, true);
+    }
+  }
   if (stageData) {
     lastStageTs = stageData.ts;
     applyFinalStage(stageData.active);
@@ -654,7 +669,7 @@ setInterval(async () => {
     const qData = await qRes.json();
     if (qData && qData.ts !== lastTs) {
       lastTs = qData.ts;
-      showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index);
+      showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index, false);
     }
     const sRes = await fetch(STAGE_URL);
     const sData = await sRes.json();
@@ -677,7 +692,7 @@ function shareWithEveryone(textEN, textUA, type, index, btnEl) {
   btnEl.classList.add('sent');
   btnEl.disabled = true;
   
-  showNotification({ en: textEN, ua: textUA }, type, index);
+  showNotification({ en: textEN, ua: textUA }, type, index, false);
 
   // Reset the share button after 5 seconds
   setTimeout(() => {
@@ -689,16 +704,24 @@ function shareWithEveryone(textEN, textUA, type, index, btnEl) {
   }, 5000);
 }
 
-function showNotification(questionObj, type, index) {
+function showNotification(questionObj, type, index, isCurrentContext = false) {
+  isCurrentlyDiscussingNotif = isCurrentContext;
   currentSharedItem = { type, index, en: questionObj.en, ua: questionObj.ua };
   document.getElementById('notif-text').textContent = isUA ? questionObj.ua : questionObj.en;
+  
+  const labelEl = document.getElementById('notif-label');
+  labelEl.textContent = isCurrentContext 
+    ? (isUA ? "Зараз обговорюють" : "Currently discussing")
+    : (isUA ? "Винесено на стіл" : "Brought to the table");
   
   document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
   
-  playNotifSound();
-  
-  if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  // Play sound only if it's a new push (not the initial sync load)
+  if (!isCurrentContext) {
+    playNotifSound();
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  }
 }
 
 function dismissNotif(e) {
