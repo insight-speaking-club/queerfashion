@@ -72,7 +72,7 @@
   /* ── SECRET HOST BUTTON ── */
   #secret-close-zone { position: fixed; bottom: 0; right: 0; width: 60px; height: 60px; z-index: 9998; cursor: default; -webkit-tap-highlight-color: transparent; }
 
-  /* ── COMPACT HERO SECTION (VOGUE STYLE) ── */
+  /* ── COMPACT HERO SECTION ── */
   #hero-header { padding: 4rem 1.8rem 2rem; background: #0a0a0a; text-align: center; border-bottom: 1px solid #1a1a1a;}
   .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
   
@@ -88,16 +88,49 @@
   
   .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--accent); }
 
+  /* ── SCROLL INDICATOR ── */
+  #scroll-ind {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  #scroll-ind svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--dim);
+    stroke-width: 2;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
   /* ── MAIN CONTENT ── */
-  #closet-section { padding: 3rem 0 8rem 0; background: #0a0a0a; }
+  #closet-section { padding: 3rem 0 0 0; background: #0a0a0a; }
   .row-container { margin-bottom: 5rem; }
-  .row-header { padding: 0 1.8rem; margin-bottom: 1.2rem; }
+  .row-header { padding: 0 1.8rem; margin-bottom: 1rem; }
   .row-header h3 { font-family: 'Barlow Condensed'; font-size: 1.8rem; text-transform: uppercase; }
   .row-header span { color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; }
 
-  .swipe-hint { display: flex; align-items: center; gap: 0.4rem; padding: 0 1.8rem; margin-bottom: 1rem; opacity: 0.35; }
-  .swipe-hint span { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--white); }
-  .swipe-hint svg { width: 14px; height: 14px; fill: none; stroke: var(--white); stroke-width: 1.5; }
+  /* ── VISUAL INSTRUCTIONS ── */
+  .swipe-hint { display: flex; align-items: center; gap: 0.6rem; padding: 0 1.8rem; margin-bottom: 1.2rem; }
+  .hint-pill { display: flex; align-items: center; gap: 0.4rem; background: #141414; border: 1px solid #2a2a2a; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
+  .hint-icon { font-size: 0.85rem; }
+  .anim-swipe { animation: swipeAnim 2s infinite ease-in-out; display: inline-block; }
+  .anim-tap { animation: tapAnim 2s infinite ease-in-out; display: inline-block; }
+  @keyframes swipeAnim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+  @keyframes tapAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.85); } }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 320px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
@@ -147,6 +180,10 @@
   .share-to-table-btn:hover { opacity: 0.85; }
   .share-to-table-btn.sent { background: #2e2a26; color: var(--dim); cursor: default; }
   .share-explainer { font-size: 0.65rem; color: var(--dim); line-height: 1.5; margin-top: 0.8rem; display: block; }
+
+  /* ── FOOTER ── */
+  .site-footer { padding: 6rem 1.8rem 8rem; text-align: center; background: var(--black); border-top: 1px solid #1a1a1a; }
+  .footer-text { font-family: 'Bodoni Moda', 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 2.5rem); color: var(--accent); line-height: 1.2; }
 </style>
 </head>
 <body>
@@ -188,10 +225,16 @@
 <!-- ── SECRET CLOSE ZONE ── -->
 <div id="secret-close-zone"></div>
 
+<!-- ── SCROLL INDICATOR ── -->
+<div id="scroll-ind">
+  <span>Scroll</span>
+  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+
 <header id="hero-header">
   <span class="club-label">Queer Fashion Speaking Club</span>
   <h1 class="cover-title" id="secret-title">VOGUE?</h1>
-  <p class="cover-title-italic">The script is dead. Dress accordingly.</p>
+  <p class="cover-title-italic">Discussion Questions.</p>
 </header>
 
 <section id="closet-section">
@@ -206,8 +249,8 @@
   <div class="row-container">
     <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
     <div class="swipe-hint">
-      <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
-      <span>Swipe to browse · tap to open</span>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
@@ -216,8 +259,8 @@
   <div class="row-container">
     <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="swipe-hint">
-      <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
-      <span>Swipe to browse · tap to open</span>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row" id="row-looks"></div>
   </div>
@@ -225,8 +268,8 @@
   <div class="row-container">
     <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
     <div class="swipe-hint">
-      <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
-      <span>Swipe to browse · tap to open</span>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
@@ -234,12 +277,17 @@
   <div class="row-container" style="margin-bottom: 0;">
     <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
     <div class="swipe-hint">
-      <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
-      <span>Swipe to browse · tap to open</span>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
 </section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <p class="footer-text">The script is dead.<br>Dress accordingly.</p>
+</footer>
 
 <div class="modal" id="item-modal">
   <div class="modal-nav">
@@ -269,9 +317,22 @@ function toggleLang(e) {
   document.querySelector('.fs-heading').textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
   document.querySelector('.fs-body').innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
   
+  // Translate the footer phrase as well
+  document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
+  
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
   if (currentSharedItem) document.getElementById('notif-text').textContent = isUA ? currentSharedItem.ua : currentSharedItem.en;
 }
+
+// Hide scroll indicator on scroll
+window.addEventListener('scroll', () => {
+  const indicator = document.getElementById('scroll-ind');
+  if (window.scrollY > 50) {
+    indicator.style.opacity = '0';
+  } else {
+    indicator.style.opacity = '1';
+  }
+});
 
 // ── SECRET HOST BUTTON (10 TAPS) ──
 let titleTaps = 0, titleTimer = null;
@@ -482,7 +543,6 @@ function renderModalContent(type, index) {
     const item = beginners[index];
     const vocabList = item.vocab.map(v => `<li style="margin-bottom:0.5rem;"><strong>${v.en}</strong> &mdash; <span style="opacity:0.6">${v.ua}</span></li>`).join('');
     
-    // Updated structuresList to display English, with a line break and muted Ukrainian translation below
     const structuresList = item.structures.map(s => `
       <li style="margin-bottom:0.8rem; line-height:1.3;">
         <strong>${s.en}</strong><br>
