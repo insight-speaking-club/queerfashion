@@ -330,7 +330,7 @@
 <footer class="site-footer">
   <img class="footer-bg-img" src="backcover.jpg" alt="" onerror="this.style.display='none'">
   <div class="footer-overlay"></div>
-  <p class="footer-text">The script is dead.<br>Dress accordingly.</p>
+  <p class="footer-text" onclick="handleFooterTap(event)">The script is dead.<br>Dress accordingly.</p>
 </footer>
 
 <div class="modal" id="item-modal">
@@ -690,8 +690,8 @@ Promise.all([
 ]).then(([qData, stageData]) => {
   if (qData) {
     lastTs = qData.ts;
-    // Check if the question was shared within the last 3 hours (10800000 ms)
-    if (Date.now() - qData.ts < 10800000) {
+    // Check if the question was shared within the last 3 hours (10800000 ms) AND hasn't been cleared
+    if (qData.question_en && Date.now() - qData.ts < 10800000) {
       showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index, true);
     }
   }
@@ -709,7 +709,11 @@ setInterval(async () => {
     const qData = await qRes.json();
     if (qData && qData.ts !== lastTs) {
       lastTs = qData.ts;
-      showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index, false);
+      if (qData.question_en) {
+        showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index, false);
+      } else {
+        dismissNotif();
+      }
     }
     const sRes = await fetch(STAGE_URL);
     const sData = await sRes.json();
@@ -768,6 +772,30 @@ function dismissNotif(e) {
   if (e) e.stopPropagation();
   document.getElementById('notif-backdrop').classList.remove('show');
   document.getElementById('notif-banner').classList.remove('show');
+}
+
+// ── SECRET: tap "Dress accordingly" 7x fast to clear the question for everyone ──
+let footerTaps = 0, footerTapTimer = null;
+function handleFooterTap(e) {
+  if (e) e.stopPropagation();
+  footerTaps++;
+  clearTimeout(footerTapTimer);
+  if (footerTaps >= 7) {
+    footerTaps = 0;
+    clearQuestionForEveryone();
+  } else {
+    footerTapTimer = setTimeout(() => { footerTaps = 0; }, 1500);
+  }
+}
+
+function clearQuestionForEveryone() {
+  fetch(DB_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question_en: '', question_ua: '', type: null, index: null, ts: Date.now() })
+  });
+  currentSharedItem = null;
+  dismissNotif();
 }
 
 function openSharedModal() {
