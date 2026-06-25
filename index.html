@@ -89,7 +89,26 @@
   .fs-cta:hover { opacity: 0.8; }
 
   /* ── COMPACT HERO SECTION ── */
-  #hero-header { padding: 6rem 1.8rem 3rem; background: var(--black); text-align: center; }
+  #hero-header { 
+    padding: 6rem 1.8rem 3rem; 
+    background: var(--black); 
+    text-align: center; 
+    position: relative; 
+    overflow: hidden; 
+  }
+  .hero-bg-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0.35; z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(3,3,3,0.3) 0%, rgba(3,3,3,0.85) 100%);
+    z-index: 1;
+  }
+  .club-label, .cover-title, .cover-title-italic, .hero-instructions { position: relative; z-index: 2; }
+
   .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
   
   .cover-title { 
@@ -200,8 +219,25 @@
   .share-explainer { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.8rem; color: var(--dim); line-height: 1.5; margin-top: 1rem; display: block; }
 
   /* ── FOOTER ── */
-  .site-footer { padding: 8rem 1.8rem 10rem; text-align: center; background: var(--black); }
-  .footer-text { font-family: 'Bodoni Moda', serif; font-weight: 400; font-style: italic; font-size: clamp(1.8rem, 8vw, 3rem); color: var(--white); line-height: 1.2; }
+  .site-footer { 
+    padding: 8rem 1.8rem 10rem; 
+    text-align: center; 
+    background: var(--black); 
+    position: relative; 
+    overflow: hidden; 
+  }
+  .footer-bg-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0.35; z-index: 0;
+  }
+  .footer-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(3,3,3,0.9) 0%, rgba(3,3,3,0.5) 50%, rgba(3,3,3,0.85) 100%);
+    z-index: 1;
+  }
+  .footer-text { font-family: 'Bodoni Moda', serif; font-weight: 400; font-style: italic; font-size: clamp(1.8rem, 8vw, 3rem); color: var(--white); line-height: 1.2; position: relative; z-index: 2; }
 </style>
 </head>
 <body>
@@ -243,6 +279,8 @@
 </div>
 
 <header id="hero-header">
+  <img class="hero-bg-img" src="vogue.jpg" alt="" onerror="this.style.display='none'">
+  <div class="hero-overlay"></div>
   <span class="club-label">Queer Fashion Speaking Club</span>
   <h1 class="cover-title" id="secret-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
@@ -290,6 +328,8 @@
 </section>
 
 <footer class="site-footer">
+  <img class="footer-bg-img" src="backcover.jpg" alt="" onerror="this.style.display='none'">
+  <div class="footer-overlay"></div>
   <p class="footer-text">The script is dead.<br>Dress accordingly.</p>
 </footer>
 
