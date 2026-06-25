@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Queer Fashion Speaking Club — VOGUE?</title>
 
 <style>
@@ -15,12 +15,21 @@
     --black: #030303; 
     --white: #f4f4f4; 
     --grey: #0a0a0a; 
-    --dim: #777; 
-    --accent: #e3ded8; /* Sophisticated pale bone/off-white */
-    --border: #1f1f1f;
+    --dim: #999999; /* Increased contrast for readability */
+    --accent: #e3ded8; 
+    --border: #222222;
   }
   
-  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body { 
+    background: var(--black); 
+    color: var(--white); 
+    font-family: 'Inter', sans-serif; 
+    overflow-x: hidden; 
+    -webkit-font-smoothing: antialiased; 
+    overscroll-behavior: none; /* Prevents iOS rubber-banding */
+    touch-action: manipulation; /* Prevents double-tap zooming */
+    -webkit-tap-highlight-color: transparent;
+  }
 
   /* ── LANGUAGE TOGGLE ── */
   .lang-toggle {
@@ -29,7 +38,7 @@
     color: var(--dim);
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     letter-spacing: 0.05em;
     padding: 0.4rem 1rem;
     border-radius: 50px;
@@ -52,15 +61,15 @@
   #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   
   #notif-inner { 
-    background: var(--grey); border: 1px solid var(--border); border-radius: 0px; padding: 2rem; 
+    background: var(--grey); border: 1px solid var(--border); padding: 2rem; 
     display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 30px 60px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
   }
   #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-  #notif-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: flex; align-items: center; gap: 0.5rem;}
-  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--white); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin: 1rem 0; }
-  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.2rem; cursor: pointer; transition: color 0.2s;}
+  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: flex; align-items: center; gap: 0.5rem;}
+  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--white); line-height: 1.5; margin: 1rem 0; }
+  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
   #notif-dismiss:hover { color: var(--white); }
-  .tap-hint { background: transparent; color: var(--dim); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid var(--border); padding-bottom: 2px;}
+  .tap-hint { color: var(--dim); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid var(--border); padding-bottom: 2px;}
 
   /* ── LIGHTBOX ── */
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
@@ -71,29 +80,32 @@
   #final-stage { display: none; position: fixed; inset: 0; background: var(--black); z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2.5rem 2rem; cursor: default;}
   #final-stage.show { display: flex; }
   #final-stage-inner { max-width: 400px; pointer-events: none; }
-  .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 3rem; cursor: pointer; pointer-events: auto; }
+  .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 3rem; cursor: pointer; pointer-events: auto; padding: 1rem; }
   .fs-heading { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.2rem, 5vw, 1.8rem); color: var(--white); line-height: 1.4; margin-bottom: 0.8rem; }
   .fs-divider { width: 1px; height: 50px; background: var(--border); margin: 2rem auto; }
   .fs-body { font-family: 'Inter', sans-serif; font-weight: 300; font-size: clamp(0.9rem, 4vw, 1rem); color: var(--dim); line-height: 1.6; margin-bottom: 0.5rem; }
-  .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #555; line-height: 1.6; margin-bottom: 4rem; font-weight: 300; }
+  .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #666; line-height: 1.6; margin-bottom: 4rem; font-weight: 300; }
   .fs-cta { display: inline-block; padding: 1.2rem 2.5rem; background: var(--white); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; border-radius: 50px; transition: opacity 0.3s; pointer-events: auto; }
   .fs-cta:hover { opacity: 0.8; }
 
   /* ── COMPACT HERO SECTION ── */
-  #hero-header { padding: 6rem 1.8rem 4rem; background: var(--black); text-align: center; }
-  .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
+  #hero-header { padding: 6rem 1.8rem 3rem; background: var(--black); text-align: center; }
+  .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
   
   .cover-title { 
     font-family: 'Bodoni Moda', 'Playfair Display', serif; 
     font-weight: 400; 
-    font-size: clamp(4rem, 18vw, 8rem); 
+    font-size: clamp(3.5rem, 16vw, 8rem); 
     text-transform: uppercase; 
     line-height: 0.9; 
     margin-bottom: 1.5rem; 
     letter-spacing: -0.02em; 
   }
   
-  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--dim); }
+  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--dim); margin-bottom: 2rem; }
+  
+  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6; font-weight: 300; max-width: 300px; margin: 0 auto; }
+  .hero-instructions span { color: var(--white); font-weight: 400; }
 
   /* ── SCROLL INDICATOR ── */
   #scroll-ind {
@@ -107,7 +119,7 @@
     gap: 0.5rem;
     color: var(--dim);
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     transition: opacity 0.4s ease;
@@ -119,76 +131,73 @@
     background: var(--dim);
     animation: drift 2s infinite ease-in-out;
   }
-  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(8px); opacity: 1; } }
+  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.3; } 50% { transform: translateY(8px); opacity: 0.8; } }
 
   /* ── MAIN CONTENT ── */
   #closet-section { padding: 2rem 0 0 0; background: var(--black); }
   .row-container { margin-bottom: 6rem; }
   .row-header { padding: 0 1.8rem; margin-bottom: 1.5rem; }
   .row-header h3 { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.2; }
-  .row-header span { color: var(--dim); font-size: 0.65rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; }
+  .row-header span { color: var(--dim); font-size: 0.75rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; }
 
-  /* ── ELEGANT VISUAL INSTRUCTIONS ── */
-  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Barlow Condensed'; }
+  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Barlow Condensed'; }
   .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 380px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
   
   .carousel-row.beginner-row { height: 160px; }
-  .card-wrapper { flex: 0 0 75vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
+  .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
   @media (min-width: 768px) { .card-wrapper { flex: 0 0 40vw; } }
   
   .item-card { width: 100%; height: 100%; background: var(--grey); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid var(--border); transition: border-color 0.4s ease; }
-  .item-card:hover { border-color: #444; }
+  .item-card:hover { border-color: #555; }
   
-  /* Beginner Card with subtle UA hint */
   .beginner-card { background: transparent; padding: 2rem; align-items: flex-start; justify-content: center; gap: 1rem; text-align: left; }
-  .ua-indicator { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.55rem; color: var(--dim); border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 50px; position: absolute; top: 1.2rem; right: 1.2rem; letter-spacing: 0.1em;}
+  .ua-indicator { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.7rem; color: var(--dim); background: rgba(255,255,255,0.05); padding: 0.3rem 0.6rem; border-radius: 4px; position: absolute; top: 1.2rem; right: 1.2rem; letter-spacing: 0.1em; pointer-events: none;}
   .beginner-icon { font-size: 1.5rem; flex-shrink: 0; opacity: 0.8; margin-bottom: 0.5rem; }
   
-  /* Looks Card Designer Circle */
-  .look-card .bg-img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.5; transition: opacity 0.5s ease, transform 0.8s ease; }
+  .look-card .bg-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; position: absolute; inset: 0; opacity: 0.5; transition: opacity 0.5s ease, transform 0.8s ease; }
   .look-card:hover .bg-img { opacity: 0.8; transform: scale(1.03); }
   
   .designer-circle { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; position: absolute; top: 1.2rem; right: 1.2rem; border: 1px solid rgba(255,255,255,0.15); z-index: 3; background: #000; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
   .designer-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); padding: 3rem 1.5rem 1.5rem; font-family: 'Barlow Condensed'; font-weight: 500; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; z-index: 2;}
+  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); padding: 3rem 1.5rem 1.5rem; font-family: 'Barlow Condensed'; font-weight: 500; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; z-index: 2;}
 
   /* ── SURPRISE ME ── */
   .surprise-block { padding: 0 1.8rem; margin-bottom: 5rem; display: flex; flex-direction: column; align-items: center;}
-  .surprise-btn { display: inline-flex; align-items: center; justify-content: center; padding: 1.2rem 3rem; background: transparent; color: var(--white); border: 1px solid var(--border); border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s ease; }
+  .surprise-btn { display: inline-flex; align-items: center; justify-content: center; padding: 1.2rem 3rem; background: transparent; color: var(--white); border: 1px solid var(--border); border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s ease; }
   .surprise-btn:hover { background: var(--white); color: var(--black); }
-  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.7rem; margin-top: 1.5rem; font-family: 'Inter', sans-serif; font-weight: 300; }
+  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.8rem; margin-top: 1.5rem; font-family: 'Inter', sans-serif; font-weight: 300; }
 
   /* ── MODAL ── */
-  .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.5s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+  .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; overflow-x: hidden; }
   .modal.open { top: 0; }
   .modal-nav { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: linear-gradient(to bottom, rgba(3,3,3,0.95) 0%, transparent 100%); z-index: 10; pointer-events: none; }
   .modal-nav > * { pointer-events: auto; }
-  .modal-back { cursor: pointer; color: var(--white); text-transform: uppercase; font-family: 'Barlow Condensed'; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-  .modal-content-box { padding: 2rem 1.5rem 6rem; max-width: 600px; margin: 0 auto; }
+  .modal-back { cursor: pointer; color: var(--white); text-transform: uppercase; font-family: 'Barlow Condensed'; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); padding: 0.5rem;}
+  .modal-content-box { padding: 1rem 1.5rem 6rem; max-width: 600px; margin: 0 auto; }
 
   /* Modal Typography & Containers */
   .context-box { border-left: 1px solid var(--border); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2rem 0; }
-  .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--dim); letter-spacing: 0.15em; font-size: 0.65rem; display: block; margin-bottom: 0.8rem; font-weight: 500;}
-  .context-text { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 300; color: #aaa; line-height: 1.6; }
-  .the-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.5; color: var(--white); margin-top: 2rem; }
+  .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--dim); letter-spacing: 0.15em; font-size: 0.75rem; display: block; margin-bottom: 0.8rem; font-weight: 500;}
+  .context-text { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 300; color: #bbb; line-height: 1.6; }
+  .the-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; line-height: 1.5; color: var(--white); margin-top: 2rem; }
 
-  .look-image-area { width: 100%; height: 60vh; overflow: hidden; background: var(--grey); cursor: zoom-in; }
-  .look-image-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .look-image-area { width: 100%; min-height: 300px; height: 45vh; max-height: 500px; overflow: hidden; background: var(--grey); cursor: zoom-in; }
+  .look-image-area img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   .look-thumbnails { display: flex; gap: 2px; margin-top: 2px; height: 80px; }
   .look-thumb { flex: 1; background: var(--grey); opacity: 0.3; overflow: hidden; cursor: pointer; transition: opacity 0.3s ease; }
-  .look-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .look-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   .look-thumb:hover { opacity: 0.6; }
   .look-thumb.active { opacity: 1; }
 
   .share-container { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
-  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.2rem 2rem; background: var(--white); color: var(--black); border: none; border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: opacity 0.3s; width: 100%; max-width: 300px; }
+  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.2rem 2rem; background: var(--white); color: var(--black); border: none; border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; width: 100%; max-width: 300px; }
   .share-to-table-btn:hover { opacity: 0.8; }
   .share-to-table-btn.sent { background: transparent; border: 1px solid var(--border); color: var(--dim); cursor: default; }
-  .share-explainer { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.7rem; color: var(--dim); line-height: 1.5; margin-top: 1rem; display: block; }
+  .share-explainer { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.8rem; color: var(--dim); line-height: 1.5; margin-top: 1rem; display: block; }
 
   /* ── FOOTER ── */
   .site-footer { padding: 8rem 1.8rem 10rem; text-align: center; background: var(--black); }
@@ -205,7 +214,7 @@
     <p class="fs-body">You've been talking about what clothes mean.<br>Now make something that means something.</p>
     <p class="fs-sub" id="fs-sub-text">Your outfit, your rules. No right answers.</p>
     <div style="margin-top: 3rem;">
-      <a href="https://insight-speaking-club.github.io/create-your-outfit/" class="fs-cta" id="fs-cta-text">Enter the closet</a>
+      <a href="https://insight-speaking-club.github.io/create-your-outfit/" target="_blank" class="fs-cta" id="fs-cta-text">Enter the closet</a>
     </div>
   </div>
 </div>
@@ -237,6 +246,7 @@
   <span class="club-label">Queer Fashion Speaking Club</span>
   <h1 class="cover-title" id="secret-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
+  <p class="hero-instructions">Tap a card. <span>Share</span> with the table. Discuss.</p>
 </header>
 
 <section id="closet-section">
@@ -351,7 +361,6 @@ let finalStageActive = false;
 let titleTaps = 0, titleTimer = null;
 let closeTaps = 0, closeTimer = null;
 
-// The "Go Back" logic (10 taps on "The last stage" eyebrow)
 document.getElementById('fs-eyebrow-trigger').addEventListener('click', () => {
   closeTaps++;
   clearTimeout(closeTimer);
@@ -391,41 +400,11 @@ function surpriseMe() {
 
 // ── DATA (Bilingual) ──
 const beginners = [
-  { 
-    emoji: "✦", 
-    text_en: "What is your absolute favorite piece of clothing and why?", 
-    text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", 
-    vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], 
-    structures: [{ en: "My favorite piece of clothing is...", ua: "Моя улюблена річ з одягу — це..." }, { en: "I love it because...", ua: "Я люблю її, тому що..." }] 
-  },
-  { 
-    emoji: "✦", 
-    text_en: "Do you dress more for comfort or for style?", 
-    text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", 
-    vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], 
-    structures: [{ en: "I usually prefer to wear...", ua: "Зазвичай я віддаю перевагу..." }, { en: "For me, comfort is more important because...", ua: "Для мене комфорт важливіший, тому що..." }] 
-  },
-  { 
-    emoji: "✦", 
-    text_en: "How has your personal style changed since you were a teenager?", 
-    text_ua: "Як змінився ваш особистий стиль з підліткових років?", 
-    vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }, { en: "To experiment", ua: "Експериментувати" }], 
-    structures: [{ en: "When I was a teenager, I used to wear...", ua: "Коли я був/ла підлітком, я носив/ла..." }, { en: "Now, my style is more...", ua: "Зараз мій стиль більш..." }] 
-  },
-  { 
-    emoji: "✦", 
-    text_en: "Do you like shopping for clothes? Why or why not?", 
-    text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", 
-    vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Waste of time", ua: "Марна трата часу" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], 
-    structures: [{ en: "I enjoy shopping because...", ua: "Мені подобається шопінг, тому що..." }, { en: "I prefer buying clothes online because...", ua: "Я віддаю перевагу купівлі одягу онлайн, тому що..." }] 
-  },
-  { 
-    emoji: "✦", 
-    text_en: "What colors do you wear the most and why?", 
-    text_ua: "Які кольори ви носите найчастіше і чому?", 
-    vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }, { en: "To match", ua: "Пасувати / Поєднуватися" }], 
-    structures: [{ en: "My wardrobe is mostly...", ua: "Мій гардероб складається переважно з..." }, { en: "I feel confident when I wear...", ua: "Я відчуваю себе впевнено, коли ношу..." }] 
-  }
+  { emoji: "✦", text_en: "What is your absolute favorite piece of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], structures: [{ en: "My favorite piece of clothing is...", ua: "Моя улюблена річ з одягу — це..." }, { en: "I love it because...", ua: "Я люблю її, тому що..." }] },
+  { emoji: "✦", text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], structures: [{ en: "I usually prefer to wear...", ua: "Зазвичай я віддаю перевагу..." }, { en: "For me, comfort is more important because...", ua: "Для мене комфорт важливіший, тому що..." }] },
+  { emoji: "✦", text_en: "How has your personal style changed since you were a teenager?", text_ua: "Як змінився ваш особистий стиль з підліткових років?", vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }, { en: "To experiment", ua: "Експериментувати" }], structures: [{ en: "When I was a teenager, I used to wear...", ua: "Коли я був/ла підлітком, я носив/ла..." }, { en: "Now, my style is more...", ua: "Зараз мій стиль більш..." }] },
+  { emoji: "✦", text_en: "Do you like shopping for clothes? Why or why not?", text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Waste of time", ua: "Марна трата часу" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], structures: [{ en: "I enjoy shopping because...", ua: "Мені подобається шопінг, тому що..." }, { en: "I prefer buying clothes online because...", ua: "Я віддаю перевагу купівлі одягу онлайн, тому що..." }] },
+  { emoji: "✦", text_en: "What colors do you wear the most and why?", text_ua: "Які кольори ви носите найчастіше і чому?", vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }, { en: "To match", ua: "Пасувати / Поєднуватися" }], structures: [{ en: "My wardrobe is mostly...", ua: "Мій гардероб складається переважно з..." }, { en: "I feel confident when I wear...", ua: "Я відчуваю себе впевнено, коли ношу..." }] }
 ];
 
 const looks = [
@@ -501,11 +480,26 @@ populateRow('row-looks', looks, 'look');
 populateRow('row-quotes', quotes, 'quote');
 populateRow('row-provocations', provocations, 'provocation');
 
-// ── MODAL LOGIC ──
+// ── ANDROID BACK BUTTON SUPPORT & MODAL LOGIC ──
+window.addEventListener('popstate', (e) => {
+  if(document.getElementById('item-modal').classList.contains('open')) {
+    closeModal(true);
+  }
+});
+
 function openModal(type, index) {
   currentModalData = { type, index };
   renderModalContent(type, index);
   document.getElementById('item-modal').classList.add('open');
+  history.pushState({ modalOpen: true }, "");
+}
+
+function closeModal(skipHistory = false) {
+  document.getElementById('item-modal').classList.remove('open');
+  currentModalData = null;
+  if(!skipHistory && history.state?.modalOpen) {
+    history.back();
+  }
 }
 
 function renderModalContent(type, index) {
@@ -525,7 +519,6 @@ function renderModalContent(type, index) {
       `<div class="look-thumb ${i===0?'active':''}" onclick="switchImage('${img}', this)"><img src="${img}" onerror="this.style.display='none'"></div>`
     ).join('');
     
-    // Attach trigger ID if it's RuPaul
     const ruAttr = (item.designer === "RuPaul") ? `id="secret-rupaul-trigger" style="cursor:pointer;"` : '';
 
     c.innerHTML = `
@@ -547,7 +540,6 @@ function renderModalContent(type, index) {
     
     document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
-    // Attach 10-tap listener for RuPaul inside modal
     if (item.designer === "RuPaul") {
       const ruEl = document.getElementById('secret-rupaul-trigger');
       ruEl.addEventListener('click', () => {
@@ -611,7 +603,6 @@ function renderModalContent(type, index) {
       document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
   } else {
-    // Provocations (Bug Fixed: removed undefined "prompt" elements)
     const item = provocations[index];
     promptEN = item.text_en; promptUA = item.text_ua;
     
@@ -635,11 +626,6 @@ function switchImage(src, thumbEl) {
   document.getElementById('m-img').src = src;
   document.querySelectorAll('.look-thumb').forEach(t => t.classList.remove('active'));
   thumbEl.classList.add('active');
-}
-
-function closeModal() {
-  document.getElementById('item-modal').classList.remove('open');
-  currentModalData = null;
 }
 
 // ── FIREBASE & SYNC ──
@@ -685,10 +671,22 @@ function shareWithEveryone(textEN, textUA, type, index, btnEl) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ question_en: textEN, question_ua: textUA, type, index, ts: Date.now() })
   });
+  
+  const originalText = btnEl.textContent;
   btnEl.textContent = isUA ? '✓ Надіслано' : '✓ Sent';
   btnEl.classList.add('sent');
   btnEl.disabled = true;
+  
   showNotification({ en: textEN, ua: textUA }, type, index);
+
+  // Reset the share button after 5 seconds
+  setTimeout(() => {
+    if (btnEl) {
+      btnEl.textContent = originalText;
+      btnEl.classList.remove('sent');
+      btnEl.disabled = false;
+    }
+  }, 5000);
 }
 
 function showNotification(questionObj, type, index) {
