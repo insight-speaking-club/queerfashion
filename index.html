@@ -6,208 +6,215 @@
 <title>Queer Fashion Speaking Club — VOGUE?</title>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --black: #060606; --white: #f0ede8; --grey: #1a1a1a; --dim: #666; --accent: #c2a882; }
-  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  
+  /* ── REFINED COLOR PALETTE ── */
+  :root { 
+    --black: #030303; 
+    --white: #f4f4f4; 
+    --grey: #0a0a0a; 
+    --dim: #777; 
+    --accent: #e3ded8; /* Sophisticated pale bone/off-white */
+    --border: #1f1f1f;
+  }
+  
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
   /* ── LANGUAGE TOGGLE ── */
   .lang-toggle {
     background: transparent;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     color: var(--dim);
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
-    padding: 0.3rem 0.8rem;
-    border-radius: 2px;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
   }
-  .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
-  .lang-toggle.active { background: var(--accent); color: var(--black); border-color: var(--accent); font-style: normal; }
+  .lang-toggle:hover { border-color: var(--white); color: var(--white); }
+  .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
   /* ── NOTIFICATION MODAL (CENTERED) ── */
   #notif-backdrop {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(3px);
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px);
   }
   #notif-backdrop.show { display: block; }
   
   #notif-banner { 
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 9999; 
-    width: 90%; max-width: 400px; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1); 
+    width: 90%; max-width: 400px; opacity: 0; pointer-events: none; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
   }
   #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   
   #notif-inner { 
-    background: #1a1612; border: 1px solid var(--accent); border-radius: 8px; padding: 1.5rem; 
-    display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
+    background: var(--grey); border: 1px solid var(--border); border-radius: 0px; padding: 2rem; 
+    display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 30px 60px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
   }
-  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-  #notif-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;}
-  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: var(--white); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: 0.5rem 0; }
-  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.5rem; cursor: pointer; padding: 0.2rem; line-height: 1;}
-  .tap-hint { background: var(--accent); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 1rem; border-radius: 4px; margin-top: 0.5rem; display: inline-block; }
+  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+  #notif-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: flex; align-items: center; gap: 0.5rem;}
+  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--white); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin: 1rem 0; }
+  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.2rem; cursor: pointer; transition: color 0.2s;}
+  #notif-dismiss:hover { color: var(--white); }
+  .tap-hint { background: transparent; color: var(--dim); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid var(--border); padding-bottom: 2px;}
 
   /* ── LIGHTBOX ── */
-  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
+  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
   #lightbox.show { display: flex; }
   #lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-  #lightbox-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; color: var(--dim); font-size: 1.4rem; cursor: pointer; z-index: 1; }
 
   /* ── FINAL STAGE OVERLAY ── */
-  #final-stage { display: none; position: fixed; inset: 0; background: var(--black); z-index: 500; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2.5rem 2rem; cursor: default;}
+  #final-stage { display: none; position: fixed; inset: 0; background: var(--black); z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2.5rem 2rem; cursor: default;}
   #final-stage.show { display: flex; }
-  #final-stage-inner { max-width: 360px; pointer-events: none; }
-  .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2.5rem; }
-  .fs-heading { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.1rem, 5vw, 1.5rem); color: var(--accent); line-height: 1.4; margin-bottom: 0.6rem; }
-  .fs-divider { width: 1px; height: 40px; background: #2e2a26; margin: 1.8rem auto; }
-  .fs-body { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.4rem, 6vw, 2rem); color: var(--white); line-height: 1.35; margin-bottom: 0.5rem; }
-  .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--dim); line-height: 1.6; margin-bottom: 3rem; font-weight: 300; }
-  .fs-cta { display: inline-block; padding: 1rem 2rem; background: var(--white); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border-radius: 2px; transition: opacity 0.2s; pointer-events: auto; }
-  .fs-cta:hover { opacity: 0.85; }
-
-  /* ── SECRET HOST BUTTON ── */
-  #secret-close-zone { position: fixed; bottom: 0; right: 0; width: 60px; height: 60px; z-index: 9998; cursor: default; -webkit-tap-highlight-color: transparent; }
+  #final-stage-inner { max-width: 400px; pointer-events: none; }
+  .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 3rem; cursor: pointer; pointer-events: auto; }
+  .fs-heading { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.2rem, 5vw, 1.8rem); color: var(--white); line-height: 1.4; margin-bottom: 0.8rem; }
+  .fs-divider { width: 1px; height: 50px; background: var(--border); margin: 2rem auto; }
+  .fs-body { font-family: 'Inter', sans-serif; font-weight: 300; font-size: clamp(0.9rem, 4vw, 1rem); color: var(--dim); line-height: 1.6; margin-bottom: 0.5rem; }
+  .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #555; line-height: 1.6; margin-bottom: 4rem; font-weight: 300; }
+  .fs-cta { display: inline-block; padding: 1.2rem 2.5rem; background: var(--white); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; border-radius: 50px; transition: opacity 0.3s; pointer-events: auto; }
+  .fs-cta:hover { opacity: 0.8; }
 
   /* ── COMPACT HERO SECTION ── */
-  #hero-header { padding: 4rem 1.8rem 2rem; background: #0a0a0a; text-align: center; border-bottom: 1px solid #1a1a1a;}
-  .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
+  #hero-header { padding: 6rem 1.8rem 4rem; background: var(--black); text-align: center; }
+  .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
   
   .cover-title { 
     font-family: 'Bodoni Moda', 'Playfair Display', serif; 
-    font-weight: 600; 
-    font-size: clamp(4.5rem, 15vw, 7rem); 
+    font-weight: 400; 
+    font-size: clamp(4rem, 18vw, 8rem); 
     text-transform: uppercase; 
     line-height: 0.9; 
-    margin-bottom: 1rem; 
+    margin-bottom: 1.5rem; 
     letter-spacing: -0.02em; 
   }
   
-  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--accent); }
+  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--dim); }
 
   /* ── SCROLL INDICATOR ── */
   #scroll-ind {
     position: fixed;
-    bottom: 1.5rem;
-    left: 1.5rem;
+    bottom: 2rem;
+    left: 2rem;
     z-index: 50;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.5rem;
     color: var(--dim);
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     pointer-events: none;
   }
-  #scroll-ind svg {
-    width: 14px;
-    height: 14px;
-    fill: none;
-    stroke: var(--dim);
-    stroke-width: 2;
-    animation: bounce 2s infinite;
+  #scroll-ind .line {
+    width: 1px;
+    height: 30px;
+    background: var(--dim);
+    animation: drift 2s infinite ease-in-out;
   }
-  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(8px); opacity: 1; } }
 
   /* ── MAIN CONTENT ── */
-  #closet-section { padding: 3rem 0 0 0; background: #0a0a0a; }
-  .row-container { margin-bottom: 5rem; }
-  .row-header { padding: 0 1.8rem; margin-bottom: 1rem; }
-  .row-header h3 { font-family: 'Barlow Condensed'; font-size: 1.8rem; text-transform: uppercase; }
-  .row-header span { color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; }
+  #closet-section { padding: 2rem 0 0 0; background: var(--black); }
+  .row-container { margin-bottom: 6rem; }
+  .row-header { padding: 0 1.8rem; margin-bottom: 1.5rem; }
+  .row-header h3 { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.2; }
+  .row-header span { color: var(--dim); font-size: 0.65rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; }
 
-  /* ── VISUAL INSTRUCTIONS ── */
-  .swipe-hint { display: flex; align-items: center; gap: 0.6rem; padding: 0 1.8rem; margin-bottom: 1.2rem; }
-  .hint-pill { display: flex; align-items: center; gap: 0.4rem; background: #141414; border: 1px solid #2a2a2a; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
-  .hint-icon { font-size: 0.85rem; }
-  .anim-swipe { animation: swipeAnim 2s infinite ease-in-out; display: inline-block; }
-  .anim-tap { animation: tapAnim 2s infinite ease-in-out; display: inline-block; }
-  @keyframes swipeAnim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
-  @keyframes tapAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.85); } }
+  /* ── ELEGANT VISUAL INSTRUCTIONS ── */
+  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Barlow Condensed'; }
+  .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
 
-  .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 320px; align-items: center; padding-left: 1.8rem; }
+  .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 380px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
   
-  .carousel-row.beginner-row { height: 180px; }
-  .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
+  .carousel-row.beginner-row { height: 160px; }
+  .card-wrapper { flex: 0 0 75vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
+  @media (min-width: 768px) { .card-wrapper { flex: 0 0 40vw; } }
   
-  .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid #1a1a1a; transition: border-color 0.2s; }
-  .item-card:hover { border-color: #333; }
+  .item-card { width: 100%; height: 100%; background: var(--grey); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid var(--border); transition: border-color 0.4s ease; }
+  .item-card:hover { border-color: #444; }
   
-  .beginner-card { background: #0d0d0d; border: 1px dashed #444; border-radius: 8px; flex-direction: row; text-align: left; padding: 1.2rem; gap: 1rem; justify-content: flex-start; }
-  .beginner-card:hover { border-color: var(--accent); background: #111; }
-  .beginner-icon { font-size: 2.5rem; flex-shrink: 0; }
+  /* Beginner Card with subtle UA hint */
+  .beginner-card { background: transparent; padding: 2rem; align-items: flex-start; justify-content: center; gap: 1rem; text-align: left; }
+  .ua-indicator { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.55rem; color: var(--dim); border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 50px; position: absolute; top: 1.2rem; right: 1.2rem; letter-spacing: 0.1em;}
+  .beginner-icon { font-size: 1.5rem; flex-shrink: 0; opacity: 0.8; margin-bottom: 0.5rem; }
+  
+  /* Looks Card Designer Circle */
+  .look-card .bg-img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.5; transition: opacity 0.5s ease, transform 0.8s ease; }
+  .look-card:hover .bg-img { opacity: 0.8; transform: scale(1.03); }
+  
+  .designer-circle { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; position: absolute; top: 1.2rem; right: 1.2rem; border: 1px solid rgba(255,255,255,0.15); z-index: 3; background: #000; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+  .designer-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; text-align: left; }
+  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); padding: 3rem 1.5rem 1.5rem; font-family: 'Barlow Condensed'; font-weight: 500; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; z-index: 2;}
 
   /* ── SURPRISE ME ── */
-  .surprise-block { padding: 0 1.8rem; margin-bottom: 3rem; }
-  .surprise-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.15rem 1.5rem; background: var(--accent); color: var(--black); border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; border: none; }
-  .surprise-btn:hover { opacity: 0.9; }
-  .surprise-btn .dice { font-size: 1.3rem; transition: transform 0.3s; }
-  .surprise-btn:active .dice { transform: rotate(25deg); }
-  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.75rem; margin-top: 1.2rem; font-style: italic; }
+  .surprise-block { padding: 0 1.8rem; margin-bottom: 5rem; display: flex; flex-direction: column; align-items: center;}
+  .surprise-btn { display: inline-flex; align-items: center; justify-content: center; padding: 1.2rem 3rem; background: transparent; color: var(--white); border: 1px solid var(--border); border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s ease; }
+  .surprise-btn:hover { background: var(--white); color: var(--black); }
+  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.7rem; margin-top: 1.5rem; font-family: 'Inter', sans-serif; font-weight: 300; }
 
   /* ── MODAL ── */
-  .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s cubic-bezier(0.32, 0.72, 0, 1); overflow-y: auto; }
+  .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.5s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
   .modal.open { top: 0; }
-  .modal-nav { padding: 1.5rem; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(6,6,6,0.9); backdrop-filter: blur(5px); z-index: 10; }
-  .modal-back { cursor: pointer; color: var(--dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; }
-  .modal-content-box { padding: 2rem 1.5rem 6rem; }
+  .modal-nav { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: linear-gradient(to bottom, rgba(3,3,3,0.95) 0%, transparent 100%); z-index: 10; pointer-events: none; }
+  .modal-nav > * { pointer-events: auto; }
+  .modal-back { cursor: pointer; color: var(--white); text-transform: uppercase; font-family: 'Barlow Condensed'; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+  .modal-content-box { padding: 2rem 1.5rem 6rem; max-width: 600px; margin: 0 auto; }
 
   /* Modal Typography & Containers */
-  .context-box { background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.2rem; margin-bottom: 1.5rem; }
-  .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--accent); letter-spacing: 0.1em; font-size: 0.75rem; display: block; margin-bottom: 0.6rem; }
-  .context-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #aaa; line-height: 1.5; }
-  .the-question { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1.15rem; line-height: 1.5; color: var(--white); margin-bottom: 2rem; }
+  .context-box { border-left: 1px solid var(--border); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2rem 0; }
+  .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--dim); letter-spacing: 0.15em; font-size: 0.65rem; display: block; margin-bottom: 0.8rem; font-weight: 500;}
+  .context-text { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 300; color: #aaa; line-height: 1.6; }
+  .the-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.5; color: var(--white); margin-top: 2rem; }
 
-  .look-image-area { width: 100%; height: 72vw; max-height: 420px; overflow: hidden; background: #111; cursor: zoom-in; }
+  .look-image-area { width: 100%; height: 60vh; overflow: hidden; background: var(--grey); cursor: zoom-in; }
   .look-image-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .look-thumbnails { display: flex; gap: 2px; margin-top: 2px; }
-  .look-thumb { flex: 1; height: 60px; background: #141414; opacity: 0.4; overflow: hidden; cursor: pointer; }
+  .look-thumbnails { display: flex; gap: 2px; margin-top: 2px; height: 80px; }
+  .look-thumb { flex: 1; background: var(--grey); opacity: 0.3; overflow: hidden; cursor: pointer; transition: opacity 0.3s ease; }
   .look-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .look-thumb.active { opacity: 1; border-bottom: 2px solid var(--white); }
+  .look-thumb:hover { opacity: 0.6; }
+  .look-thumb.active { opacity: 1; }
 
-  .share-container { margin-top: 3rem; background: #0f0f0f; border: 1px solid #222; padding: 1.2rem; border-radius: 6px; text-align: center; }
-  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 1rem; background: var(--accent); color: #1a1612; border: none; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.15s; width: 100%; }
-  .share-to-table-btn:hover { opacity: 0.85; }
-  .share-to-table-btn.sent { background: #2e2a26; color: var(--dim); cursor: default; }
-  .share-explainer { font-size: 0.65rem; color: var(--dim); line-height: 1.5; margin-top: 0.8rem; display: block; }
+  .share-container { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.2rem 2rem; background: var(--white); color: var(--black); border: none; border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: opacity 0.3s; width: 100%; max-width: 300px; }
+  .share-to-table-btn:hover { opacity: 0.8; }
+  .share-to-table-btn.sent { background: transparent; border: 1px solid var(--border); color: var(--dim); cursor: default; }
+  .share-explainer { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.7rem; color: var(--dim); line-height: 1.5; margin-top: 1rem; display: block; }
 
   /* ── FOOTER ── */
-  .site-footer { padding: 6rem 1.8rem 8rem; text-align: center; background: var(--black); border-top: 1px solid #1a1a1a; }
-  .footer-text { font-family: 'Bodoni Moda', 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 2.5rem); color: var(--accent); line-height: 1.2; }
+  .site-footer { padding: 8rem 1.8rem 10rem; text-align: center; background: var(--black); }
+  .footer-text { font-family: 'Bodoni Moda', serif; font-weight: 400; font-style: italic; font-size: clamp(1.8rem, 8vw, 3rem); color: var(--white); line-height: 1.2; }
 </style>
 </head>
 <body>
 
-<!-- ── FINAL STAGE OVERLAY ── -->
 <div id="final-stage">
   <div id="final-stage-inner">
-    <p class="fs-eyebrow">The last stage</p>
+    <p class="fs-eyebrow" id="fs-eyebrow-trigger">The last stage</p>
     <p class="fs-heading">Thank you for sharing your thoughts.</p>
     <div class="fs-divider"></div>
     <p class="fs-body">You've been talking about what clothes mean.<br>Now make something that means something.</p>
     <p class="fs-sub" id="fs-sub-text">Your outfit, your rules. No right answers.</p>
-    <div style="margin-top: 2.5rem;">
-      <a href="https://insight-speaking-club.github.io/create-your-outfit/" class="fs-cta" id="fs-cta-text">Enter the closet →</a>
+    <div style="margin-top: 3rem;">
+      <a href="https://insight-speaking-club.github.io/create-your-outfit/" class="fs-cta" id="fs-cta-text">Enter the closet</a>
     </div>
   </div>
 </div>
 
-<!-- ── NOTIFICATION MODAL ── -->
 <div id="notif-backdrop" onclick="dismissNotif(event)"></div>
 <div id="notif-banner">
   <div id="notif-inner" onclick="openSharedModal()">
     <div id="notif-header">
-      <div id="notif-label"><span>✦</span> Brought to the table</div>
+      <div id="notif-label">Brought to the table</div>
       <button id="notif-dismiss" onclick="dismissNotif(event)">✕</button>
     </div>
     <div id="notif-text"></div>
@@ -218,17 +225,12 @@
 </div>
 
 <div id="lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<!-- ── SECRET CLOSE ZONE ── -->
-<div id="secret-close-zone"></div>
-
-<!-- ── SCROLL INDICATOR ── -->
 <div id="scroll-ind">
   <span>Scroll</span>
-  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  <div class="line"></div>
 </div>
 
 <header id="hero-header">
@@ -239,52 +241,44 @@
 
 <section id="closet-section">
   
-  <!-- ── SURPRISE ME ── -->
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> I don't wanna choose — pick for me</button>
+    <button class="surprise-btn" onclick="surpriseMe()">Pick for me</button>
     <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
-  <!-- ── BEGINNERS SECTION ── -->
   <div class="row-container">
-    <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
-    <div class="swipe-hint">
-      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
-      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
+    <div class="row-header"><span>A1-A2 Level</span><h3>The Essentials.</h3></div>
+    <div class="elegant-scroll-hint">
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
-  <!-- ── EXISTING SECTIONS ── -->
   <div class="row-container">
-    <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
-    <div class="swipe-hint">
-      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
-      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
+    <div class="row-header"><span>The Icons</span><h3>A Look.</h3></div>
+    <div class="elegant-scroll-hint">
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row" id="row-looks"></div>
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
-    <div class="swipe-hint">
-      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
-      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
+    <div class="row-header"><span>Words that land</span><h3>A Quote.</h3></div>
+    <div class="elegant-scroll-hint">
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
   
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
-    <div class="swipe-hint">
-      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
-      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
+    <div class="row-header"><span>No cushioning</span><h3>A Provocation.</h3></div>
+    <div class="elegant-scroll-hint">
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer class="site-footer">
   <p class="footer-text">The script is dead.<br>Dress accordingly.</p>
 </footer>
@@ -292,7 +286,7 @@
 <div class="modal" id="item-modal">
   <div class="modal-nav">
     <div class="modal-back" onclick="closeModal()">
-      ↓ Back
+      <span>✕</span> Close
     </div>
     <button class="lang-toggle" id="modal-lang-btn" onclick="toggleLang(event)">Перекласти</button>
   </div>
@@ -313,11 +307,10 @@ function toggleLang(e) {
     btn.textContent = isUA ? 'Translate' : 'Перекласти';
   });
   document.getElementById('fs-sub-text').textContent = isUA ? 'Твій образ, твої правила. Правильних відповідей немає.' : 'Your outfit, your rules. No right answers.';
-  document.getElementById('fs-cta-text').textContent = isUA ? 'Увійти до гардеробу →' : 'Enter the closet →';
+  document.getElementById('fs-cta-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
   document.querySelector('.fs-heading').textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
   document.querySelector('.fs-body').innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
   
-  // Translate the footer phrase as well
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
@@ -353,23 +346,13 @@ function playNotifSound() {
   sound.play().catch(e => console.log("Audio play failed:", e));
 }
 
-// ── SECRET HOST BUTTON (10 TAPS) ──
+// ── SECRET HOST BUTTON LOGIC ──
+let finalStageActive = false;
 let titleTaps = 0, titleTimer = null;
 let closeTaps = 0, closeTimer = null;
-let finalStageActive = false;
 
-document.getElementById('secret-title').addEventListener('click', () => {
-  titleTaps++;
-  clearTimeout(titleTimer);
-  if (titleTaps >= 10) {
-    titleTaps = 0;
-    if (!finalStageActive) pushFinalStage(true);
-  } else {
-    titleTimer = setTimeout(() => { titleTaps = 0; }, 1500);
-  }
-});
-
-document.getElementById('secret-close-zone').addEventListener('click', () => {
+// The "Go Back" logic (10 taps on "The last stage" eyebrow)
+document.getElementById('fs-eyebrow-trigger').addEventListener('click', () => {
   closeTaps++;
   clearTimeout(closeTimer);
   if (closeTaps >= 10) {
@@ -377,19 +360,6 @@ document.getElementById('secret-close-zone').addEventListener('click', () => {
     if (finalStageActive) pushFinalStage(false);
   } else {
     closeTimer = setTimeout(() => { closeTaps = 0; }, 1500);
-  }
-});
-
-let stageTaps = 0, stageTimer = null;
-document.getElementById('final-stage').addEventListener('click', (e) => {
-  if (e.target.tagName === 'A') return; 
-  stageTaps++;
-  clearTimeout(stageTimer);
-  if (stageTaps >= 10) {
-    stageTaps = 0;
-    if (finalStageActive) pushFinalStage(false);
-  } else {
-    stageTimer = setTimeout(() => { stageTaps = 0; }, 1500);
   }
 });
 
@@ -422,35 +392,35 @@ function surpriseMe() {
 // ── DATA (Bilingual) ──
 const beginners = [
   { 
-    emoji: "👗", 
+    emoji: "✦", 
     text_en: "What is your absolute favorite piece of clothing and why?", 
     text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", 
     vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], 
     structures: [{ en: "My favorite piece of clothing is...", ua: "Моя улюблена річ з одягу — це..." }, { en: "I love it because...", ua: "Я люблю її, тому що..." }] 
   },
   { 
-    emoji: "👟", 
+    emoji: "✦", 
     text_en: "Do you dress more for comfort or for style?", 
     text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", 
     vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], 
     structures: [{ en: "I usually prefer to wear...", ua: "Зазвичай я віддаю перевагу..." }, { en: "For me, comfort is more important because...", ua: "Для мене комфорт важливіший, тому що..." }] 
   },
   { 
-    emoji: "🧢", 
+    emoji: "✦", 
     text_en: "How has your personal style changed since you were a teenager?", 
     text_ua: "Як змінився ваш особистий стиль з підліткових років?", 
     vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }, { en: "To experiment", ua: "Експериментувати" }], 
     structures: [{ en: "When I was a teenager, I used to wear...", ua: "Коли я був/ла підлітком, я носив/ла..." }, { en: "Now, my style is more...", ua: "Зараз мій стиль більш..." }] 
   },
   { 
-    emoji: "🛍️", 
+    emoji: "✦", 
     text_en: "Do you like shopping for clothes? Why or why not?", 
     text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", 
     vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Waste of time", ua: "Марна трата часу" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], 
     structures: [{ en: "I enjoy shopping because...", ua: "Мені подобається шопінг, тому що..." }, { en: "I prefer buying clothes online because...", ua: "Я віддаю перевагу купівлі одягу онлайн, тому що..." }] 
   },
   { 
-    emoji: "👕", 
+    emoji: "✦", 
     text_en: "What colors do you wear the most and why?", 
     text_ua: "Які кольори ви носите найчастіше і чому?", 
     vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }, { en: "To match", ua: "Пасувати / Поєднуватися" }], 
@@ -499,12 +469,28 @@ function populateRow(containerId, data, type) {
     wrapper.className = 'card-wrapper';
     
     if (type === 'look') {
-      wrapper.innerHTML = `<div class="item-card" onclick="openModal('${type}', ${index})"><img src="${item.images[0]}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; opacity:0.6;"><div class="look-label">${item.name}</div></div>`;
+      const slug = item.designer.toLowerCase().replace(/\s+/g, '-');
+      wrapper.innerHTML = `
+        <div class="item-card look-card" onclick="openModal('${type}', ${index})">
+          <img class="bg-img" src="${item.images[0]}" onerror="this.style.display='none'">
+          <div class="designer-circle">
+            <img src="${slug}.jpg" onerror="this.style.display='none'">
+          </div>
+          <div class="look-label">${item.name}</div>
+        </div>`;
     } else if (type === 'beginner') {
-      wrapper.innerHTML = `<div class="item-card beginner-card" onclick="openModal('${type}', ${index})"><div class="beginner-icon">${item.emoji}</div><div style="font-family:'Inter', sans-serif; font-weight:500; font-size:1rem; line-height:1.4; z-index:2;">${item.text_en}</div></div>`;
+      wrapper.innerHTML = `
+        <div class="item-card beginner-card" onclick="openModal('${type}', ${index})">
+          <span class="ua-indicator">EN / UA</span>
+          <div class="beginner-icon">${item.emoji}</div>
+          <div style="font-family:'Inter', sans-serif; font-weight:400; font-size:1.1rem; line-height:1.5; z-index:2;">${item.text_en}</div>
+        </div>`;
     } else {
       const displayText = type === 'provocation' ? item.text_en : '"' + item.text_en + '"';
-      wrapper.innerHTML = `<div class="item-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div style="font-family:'Playfair Display'; font-style:italic; font-size:1.1rem; line-height:1.5; z-index:2;">${displayText}</div></div>`;
+      wrapper.innerHTML = `
+        <div class="item-card" style="padding:2rem" onclick="openModal('${type}', ${index})">
+          <div style="font-family:'Playfair Display'; font-style:italic; font-size:1.2rem; line-height:1.5; z-index:2;">${displayText}</div>
+        </div>`;
     }
     container.appendChild(wrapper);
   });
@@ -528,7 +514,7 @@ function renderModalContent(type, index) {
   
   const shareSection = `
     <div class="share-container">
-      <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
+      <button id="dynamic-share-btn" class="share-to-table-btn">${isUA ? 'Поділитися за столом' : 'Share with the table'}</button>
       <span class="share-explainer">${isUA ? 'Якщо ви натиснете цю кнопку, всі, хто користується сайтом, побачать спливаюче вікно з обраним вами питанням.' : 'If you click this button, everyone using the website will see a pop-up with the question you chose.'}</span>
     </div>`;
 
@@ -539,12 +525,15 @@ function renderModalContent(type, index) {
       `<div class="look-thumb ${i===0?'active':''}" onclick="switchImage('${img}', this)"><img src="${img}" onerror="this.style.display='none'"></div>`
     ).join('');
     
+    // Attach trigger ID if it's RuPaul
+    const ruAttr = (item.designer === "RuPaul") ? `id="secret-rupaul-trigger" style="cursor:pointer;"` : '';
+
     c.innerHTML = `
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
-        <p style="color:var(--dim); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;">${item.designer}</p>
-        <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; text-transform:uppercase; margin-bottom:1.5rem; line-height:1.1;">${item.name}</h2>
+        <p style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed';">${item.designer}</p>
+        <h2 ${ruAttr} style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
         
         <div class="context-box">
           <span class="context-label">${isUA ? 'Контекст' : 'The Context'}</span>
@@ -558,23 +547,39 @@ function renderModalContent(type, index) {
     
     document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
+    // Attach 10-tap listener for RuPaul inside modal
+    if (item.designer === "RuPaul") {
+      const ruEl = document.getElementById('secret-rupaul-trigger');
+      ruEl.addEventListener('click', () => {
+        titleTaps++;
+        clearTimeout(titleTimer);
+        if (titleTaps >= 10) {
+          titleTaps = 0;
+          closeModal();
+          if (!finalStageActive) pushFinalStage(true);
+        } else {
+          titleTimer = setTimeout(() => { titleTaps = 0; }, 1500);
+        }
+      });
+    }
+
   } else if (type === 'beginner') {
     const item = beginners[index];
-    const vocabList = item.vocab.map(v => `<li style="margin-bottom:0.5rem;"><strong>${v.en}</strong> &mdash; <span style="opacity:0.6">${v.ua}</span></li>`).join('');
+    const vocabList = item.vocab.map(v => `<li style="margin-bottom:0.8rem;"><strong>${v.en}</strong><br><span style="color:var(--dim); font-size:0.85rem;">${v.ua}</span></li>`).join('');
     
     const structuresList = item.structures.map(s => `
-      <li style="margin-bottom:0.8rem; line-height:1.3;">
+      <li style="margin-bottom:1rem; line-height:1.4;">
         <strong>${s.en}</strong><br>
-        <span style="opacity:0.6; font-size:0.85rem;">${s.ua}</span>
+        <span style="color:var(--dim); font-size:0.85rem;">${s.ua}</span>
       </li>
     `).join('');
 
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:2rem;">
-        <div style="font-size:3.5rem; margin-bottom:1rem; opacity:0.9;">${item.emoji}</div>
-        <h2 style="font-family:'Inter',sans-serif; font-weight:500; font-size:1.5rem; line-height:1.4; margin-bottom:2.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
+        <div style="font-size:2.5rem; margin-bottom:1.5rem; opacity:0.8;">${item.emoji}</div>
+        <h2 style="font-family:'Inter',sans-serif; font-weight:400; font-size:1.6rem; line-height:1.4; margin-bottom:3rem;">${isUA ? item.text_ua : item.text_en}</h2>
         
-        <div class="context-box" style="margin-bottom: 1.5rem;">
+        <div class="context-box" style="margin-bottom: 2rem;">
           <h4 class="context-label">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
           <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${vocabList}
@@ -583,7 +588,7 @@ function renderModalContent(type, index) {
 
         <div class="context-box">
           <h4 class="context-label">${isUA ? 'Як почати речення' : 'How to start'}</h4>
-          <ul style="list-style:disc; padding-left:1.2rem; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
+          <ul style="list-style:none; padding-left:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${structuresList}
           </ul>
         </div>
@@ -594,9 +599,9 @@ function renderModalContent(type, index) {
     promptEN = item.prompt_en; promptUA = item.prompt_ua;
     
     c.innerHTML = `
-      <div class="modal-content-box" style="padding-top:3rem;">
-        <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.8rem; line-height:1.3; margin-bottom:1rem;">"${isUA ? item.text_ua : item.text_en}"</h2>
-        <p style="color:var(--dim); margin-bottom: 2.5rem;">— ${item.author}</p>
+      <div class="modal-content-box" style="padding-top:4rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:2.2rem; line-height:1.3; margin-bottom:1.5rem;">"${isUA ? item.text_ua : item.text_en}"</h2>
+        <p style="color:var(--dim); font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.1em;">— ${item.author}</p>
         
         <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
         
@@ -606,19 +611,18 @@ function renderModalContent(type, index) {
       document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
   } else {
+    // Provocations (Bug Fixed: removed undefined "prompt" elements)
     const item = provocations[index];
     promptEN = item.text_en; promptUA = item.text_ua;
     
     c.innerHTML = `
-      <div class="modal-content-box" style="padding-top:3rem;">
-        <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:2rem; text-transform:uppercase; line-height:1.15; margin-bottom:1.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
+      <div class="modal-content-box" style="padding-top:4rem;">
+        <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2rem; line-height:1.2; margin-bottom:2.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
         
         <div class="context-box">
           <span class="context-label">${isUA ? 'Наприклад' : 'For Example'}</span>
           <p class="context-text">${isUA ? item.example_ua : item.example_en}</p>
         </div>
-        
-        <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
         
         ${shareSection}
       </div>`;
@@ -681,7 +685,7 @@ function shareWithEveryone(textEN, textUA, type, index, btnEl) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ question_en: textEN, question_ua: textUA, type, index, ts: Date.now() })
   });
-  btnEl.textContent = isUA ? '✓ Надіслано на стіл' : '✓ Sent to the table';
+  btnEl.textContent = isUA ? '✓ Надіслано' : '✓ Sent';
   btnEl.classList.add('sent');
   btnEl.disabled = true;
   showNotification({ en: textEN, ua: textUA }, type, index);
