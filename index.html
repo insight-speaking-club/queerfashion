@@ -9,23 +9,13 @@
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  /* ── ELEVATED EDITORIAL COLOR PALETTE ── */
-  :root { 
-    --black: #080808; 
-    --white: #EBE6DF; 
-    --grey: #121212; 
-    --border: #222222;
-    --dim: #7A7A7A; 
-    --accent: #CBA276; 
-  }
-  
+  :root { --black: #060606; --white: #f0ede8; --grey: #1a1a1a; --dim: #666; --accent: #c2a882; }
   body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
   /* ── LANGUAGE TOGGLE ── */
   .lang-toggle {
     background: transparent;
-    border: 1px solid var(--border);
+    border: 1px solid #333;
     color: var(--dim);
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -52,7 +42,7 @@
   #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   
   #notif-inner { 
-    background: var(--grey); border: 1px solid var(--accent); border-radius: 8px; padding: 1.5rem; 
+    background: #1a1612; border: 1px solid var(--accent); border-radius: 8px; padding: 1.5rem; 
     display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
   }
   #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
@@ -73,7 +63,7 @@
   #final-stage-inner { max-width: 360px; pointer-events: none; }
   .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2.5rem; }
   .fs-heading { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.1rem, 5vw, 1.5rem); color: var(--accent); line-height: 1.4; margin-bottom: 0.6rem; }
-  .fs-divider { width: 1px; height: 40px; background: var(--border); margin: 1.8rem auto; }
+  .fs-divider { width: 1px; height: 40px; background: #2e2a26; margin: 1.8rem auto; }
   .fs-body { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.4rem, 6vw, 2rem); color: var(--white); line-height: 1.35; margin-bottom: 0.5rem; }
   .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--dim); line-height: 1.6; margin-bottom: 3rem; font-weight: 300; }
   .fs-cta { display: inline-block; padding: 1rem 2rem; background: var(--white); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border-radius: 2px; transition: opacity 0.2s; pointer-events: auto; }
@@ -82,8 +72,8 @@
   /* ── SECRET HOST BUTTON ── */
   #secret-close-zone { position: fixed; bottom: 0; right: 0; width: 60px; height: 60px; z-index: 9998; cursor: default; -webkit-tap-highlight-color: transparent; }
 
-  /* ── COMPACT HERO SECTION (VOGUE STYLE) ── */
-  #hero-header { padding: 4rem 1.8rem 2rem; background: var(--black); text-align: center; border-bottom: 1px solid var(--border);}
+  /* ── COMPACT HERO SECTION ── */
+  #hero-header { padding: 4rem 1.8rem 2rem; background: #0a0a0a; text-align: center; border-bottom: 1px solid #1a1a1a;}
   .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
   
   .cover-title { 
@@ -127,21 +117,20 @@
   @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
   /* ── MAIN CONTENT ── */
-  #closet-section { padding: 3rem 0 0 0; background: var(--black); }
+  #closet-section { padding: 3rem 0 0 0; background: #0a0a0a; }
   .row-container { margin-bottom: 5rem; }
   .row-header { padding: 0 1.8rem; margin-bottom: 1rem; }
   .row-header h3 { font-family: 'Barlow Condensed'; font-size: 1.8rem; text-transform: uppercase; }
   .row-header span { color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; }
 
-  /* ── VISUAL INSTRUCTIONS (CHIC SVGS) ── */
+  /* ── VISUAL INSTRUCTIONS ── */
   .swipe-hint { display: flex; align-items: center; gap: 0.6rem; padding: 0 1.8rem; margin-bottom: 1.2rem; }
-  .hint-pill { display: flex; align-items: center; gap: 0.5rem; background: var(--grey); border: 1px solid var(--border); padding: 0.4rem 0.9rem; border-radius: 30px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); }
-  .hint-pill svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-  
-  .anim-swipe { animation: swipeAnim 2s infinite ease-in-out; }
-  .anim-tap { animation: tapAnim 2s infinite ease-in-out; }
-  @keyframes swipeAnim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
-  @keyframes tapAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.8); } }
+  .hint-pill { display: flex; align-items: center; gap: 0.4rem; background: #141414; border: 1px solid #2a2a2a; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
+  .hint-icon { font-size: 0.85rem; }
+  .anim-swipe { animation: swipeAnim 2s infinite ease-in-out; display: inline-block; }
+  .anim-tap { animation: tapAnim 2s infinite ease-in-out; display: inline-block; }
+  @keyframes swipeAnim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+  @keyframes tapAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.85); } }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 320px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
@@ -149,55 +138,51 @@
   .carousel-row.beginner-row { height: 180px; }
   .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
   
-  .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid var(--border); transition: border-color 0.2s; }
-  .item-card:hover { border-color: #444; }
+  .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid #1a1a1a; transition: border-color 0.2s; }
+  .item-card:hover { border-color: #333; }
   
-  .beginner-card { background: #0b0b0b; border: 1px dashed #333; border-radius: 8px; flex-direction: row; text-align: left; padding: 1.2rem; gap: 1rem; justify-content: flex-start; }
-  .beginner-card:hover { border-color: var(--accent); background: var(--grey); }
+  .beginner-card { background: #0d0d0d; border: 1px dashed #444; border-radius: 8px; flex-direction: row; text-align: left; padding: 1.2rem; gap: 1rem; justify-content: flex-start; }
+  .beginner-card:hover { border-color: var(--accent); background: #111; }
   .beginner-icon { font-size: 2.5rem; flex-shrink: 0; }
 
-  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; text-align: left; }
+  .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; text-align: left; }
 
-  /* ── SURPRISE ME (ELEGANT & SMALLER) ── */
-  .surprise-block { padding: 0 1.8rem; margin-bottom: 3.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-  .surprise-btn { 
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; 
-    padding: 0.7rem 1.4rem; background: transparent; color: var(--accent); 
-    border: 1px solid var(--accent); border-radius: 4px; 
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; 
-    text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s ease; 
-  }
-  .surprise-btn:hover { background: var(--accent); color: var(--black); }
-  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.75rem; font-style: italic; }
+  /* ── SURPRISE ME ── */
+  .surprise-block { padding: 0 1.8rem; margin-bottom: 3rem; }
+  .surprise-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.15rem 1.5rem; background: var(--accent); color: var(--black); border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; border: none; }
+  .surprise-btn:hover { opacity: 0.9; }
+  .surprise-btn .dice { font-size: 1.3rem; transition: transform 0.3s; }
+  .surprise-btn:active .dice { transform: rotate(25deg); }
+  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.75rem; margin-top: 1.2rem; font-style: italic; }
 
   /* ── MODAL ── */
   .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s cubic-bezier(0.32, 0.72, 0, 1); overflow-y: auto; }
   .modal.open { top: 0; }
-  .modal-nav { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(8,8,8,0.9); backdrop-filter: blur(8px); z-index: 10; }
+  .modal-nav { padding: 1.5rem; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(6,6,6,0.9); backdrop-filter: blur(5px); z-index: 10; }
   .modal-back { cursor: pointer; color: var(--dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; }
   .modal-content-box { padding: 2rem 1.5rem 6rem; }
 
   /* Modal Typography & Containers */
-  .context-box { background: var(--grey); border: 1px solid var(--border); border-radius: 6px; padding: 1.2rem; margin-bottom: 1.5rem; }
+  .context-box { background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.2rem; margin-bottom: 1.5rem; }
   .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--accent); letter-spacing: 0.1em; font-size: 0.75rem; display: block; margin-bottom: 0.6rem; }
-  .context-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #b0b0b0; line-height: 1.5; }
+  .context-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #aaa; line-height: 1.5; }
   .the-question { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1.15rem; line-height: 1.5; color: var(--white); margin-bottom: 2rem; }
 
-  .look-image-area { width: 100%; height: 72vw; max-height: 420px; overflow: hidden; background: var(--grey); cursor: zoom-in; }
+  .look-image-area { width: 100%; height: 72vw; max-height: 420px; overflow: hidden; background: #111; cursor: zoom-in; }
   .look-image-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .look-thumbnails { display: flex; gap: 2px; margin-top: 2px; }
   .look-thumb { flex: 1; height: 60px; background: #141414; opacity: 0.4; overflow: hidden; cursor: pointer; }
   .look-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .look-thumb.active { opacity: 1; border-bottom: 2px solid var(--white); }
 
-  .share-container { margin-top: 3rem; background: #0a0a0a; border: 1px solid var(--border); padding: 1.2rem; border-radius: 6px; text-align: center; }
-  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 1rem; background: var(--accent); color: var(--black); border: none; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.15s; width: 100%; }
+  .share-container { margin-top: 3rem; background: #0f0f0f; border: 1px solid #222; padding: 1.2rem; border-radius: 6px; text-align: center; }
+  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 1rem; background: var(--accent); color: #1a1612; border: none; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.15s; width: 100%; }
   .share-to-table-btn:hover { opacity: 0.85; }
-  .share-to-table-btn.sent { background: #222; color: var(--dim); cursor: default; }
+  .share-to-table-btn.sent { background: #2e2a26; color: var(--dim); cursor: default; }
   .share-explainer { font-size: 0.65rem; color: var(--dim); line-height: 1.5; margin-top: 0.8rem; display: block; }
 
   /* ── FOOTER ── */
-  .site-footer { padding: 5rem 1.8rem 8rem; text-align: center; background: var(--black); border-top: 1px solid var(--border); }
+  .site-footer { padding: 6rem 1.8rem 8rem; text-align: center; background: var(--black); border-top: 1px solid #1a1a1a; }
   .footer-text { font-family: 'Bodoni Moda', 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 2.5rem); color: var(--accent); line-height: 1.2; }
 </style>
 </head>
@@ -256,7 +241,7 @@
   
   <!-- ── SURPRISE ME ── -->
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()">✦ I don't wanna choose — pick for me</button>
+    <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> I don't wanna choose — pick for me</button>
     <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
@@ -264,14 +249,8 @@
   <div class="row-container">
     <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
     <div class="swipe-hint">
-      <div class="hint-pill">
-        <svg class="anim-swipe" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        <span>Swipe</span>
-      </div>
-      <div class="hint-pill">
-        <svg class="anim-tap" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>
-        <span>Tap</span>
-      </div>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
@@ -280,14 +259,8 @@
   <div class="row-container">
     <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="swipe-hint">
-      <div class="hint-pill">
-        <svg class="anim-swipe" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        <span>Swipe</span>
-      </div>
-      <div class="hint-pill">
-        <svg class="anim-tap" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>
-        <span>Tap</span>
-      </div>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row" id="row-looks"></div>
   </div>
@@ -295,14 +268,8 @@
   <div class="row-container">
     <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
     <div class="swipe-hint">
-      <div class="hint-pill">
-        <svg class="anim-swipe" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        <span>Swipe</span>
-      </div>
-      <div class="hint-pill">
-        <svg class="anim-tap" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>
-        <span>Tap</span>
-      </div>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
@@ -310,14 +277,8 @@
   <div class="row-container" style="margin-bottom: 0;">
     <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
     <div class="swipe-hint">
-      <div class="hint-pill">
-        <svg class="anim-swipe" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        <span>Swipe</span>
-      </div>
-      <div class="hint-pill">
-        <svg class="anim-tap" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>
-        <span>Tap</span>
-      </div>
+      <div class="hint-pill"><span class="hint-icon anim-swipe">↔️</span> Swipe</div>
+      <div class="hint-pill"><span class="hint-icon anim-tap">👆</span> Tap</div>
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
@@ -356,6 +317,7 @@ function toggleLang(e) {
   document.querySelector('.fs-heading').textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
   document.querySelector('.fs-body').innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
   
+  // Translate the footer phrase as well
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
@@ -371,6 +333,25 @@ window.addEventListener('scroll', () => {
     indicator.style.opacity = '1';
   }
 });
+
+// ── AUDIO UNLOCK + NOTIFICATION SOUND ──
+let audioUnlocked = false;
+
+function unlockAudio() {
+  if (audioUnlocked) return;
+  const silent = new Audio();
+  silent.play().then(() => { audioUnlocked = true; }).catch(() => {});
+}
+
+document.body.addEventListener('click', unlockAudio, { once: true });
+document.body.addEventListener('touchstart', unlockAudio, { once: true });
+
+function playNotifSound() {
+  if (!audioUnlocked) return;
+  const sound = new Audio('notification.mp3');
+  sound.volume = 0.7;
+  sound.play().catch(e => console.log("Audio play failed:", e));
+}
 
 // ── SECRET HOST BUTTON (10 TAPS) ──
 let titleTaps = 0, titleTimer = null;
@@ -628,7 +609,6 @@ function renderModalContent(type, index) {
     const item = provocations[index];
     promptEN = item.text_en; promptUA = item.text_ua;
     
-    // REMOVED the extra 'the-question' div here that was causing 'undefined'
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:3rem;">
         <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:2rem; text-transform:uppercase; line-height:1.15; margin-bottom:1.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
@@ -637,6 +617,8 @@ function renderModalContent(type, index) {
           <span class="context-label">${isUA ? 'Наприклад' : 'For Example'}</span>
           <p class="context-text">${isUA ? item.example_ua : item.example_en}</p>
         </div>
+        
+        <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
         
         ${shareSection}
       </div>`;
@@ -712,7 +694,9 @@ function showNotification(questionObj, type, index) {
   document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
   
-  if (navigator.vibrate) navigator.vibrate(100);
+  playNotifSound();
+  
+  if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
 }
 
 function dismissNotif(e) {
