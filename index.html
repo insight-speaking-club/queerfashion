@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Queer Fashion — Flip the Script</title>
+<title>Queer Fashion Speaking Club — VOGUE?</title>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
+  /* Added Bodoni Moda to perfectly replicate the Vogue magazine Didot/Bodoni style */
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
+  
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --black: #060606; --white: #f0ede8; --grey: #1a1a1a; --dim: #666; --accent: #c2a882; }
   body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -71,11 +73,22 @@
   /* ── SECRET HOST BUTTON ── */
   #secret-close-zone { position: fixed; bottom: 0; right: 0; width: 60px; height: 60px; z-index: 9998; cursor: default; -webkit-tap-highlight-color: transparent; }
 
-  /* ── COMPACT HERO SECTION ── */
+  /* ── COMPACT HERO SECTION (VOGUE STYLE) ── */
   #hero-header { padding: 4rem 1.8rem 2rem; background: #0a0a0a; text-align: center; border-bottom: 1px solid #1a1a1a;}
-  .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
-  .cover-title { font-family: 'Barlow Condensed'; font-weight: 900; font-size: clamp(3rem, 10vw, 4.5rem); text-transform: uppercase; line-height: 0.9; margin-bottom: 0.5rem; }
-  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--accent); }
+  .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
+  
+  /* The Vogue-style Title */
+  .cover-title { 
+    font-family: 'Bodoni Moda', 'Playfair Display', serif; 
+    font-weight: 600; 
+    font-size: clamp(4.5rem, 15vw, 7rem); 
+    text-transform: uppercase; 
+    line-height: 0.9; 
+    margin-bottom: 1rem; 
+    letter-spacing: -0.02em; /* Tight letter spacing typical of fashion covers */
+  }
+  
+  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--accent); }
 
   /* ── MAIN CONTENT ── */
   #closet-section { padding: 3rem 0 8rem 0; background: #0a0a0a; }
@@ -90,18 +103,21 @@
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 320px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
+  
+  /* Beginner Specific Carousel/Cards */
+  .carousel-row.beginner-row { height: 180px; }
   .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
+  
   .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid #1a1a1a; transition: border-color 0.2s; }
   .item-card:hover { border-color: #333; }
   
-  /* Beginner specific styling */
-  .beginner-card { background: #0d0d0d; border: 1px dashed #444; border-radius: 8px; }
+  .beginner-card { background: #0d0d0d; border: 1px dashed #444; border-radius: 8px; flex-direction: row; text-align: left; padding: 1.2rem; gap: 1rem; justify-content: flex-start; }
   .beginner-card:hover { border-color: var(--accent); background: #111; }
-  .beginner-icon { font-size: 2rem; margin-bottom: 1rem; opacity: 0.8; }
+  .beginner-icon { font-size: 2.5rem; flex-shrink: 0; }
 
   .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; text-align: left; }
 
-  /* ── SURPRISE ME (Moved Up) ── */
+  /* ── SURPRISE ME ── */
   .surprise-block { padding: 0 1.8rem; margin-bottom: 3rem; }
   .surprise-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.15rem 1.5rem; background: var(--accent); color: var(--black); border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; border: none; }
   .surprise-btn:hover { opacity: 0.9; }
@@ -136,6 +152,7 @@
 </head>
 <body>
 
+<!-- ── FINAL STAGE OVERLAY ── -->
 <div id="final-stage">
   <div id="final-stage-inner">
     <p class="fs-eyebrow">The last stage</p>
@@ -149,6 +166,7 @@
   </div>
 </div>
 
+<!-- ── NOTIFICATION MODAL ── -->
 <div id="notif-backdrop" onclick="dismissNotif(event)"></div>
 <div id="notif-banner">
   <div id="notif-inner" onclick="openSharedModal()">
@@ -168,30 +186,34 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
+<!-- ── SECRET CLOSE ZONE ── -->
 <div id="secret-close-zone"></div>
 
 <header id="hero-header">
-  <span class="club-label">Insight Speaking Club Presents</span>
-  <h1 class="cover-title" id="secret-title">Flip the Script.</h1>
-  <p class="cover-title-italic">You decide which side is right-side-up.</p>
+  <span class="club-label">Queer Fashion Speaking Club</span>
+  <h1 class="cover-title" id="secret-title">VOGUE?</h1>
+  <p class="cover-title-italic">The script is dead. Dress accordingly.</p>
 </header>
 
 <section id="closet-section">
   
+  <!-- ── SURPRISE ME ── -->
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> Start with a random question</button>
+    <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> I don't wanna choose — pick for me</button>
     <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
+  <!-- ── BEGINNERS SECTION ── -->
   <div class="row-container">
-    <div class="row-header"><span>Warming Up</span><h3>Start here if you want an easy entry.</h3></div>
+    <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
     <div class="swipe-hint">
       <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
       <span>Swipe to browse · tap to open</span>
     </div>
-    <div class="carousel-row" id="row-beginners"></div>
+    <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
+  <!-- ── EXISTING SECTIONS ── -->
   <div class="row-container">
     <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="swipe-hint">
@@ -279,7 +301,6 @@ document.getElementById('secret-close-zone').addEventListener('click', () => {
   }
 });
 
-// Tap the final stage overlay itself 10 times to go back
 let stageTaps = 0, stageTimer = null;
 document.getElementById('final-stage').addEventListener('click', (e) => {
   if (e.target.tagName === 'A') return; 
@@ -307,10 +328,9 @@ function applyFinalStage(active) {
   document.getElementById('final-stage').classList.toggle('show', active);
 }
 
-// ── SURPRISE ME ──
+// ── SURPRISE ME (EXCLUDES BEGINNERS) ──
 function surpriseMe() {
   const pools = [
-    { type: 'beginner', items: beginners },
     { type: 'look', items: looks },
     { type: 'quote', items: quotes },
     { type: 'provocation', items: provocations }
@@ -322,9 +342,11 @@ function surpriseMe() {
 
 // ── DATA (Bilingual) ──
 const beginners = [
-  { text_en: "What is your absolute favorite item of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", prompt_en: "Does this item have a special memory attached to it, or does it just fit perfectly? How does it make you feel when you wear it?", prompt_ua: "Чи пов'язаний з цією річчю якийсь особливий спогад, чи вона просто ідеально сидить? Як ви себе почуваєте, коли її носите?" },
-  { text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", prompt_en: "If you had to choose one approach for the rest of your life, which would it be? Can comfort and style truly coexist?", prompt_ua: "Якби довелося обрати один підхід на все життя, що б це було? Чи можуть комфорт і стиль дійсно співіснувати?" },
-  { text_en: "How has your personal style changed since you were a teenager?", text_ua: "Як змінився ваш особистий стиль з підліткових років?", prompt_en: "What is a trend you used to completely love but now look back on and deeply regret?", prompt_ua: "Який тренд ви колись обожнювали, а зараз озираєтесь назад і глибоко шкодуєте про нього?" }
+  { emoji: "👗", text_en: "What is your absolute favorite piece of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], structures: ["My favorite piece of clothing is...", "I love it because..."] },
+  { emoji: "👟", text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], structures: ["I usually prefer to wear...", "For me, comfort is more important because..."] },
+  { emoji: "🧢", text_en: "How has your personal style changed since you were a teenager?", text_ua: "Як змінився ваш особистий стиль з підліткових років?", vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }, { en: "To experiment", ua: "Експериментувати" }], structures: ["When I was a teenager, I used to wear...", "Now, my style is more..."] },
+  { emoji: "🛍️", text_en: "Do you like shopping for clothes? Why or why not?", text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Waste of time", ua: "Марна трата часу" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], structures: ["I enjoy shopping because...", "I prefer buying clothes online because..."] },
+  { emoji: "👕", text_en: "What colors do you wear the most and why?", text_ua: "Які кольори ви носите найчастіше і чому?", vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }, { en: "To match", ua: "Пасувати / Поєднуватися" }], structures: ["My wardrobe is mostly...", "I feel confident when I wear..."] }
 ];
 
 const looks = [
@@ -370,7 +392,7 @@ function populateRow(containerId, data, type) {
     if (type === 'look') {
       wrapper.innerHTML = `<div class="item-card" onclick="openModal('${type}', ${index})"><img src="${item.images[0]}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; opacity:0.6;"><div class="look-label">${item.name}</div></div>`;
     } else if (type === 'beginner') {
-      wrapper.innerHTML = `<div class="item-card beginner-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div class="beginner-icon">☕</div><div style="font-family:'Inter', sans-serif; font-weight:500; font-size:1rem; line-height:1.5; z-index:2;">${item.text_en}</div></div>`;
+      wrapper.innerHTML = `<div class="item-card beginner-card" onclick="openModal('${type}', ${index})"><div class="beginner-icon">${item.emoji}</div><div style="font-family:'Inter', sans-serif; font-weight:500; font-size:1rem; line-height:1.4; z-index:2;">${item.text_en}</div></div>`;
     } else {
       const displayText = type === 'provocation' ? item.text_en : '"' + item.text_en + '"';
       wrapper.innerHTML = `<div class="item-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div style="font-family:'Playfair Display'; font-style:italic; font-size:1.1rem; line-height:1.5; z-index:2;">${displayText}</div></div>`;
@@ -395,7 +417,7 @@ function renderModalContent(type, index) {
   const c = document.getElementById('modal-body-container');
   let promptEN = '', promptUA = '';
   
-  // Shared explanation block for the button
+  // Shared explanation block for the button (Only for non-beginners)
   const shareSection = `
     <div class="share-container">
       <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
@@ -419,17 +441,35 @@ function renderModalContent(type, index) {
         <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; color:var(--white); margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
         ${shareSection}
       </div>`;
+    
+    document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
+
   } else if (type === 'beginner') {
     const item = beginners[index];
-    promptEN = item.prompt_en; promptUA = item.prompt_ua;
+    
+    const vocabList = item.vocab.map(v => `<li style="margin-bottom:0.5rem;"><strong>${v.en}</strong> &mdash; <span style="opacity:0.6">${v.ua}</span></li>`).join('');
+    const structuresList = item.structures.map(s => `<li style="margin-bottom:0.5rem;">${s}</li>`).join('');
+
     c.innerHTML = `
-      <div class="modal-content-box" style="padding-top:3rem;">
-        <div style="font-size:3rem; margin-bottom:1rem; opacity:0.8;">☕</div>
-        <h2 style="font-family:'Inter',sans-serif; font-weight:500; font-size:1.4rem; line-height:1.4; margin-bottom:2rem;">${isUA ? item.text_ua : item.text_en}</h2>
-        <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
-        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
-        ${shareSection}
+      <div class="modal-content-box" style="padding-top:2rem;">
+        <div style="font-size:3.5rem; margin-bottom:1rem; opacity:0.9;">${item.emoji}</div>
+        <h2 style="font-family:'Inter',sans-serif; font-weight:500; font-size:1.5rem; line-height:1.4; margin-bottom:2.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
+        
+        <div style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem;">
+          <h4 style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; color:var(--accent); letter-spacing:0.1em; font-size:0.85rem; margin-bottom:1.2rem;">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
+          <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
+            ${vocabList}
+          </ul>
+        </div>
+
+        <div style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.5rem;">
+          <h4 style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; color:var(--accent); letter-spacing:0.1em; font-size:0.85rem; margin-bottom:1.2rem;">${isUA ? 'Як почати речення' : 'How to start'}</h4>
+          <ul style="list-style:disc; padding-left:1.2rem; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
+            ${structuresList}
+          </ul>
+        </div>
       </div>`;
+
   } else if (type === 'quote') {
     const item = quotes[index];
     promptEN = item.prompt_en; promptUA = item.prompt_ua;
@@ -441,6 +481,8 @@ function renderModalContent(type, index) {
         <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
         ${shareSection}
       </div>`;
+      document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
+
   } else {
     const item = provocations[index];
     promptEN = item.text_en; promptUA = item.text_ua;
@@ -454,8 +496,8 @@ function renderModalContent(type, index) {
         <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
         ${shareSection}
       </div>`;
+      document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
   }
-  document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 }
 
 function switchImage(src, thumbEl) {
@@ -522,7 +564,6 @@ function showNotification(questionObj, type, index) {
   currentSharedItem = { type, index, en: questionObj.en, ua: questionObj.ua };
   document.getElementById('notif-text').textContent = isUA ? questionObj.ua : questionObj.en;
   
-  // Show backdrop and centered banner
   document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
   
