@@ -28,183 +28,88 @@
   .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
   .lang-toggle.active { background: var(--accent); color: var(--black); border-color: var(--accent); font-style: normal; }
 
-  /* ── NOTIFICATION BANNER ── */
-  #notif-banner { position: fixed; bottom: -120px; left: 0; right: 0; z-index: 9999; padding: 0 1rem 2rem; transition: bottom 0.4s cubic-bezier(0.32, 0.72, 0, 1); }
-  #notif-banner.show { bottom: 0; }
-  #notif-inner { background: #1a1612; border: 1px solid #2e2a26; border-radius: 4px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.8); max-width: 480px; margin: 0 auto; cursor: pointer; transition: border-color 0.2s; }
-  #notif-inner:hover { border-color: var(--accent); }
-  #notif-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; color: var(--accent); }
-  #notif-content { flex: 1; min-width: 0; }
-  #notif-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
-  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--white); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.2rem; cursor: pointer; flex-shrink: 0; padding: 0 0 0 0.5rem; }
+  /* ── NOTIFICATION MODAL (CENTERED) ── */
+  #notif-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(3px);
+  }
+  #notif-backdrop.show { display: block; }
+  
+  #notif-banner { 
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 9999; 
+    width: 90%; max-width: 400px; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1); 
+  }
+  #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
+  
+  #notif-inner { 
+    background: #1a1612; border: 1px solid var(--accent); border-radius: 8px; padding: 1.5rem; 
+    display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
+  }
+  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+  #notif-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;}
+  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: var(--white); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: 0.5rem 0; }
+  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.5rem; cursor: pointer; padding: 0.2rem; line-height: 1;}
+  .tap-hint { background: var(--accent); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 1rem; border-radius: 4px; margin-top: 0.5rem; display: inline-block; }
 
   /* ── LIGHTBOX ── */
-  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 800; align-items: center; justify-content: center; cursor: zoom-out; }
+  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
   #lightbox.show { display: flex; }
   #lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
   #lightbox-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; color: var(--dim); font-size: 1.4rem; cursor: pointer; z-index: 1; }
 
   /* ── FINAL STAGE OVERLAY ── */
-  #final-stage {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--black);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 2.5rem 2rem;
-  }
+  #final-stage { display: none; position: fixed; inset: 0; background: var(--black); z-index: 500; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2.5rem 2rem; cursor: default;}
   #final-stage.show { display: flex; }
-  #final-stage-inner { max-width: 360px; }
-  .fs-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 400;
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: var(--dim);
-    margin-bottom: 2.5rem;
-  }
-  .fs-heading {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(1.1rem, 5vw, 1.5rem);
-    color: var(--accent);
-    line-height: 1.4;
-    margin-bottom: 0.6rem;
-  }
-  .fs-divider {
-    width: 1px;
-    height: 40px;
-    background: #2e2a26;
-    margin: 1.8rem auto;
-  }
-  .fs-body {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(1.4rem, 6vw, 2rem);
-    color: var(--white);
-    line-height: 1.35;
-    margin-bottom: 0.5rem;
-  }
-  .fs-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    color: var(--dim);
-    line-height: 1.6;
-    margin-bottom: 3rem;
-    font-weight: 300;
-  }
-  .fs-cta {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: var(--white);
-    color: var(--black);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: opacity 0.2s;
-  }
+  #final-stage-inner { max-width: 360px; pointer-events: none; }
+  .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2.5rem; }
+  .fs-heading { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.1rem, 5vw, 1.5rem); color: var(--accent); line-height: 1.4; margin-bottom: 0.6rem; }
+  .fs-divider { width: 1px; height: 40px; background: #2e2a26; margin: 1.8rem auto; }
+  .fs-body { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.4rem, 6vw, 2rem); color: var(--white); line-height: 1.35; margin-bottom: 0.5rem; }
+  .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--dim); line-height: 1.6; margin-bottom: 3rem; font-weight: 300; }
+  .fs-cta { display: inline-block; padding: 1rem 2rem; background: var(--white); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border-radius: 2px; transition: opacity 0.2s; pointer-events: auto; }
   .fs-cta:hover { opacity: 0.85; }
 
   /* ── SECRET HOST BUTTON ── */
-  #secret-close-zone {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 44px;
-    height: 44px;
-    z-index: 9998;
-    cursor: default;
-    -webkit-tap-highlight-color: transparent;
-  }
+  #secret-close-zone { position: fixed; bottom: 0; right: 0; width: 60px; height: 60px; z-index: 9998; cursor: default; -webkit-tap-highlight-color: transparent; }
 
-  /* Hero Section */
-  #hero-cover { height: 100vh; display: flex; flex-direction: column; justify-content: space-between; position: relative; background: url('cover.jpg') center/cover; }
-  #hero-cover::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9)); pointer-events: none; }
-  .home-center { z-index: 1; padding: 0 1.8rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .cover-title { font-family: 'Barlow Condensed'; font-weight: 900; font-size: clamp(4rem, 15vw, 8rem); text-transform: uppercase; line-height: 0.85; }
-  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: clamp(1.5rem, 5vw, 2.5rem); margin-top: 1rem; color: var(--accent); }
+  /* ── COMPACT HERO SECTION ── */
+  #hero-header { padding: 4rem 1.8rem 2rem; background: #0a0a0a; text-align: center; border-bottom: 1px solid #1a1a1a;}
+  .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
+  .cover-title { font-family: 'Barlow Condensed'; font-weight: 900; font-size: clamp(3rem, 10vw, 4.5rem); text-transform: uppercase; line-height: 0.9; margin-bottom: 0.5rem; }
+  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--accent); }
 
-  /* ── SCROLL HINT ── */
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    opacity: 0.4;
-    animation: scrollBob 2s ease-in-out infinite;
-  }
-  .scroll-hint span {
-    font-size: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--white);
-  }
-  .scroll-hint svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: var(--white);
-    stroke-width: 1.5;
-  }
-  @keyframes scrollBob {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(5px); }
-  }
-
-  /* Closets */
-  #closet-section { padding: 5rem 0 8rem 0; background: #0a0a0a; }
-  .row-container { margin-bottom: 6rem; }
+  /* ── MAIN CONTENT ── */
+  #closet-section { padding: 3rem 0 8rem 0; background: #0a0a0a; }
+  .row-container { margin-bottom: 5rem; }
   .row-header { padding: 0 1.8rem; margin-bottom: 1.2rem; }
   .row-header h3 { font-family: 'Barlow Condensed'; font-size: 1.8rem; text-transform: uppercase; }
   .row-header span { color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; }
 
-  /* ── SWIPE HINT ── */
-  .swipe-hint {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0 1.8rem;
-    margin-bottom: 1rem;
-    opacity: 0.35;
-  }
-  .swipe-hint span {
-    font-size: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--white);
-  }
-  .swipe-hint svg {
-    width: 14px;
-    height: 14px;
-    fill: none;
-    stroke: var(--white);
-    stroke-width: 1.5;
-  }
+  .swipe-hint { display: flex; align-items: center; gap: 0.4rem; padding: 0 1.8rem; margin-bottom: 1rem; opacity: 0.35; }
+  .swipe-hint span { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--white); }
+  .swipe-hint svg { width: 14px; height: 14px; fill: none; stroke: var(--white); stroke-width: 1.5; }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 320px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
   .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
   .item-card { width: 100%; height: 100%; background: var(--grey); border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; position: relative; overflow: hidden; border: 1px solid #1a1a1a; transition: border-color 0.2s; }
   .item-card:hover { border-color: #333; }
+  
+  /* Beginner specific styling */
+  .beginner-card { background: #0d0d0d; border: 1px dashed #444; border-radius: 8px; }
+  .beginner-card:hover { border-color: var(--accent); background: #111; }
+  .beginner-icon { font-size: 2rem; margin-bottom: 1rem; opacity: 0.8; }
+
   .look-label { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem 1rem 1rem; font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; text-align: left; }
 
-  /* Modal */
+  /* ── SURPRISE ME (Moved Up) ── */
+  .surprise-block { padding: 0 1.8rem; margin-bottom: 3rem; }
+  .surprise-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.15rem 1.5rem; background: var(--accent); color: var(--black); border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; border: none; }
+  .surprise-btn:hover { opacity: 0.9; }
+  .surprise-btn .dice { font-size: 1.3rem; transition: transform 0.3s; }
+  .surprise-btn:active .dice { transform: rotate(25deg); }
+  .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.75rem; margin-top: 1.2rem; font-style: italic; }
+
+  /* ── MODAL ── */
   .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s cubic-bezier(0.32, 0.72, 0, 1); overflow-y: auto; }
   .modal.open { top: 0; }
   .modal-nav { padding: 1.5rem; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(6,6,6,0.9); backdrop-filter: blur(5px); z-index: 10; }
@@ -222,39 +127,15 @@
   .provocation-example strong { display: block; color: var(--accent); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
   .bring-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin-top: 2.5rem; margin-bottom: 0.8rem; display: block; }
 
-  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; margin-top: 3rem; padding: 0.6rem 1rem; background: var(--accent); color: #1a1612; border: none; border-radius: 2px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.15s; width: 100%; }
+  .share-container { margin-top: 3rem; background: #0f0f0f; border: 1px solid #222; padding: 1.2rem; border-radius: 6px; text-align: center; }
+  .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 1rem; background: var(--accent); color: #1a1612; border: none; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.15s; width: 100%; }
   .share-to-table-btn:hover { opacity: 0.85; }
   .share-to-table-btn.sent { background: #2e2a26; color: var(--dim); cursor: default; }
-
-  /* Surprise me */
-  .surprise-block { padding: 0 1.8rem; margin-bottom: 8rem; }
-  .surprise-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    width: 100%;
-    padding: 1.15rem 1.5rem;
-    background: transparent;
-    border: 1.5px solid var(--accent);
-    color: var(--accent);
-    border-radius: 4px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .surprise-btn:hover { background: var(--accent); color: var(--black); }
-  .surprise-btn .dice { font-size: 1.1rem; transition: transform 0.3s; }
-  .surprise-btn:active .dice { transform: rotate(25deg); }
+  .share-explainer { font-size: 0.65rem; color: var(--dim); line-height: 1.5; margin-top: 0.8rem; display: block; }
 </style>
 </head>
 <body>
 
-<!-- ── FINAL STAGE OVERLAY ── -->
 <div id="final-stage">
   <div id="final-stage-inner">
     <p class="fs-eyebrow">The last stage</p>
@@ -268,19 +149,17 @@
   </div>
 </div>
 
-
-
+<div id="notif-backdrop" onclick="dismissNotif(event)"></div>
 <div id="notif-banner">
   <div id="notif-inner" onclick="openSharedModal()">
-    <div id="notif-icon">✦</div>
-    <div id="notif-content">
-      <div id="notif-label">
-        <span>Brought to the table</span>
-        <span style="opacity: 0.5;">Tap to view →</span>
-      </div>
-      <div id="notif-text"></div>
+    <div id="notif-header">
+      <div id="notif-label"><span>✦</span> Brought to the table</div>
+      <button id="notif-dismiss" onclick="dismissNotif(event)">✕</button>
     </div>
-    <button id="notif-dismiss" onclick="dismissNotif(event)">✕</button>
+    <div id="notif-text"></div>
+    <div>
+      <span class="tap-hint">Tap to open</span>
+    </div>
   </div>
 </div>
 
@@ -289,21 +168,30 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<!-- ── SECRET CLOSE ZONE (bottom-right corner, 5×) ── -->
 <div id="secret-close-zone"></div>
 
-<section id="hero-cover">
-  <div class="home-center">
-    <h1 class="cover-title" id="secret-title">Flip the<br>Script.</h1>
-    <span class="cover-title-italic">You decide which side is right-side-up.</span>
-  </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <svg viewBox="0 0 16 16"><polyline points="4,6 8,10 12,6"/></svg>
-  </div>
-</section>
+<header id="hero-header">
+  <span class="club-label">Insight Speaking Club Presents</span>
+  <h1 class="cover-title" id="secret-title">Flip the Script.</h1>
+  <p class="cover-title-italic">You decide which side is right-side-up.</p>
+</header>
 
 <section id="closet-section">
+  
+  <div class="surprise-block">
+    <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> Start with a random question</button>
+    <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
+  </div>
+
+  <div class="row-container">
+    <div class="row-header"><span>Warming Up</span><h3>Start here if you want an easy entry.</h3></div>
+    <div class="swipe-hint">
+      <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
+      <span>Swipe to browse · tap to open</span>
+    </div>
+    <div class="carousel-row" id="row-beginners"></div>
+  </div>
+
   <div class="row-container">
     <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="swipe-hint">
@@ -312,6 +200,7 @@
     </div>
     <div class="carousel-row" id="row-looks"></div>
   </div>
+  
   <div class="row-container">
     <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
     <div class="swipe-hint">
@@ -320,28 +209,21 @@
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
+  
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick your PROVOCATION.</h3></div>
+    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
     <div class="swipe-hint">
       <svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg>
       <span>Swipe to browse · tap to open</span>
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
-  <div class="row-container" style="margin-bottom: 0; padding-top: 4rem;">
-    <div class="row-header"><h3>Or just let fate pick for you.</h3></div>
-    <div class="surprise-block">
-      <button class="surprise-btn" onclick="surpriseMe()"><span class="dice">🎲</span> I don't wanna choose — pick for me</button>
-    </div>
-  </div>
 </section>
-
-
 
 <div class="modal" id="item-modal">
   <div class="modal-nav">
     <div class="modal-back" onclick="closeModal()">
-      ↓ Back <span style="font-size:0.55rem; opacity:0.4; letter-spacing:0.08em; text-transform:none;">— no pun intended</span>
+      ↓ Back
     </div>
     <button class="lang-toggle" id="modal-lang-btn" onclick="toggleLang(event)">Перекласти</button>
   </div>
@@ -361,20 +243,16 @@ function toggleLang(e) {
     btn.classList.toggle('active', isUA);
     btn.textContent = isUA ? 'Translate' : 'Перекласти';
   });
-  // Update final stage text
   document.getElementById('fs-sub-text').textContent = isUA ? 'Твій образ, твої правила. Правильних відповідей немає.' : 'Your outfit, your rules. No right answers.';
   document.getElementById('fs-cta-text').textContent = isUA ? 'Увійти до гардеробу →' : 'Enter the closet →';
-  const fsHeading = document.querySelector('.fs-heading');
-  fsHeading.textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
-  const fsBody = document.querySelector('.fs-body');
-  fsBody.innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
+  document.querySelector('.fs-heading').textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
+  document.querySelector('.fs-body').innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
+  
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
   if (currentSharedItem) document.getElementById('notif-text').textContent = isUA ? currentSharedItem.ua : currentSharedItem.en;
 }
 
-// ── SECRET HOST BUTTON ──
-// Activate: tap "Flip the Script" title 5 times → pushes to everyone via Firebase
-// Deactivate: tap bottom-right corner 5 times → pushes to everyone via Firebase
+// ── SECRET HOST BUTTON (10 TAPS) ──
 let titleTaps = 0, titleTimer = null;
 let closeTaps = 0, closeTimer = null;
 let finalStageActive = false;
@@ -382,36 +260,36 @@ let finalStageActive = false;
 document.getElementById('secret-title').addEventListener('click', () => {
   titleTaps++;
   clearTimeout(titleTimer);
-  if (titleTaps >= 5) {
+  if (titleTaps >= 10) {
     titleTaps = 0;
     if (!finalStageActive) pushFinalStage(true);
   } else {
-    titleTimer = setTimeout(() => { titleTaps = 0; }, 1200);
+    titleTimer = setTimeout(() => { titleTaps = 0; }, 1500);
   }
 });
 
 document.getElementById('secret-close-zone').addEventListener('click', () => {
   closeTaps++;
   clearTimeout(closeTimer);
-  if (closeTaps >= 5) {
+  if (closeTaps >= 10) {
     closeTaps = 0;
     if (finalStageActive) pushFinalStage(false);
   } else {
-    closeTimer = setTimeout(() => { closeTaps = 0; }, 1200);
+    closeTimer = setTimeout(() => { closeTaps = 0; }, 1500);
   }
 });
 
-// Tap the final stage overlay itself 5 times to go back
+// Tap the final stage overlay itself 10 times to go back
 let stageTaps = 0, stageTimer = null;
 document.getElementById('final-stage').addEventListener('click', (e) => {
-  if (e.target.tagName === 'A') return; // don't intercept the CTA button
+  if (e.target.tagName === 'A') return; 
   stageTaps++;
   clearTimeout(stageTimer);
-  if (stageTaps >= 5) {
+  if (stageTaps >= 10) {
     stageTaps = 0;
     if (finalStageActive) pushFinalStage(false);
   } else {
-    stageTimer = setTimeout(() => { stageTaps = 0; }, 1200);
+    stageTimer = setTimeout(() => { stageTaps = 0; }, 1500);
   }
 });
 
@@ -432,6 +310,7 @@ function applyFinalStage(active) {
 // ── SURPRISE ME ──
 function surpriseMe() {
   const pools = [
+    { type: 'beginner', items: beginners },
     { type: 'look', items: looks },
     { type: 'quote', items: quotes },
     { type: 'provocation', items: provocations }
@@ -442,49 +321,19 @@ function surpriseMe() {
 }
 
 // ── DATA (Bilingual) ──
+const beginners = [
+  { text_en: "What is your absolute favorite item of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", prompt_en: "Does this item have a special memory attached to it, or does it just fit perfectly? How does it make you feel when you wear it?", prompt_ua: "Чи пов'язаний з цією річчю якийсь особливий спогад, чи вона просто ідеально сидить? Як ви себе почуваєте, коли її носите?" },
+  { text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", prompt_en: "If you had to choose one approach for the rest of your life, which would it be? Can comfort and style truly coexist?", prompt_ua: "Якби довелося обрати один підхід на все життя, що б це було? Чи можуть комфорт і стиль дійсно співіснувати?" },
+  { text_en: "How has your personal style changed since you were a teenager?", text_ua: "Як змінився ваш особистий стиль з підліткових років?", prompt_en: "What is a trend you used to completely love but now look back on and deeply regret?", prompt_ua: "Який тренд ви колись обожнювали, а зараз озираєтесь назад і глибоко шкодуєте про нього?" }
+];
+
 const looks = [
-  { designer: "Yves Saint Laurent", name: "Le Smoking, 1966",
-    desc_en: "A tuxedo suit designed for women. Stores refused to sell it. Women were turned away from restaurants for wearing it.",
-    desc_ua: "Смокінг, створений для жінок. Магазини відмовлялися його продавати. Жінок не пускали в ресторани за те, що вони його носили.",
-    images: ["ysl-1.jpg", "ysl-2.jpg", "ysl-3.jpg"],
-    prompt_en: "A woman in a suit got banned from restaurants in 1966. In 2025 a man in a skirt still gets stared at. Why does clothing worn 'by the wrong gender' still feel like a provocation to so many people — and do you think that will ever actually change?",
-    prompt_ua: "Жінці в костюмі заборонили відвідувати ресторани в 1966 році. У 2025 році на чоловіка в спідниці досі витріщаються. Чому одяг 'не тієї статі' досі здається багатьом провокацією — і чи зміниться це коли-небудь?"
-  },
-  { designer: "Alexander McQueen", name: "Bumster Trousers, 1994",
-    desc_en: "Cut low, exposing the spine. The press called it obscene; others saw art.",
-    desc_ua: "Занижена талія, що відкриває хребет. Преса називала це непристойністю; інші бачили мистецтво.",
-    images: ["mcqueen-1.jpg", "mcqueen-2.jpg", "mcqueen-3.jpg"],
-    prompt_en: "The same amount of skin can be 'obscene' on one person and 'artistic' on another. Who gets to draw that line — and have you ever felt like your body was being judged by a rule that didn't apply to everyone equally?",
-    prompt_ua: "Однакова кількість оголеного тіла може бути 'непристойною' на одній людині та 'мистецтвом' на іншій. Хто проводить цю межу — і чи відчували ви коли-небудь, що ваше тіло оцінюють за правилом, яке не стосується всіх однаково?"
-  },
-  { designer: "David Bowie", name: "Ziggy Stardust, 1972",
-    desc_en: "A costume that became a person. Fashion as alter ego.",
-    desc_ua: "Костюм, який став людиною. Мода як альтер-его.",
-    images: ["bowie-1.jpg", "bowie-2.jpg", "bowie-3.jpg"],
-    prompt_en: "Bowie invented a character and then lived inside him until the character became real. Have you ever dressed as a version of yourself you weren't quite yet — and did it help you become that person, or did it feel like lying?",
-    prompt_ua: "Боуї вигадав персонажа, а потім жив у ньому, поки той не став реальним. Чи одягалися ви коли-небудь як версія себе, якою ви ще не були — і чи допомогло це вам стати цією людиною, чи відчувалося як брехня?"
-  },
-  { designer: "RuPaul", name: "Supermodel Era, 1993",
-    desc_en: "RuPaul brought drag firmly into mainstream MTV, making the invisible visible.",
-    desc_ua: "РуПол впевнено вивів дрег у мейнстрім MTV, зробивши невидиме видимим.",
-    images: ["rupaul-1.jpg", "rupaul-2.jpg", "rupaul-3.jpg"],
-    prompt_en: "RuPaul made drag mainstream — but a lot of the queer community felt that mainstream success came at the cost of the subculture's edge and politics. Can something stay radical once it's on prime time TV, or does visibility always cost something?",
-    prompt_ua: "РуПол зробив дрег мейнстрімом — але багато хто в квір-спільноті відчув, що цей успіх коштував субкультурі її гостроти та політичності. Чи може щось залишатися радикальним на телебаченні, чи видимість завжди має свою ціну?"
-  },
-  { designer: "Patricia Field", name: "Style on Screen",
-    desc_en: "Mixing the 'wrong' things until they become right. Confidence makes the fashion.",
-    desc_ua: "Поєднання 'непоєднуваного', поки воно не стане ідеальним. Впевненість створює моду.",
-    images: ["field-1.jpg", "field-2.jpg", "field-3.jpg"],
-    prompt_en: "Patricia Field's whole thing was that there are no rules — just commitment. But is that actually true, or is 'wear anything with confidence' advice that only works if you already have the right body, race, or social standing to get away with it?",
-    prompt_ua: "Головна ідея Патриції Філд — немає жодних правил, лише відданість образу. Але чи 'носити будь-що з упевненістю' працює лише тоді, коли у вас вже є відповідне тіло, раса чи соціальний статус?"
-  },
-  { designer: "Edward Enninful", name: "Forces for Change",
-    desc_en: "British Vogue cover featuring 15 trailblazing women with an empty mirror for the reader.",
-    desc_ua: "Обкладинка британського Vogue з 15 жінками-новаторами та порожнім дзеркалом для читача.",
-    images: ["enninful-1.jpg", "enninful-2.jpg", "enninful-3.jpg"],
-    prompt_en: "Vogue put a mirror on its cover and said 'you belong here too'. Sweet gesture — or is it hollow when the magazine still sells £4,000 handbags on the next page? Can a fashion magazine genuinely be inclusive, or is exclusivity the whole point?",
-    prompt_ua: "Vogue помістив дзеркало на обкладинку і сказав 'ти теж належиш сюди'. Милий жест — але чи не порожній він, коли журнал продає сумки за £4,000? Чи може модний журнал бути справді інклюзивним, чи ексклюзивність — це його суть?"
-  }
+  { designer: "Yves Saint Laurent", name: "Le Smoking, 1966", desc_en: "A tuxedo suit designed for women. Stores refused to sell it. Women were turned away from restaurants for wearing it.", desc_ua: "Смокінг, створений для жінок. Магазини відмовлялися його продавати. Жінок не пускали в ресторани за те, що вони його носили.", images: ["ysl-1.jpg", "ysl-2.jpg", "ysl-3.jpg"], prompt_en: "A woman in a suit got banned from restaurants in 1966. In 2025 a man in a skirt still gets stared at. Why does clothing worn 'by the wrong gender' still feel like a provocation to so many people — and do you think that will ever actually change?", prompt_ua: "Жінці в костюмі заборонили відвідувати ресторани в 1966 році. У 2025 році на чоловіка в спідниці досі витріщаються. Чому одяг 'не тієї статі' досі здається багатьом провокацією — і чи зміниться це коли-небудь?" },
+  { designer: "Alexander McQueen", name: "Bumster Trousers, 1994", desc_en: "Cut low, exposing the spine. The press called it obscene; others saw art.", desc_ua: "Занижена талія, що відкриває хребет. Преса називала це непристойністю; інші бачили мистецтво.", images: ["mcqueen-1.jpg", "mcqueen-2.jpg", "mcqueen-3.jpg"], prompt_en: "The same amount of skin can be 'obscene' on one person and 'artistic' on another. Who gets to draw that line — and have you ever felt like your body was being judged by a rule that didn't apply to everyone equally?", prompt_ua: "Однакова кількість оголеного тіла може бути 'непристойною' на одній людині та 'мистецтвом' на іншій. Хто проводить цю межу — і чи відчували ви коли-небудь, що ваше тіло оцінюють за правилом, яке не стосується всіх однаково?" },
+  { designer: "David Bowie", name: "Ziggy Stardust, 1972", desc_en: "A costume that became a person. Fashion as alter ego.", desc_ua: "Костюм, який став людиною. Мода як альтер-его.", images: ["bowie-1.jpg", "bowie-2.jpg", "bowie-3.jpg"], prompt_en: "Bowie invented a character and then lived inside him until the character became real. Have you ever dressed as a version of yourself you weren't quite yet — and did it help you become that person, or did it feel like lying?", prompt_ua: "Боуї вигадав персонажа, а потім жив у ньому, поки той не став реальним. Чи одягалися ви коли-небудь як версія себе, якою ви ще не були — і чи допомогло це вам стати цією людиною, чи відчувалося як брехня?" },
+  { designer: "RuPaul", name: "Supermodel Era, 1993", desc_en: "RuPaul brought drag firmly into mainstream MTV, making the invisible visible.", desc_ua: "РуПол впевнено вивів дрег у мейнстрім MTV, зробивши невидиме видимим.", images: ["rupaul-1.jpg", "rupaul-2.jpg", "rupaul-3.jpg"], prompt_en: "RuPaul made drag mainstream — but a lot of the queer community felt that mainstream success came at the cost of the subculture's edge and politics. Can something stay radical once it's on prime time TV, or does visibility always cost something?", prompt_ua: "РуПол зробив дрег мейнстрімом — але багато хто в квір-спільноті відчув, що цей успіх коштував субкультурі її гостроти та політичності. Чи може щось залишатися радикальним на телебаченні, чи видимість завжди має свою ціну?" },
+  { designer: "Patricia Field", name: "Style on Screen", desc_en: "Mixing the 'wrong' things until they become right. Confidence makes the fashion.", desc_ua: "Поєднання 'непоєднуваного', поки воно не стане ідеальним. Впевненість створює моду.", images: ["field-1.jpg", "field-2.jpg", "field-3.jpg"], prompt_en: "Patricia Field's whole thing was that there are no rules — just commitment. But is that actually true, or is 'wear anything with confidence' advice that only works if you already have the right body, race, or social standing to get away with it?", prompt_ua: "Головна ідея Патриції Філд — немає жодних правил, лише відданість образу. Але чи 'носити будь-що з упевненістю' працює лише тоді, коли у вас вже є відповідне тіло, раса чи соціальний статус?" },
+  { designer: "Edward Enninful", name: "Forces for Change", desc_en: "British Vogue cover featuring 15 trailblazing women with an empty mirror for the reader.", desc_ua: "Обкладинка британського Vogue з 15 жінками-новаторами та порожнім дзеркалом для читача.", images: ["enninful-1.jpg", "enninful-2.jpg", "enninful-3.jpg"], prompt_en: "Vogue put a mirror on its cover and said 'you belong here too'. Sweet gesture — or is it hollow when the magazine still sells £4,000 handbags on the next page? Can a fashion magazine genuinely be inclusive, or is exclusivity the whole point?", prompt_ua: "Vogue помістив дзеркало на обкладинку і сказав 'ти теж належиш сюди'. Милий жест — але чи не порожній він, коли журнал продає сумки за £4,000? Чи може модний журнал бути справді інклюзивним, чи ексклюзивність — це його суть?" }
 ];
 
 const quotes = [
@@ -517,8 +366,11 @@ function populateRow(containerId, data, type) {
   data.forEach((item, index) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'card-wrapper';
+    
     if (type === 'look') {
       wrapper.innerHTML = `<div class="item-card" onclick="openModal('${type}', ${index})"><img src="${item.images[0]}" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; opacity:0.6;"><div class="look-label">${item.name}</div></div>`;
+    } else if (type === 'beginner') {
+      wrapper.innerHTML = `<div class="item-card beginner-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div class="beginner-icon">☕</div><div style="font-family:'Inter', sans-serif; font-weight:500; font-size:1rem; line-height:1.5; z-index:2;">${item.text_en}</div></div>`;
     } else {
       const displayText = type === 'provocation' ? item.text_en : '"' + item.text_en + '"';
       wrapper.innerHTML = `<div class="item-card" style="padding:1.5rem" onclick="openModal('${type}', ${index})"><div style="font-family:'Playfair Display'; font-style:italic; font-size:1.1rem; line-height:1.5; z-index:2;">${displayText}</div></div>`;
@@ -527,6 +379,7 @@ function populateRow(containerId, data, type) {
   });
 }
 
+populateRow('row-beginners', beginners, 'beginner');
 populateRow('row-looks', looks, 'look');
 populateRow('row-quotes', quotes, 'quote');
 populateRow('row-provocations', provocations, 'provocation');
@@ -541,6 +394,14 @@ function openModal(type, index) {
 function renderModalContent(type, index) {
   const c = document.getElementById('modal-body-container');
   let promptEN = '', promptUA = '';
+  
+  // Shared explanation block for the button
+  const shareSection = `
+    <div class="share-container">
+      <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
+      <span class="share-explainer">${isUA ? 'Якщо ви натиснете цю кнопку, всі, хто користується сайтом, побачать спливаюче вікно з обраним вами питанням.' : 'If you click this button, everyone using the website will see a pop-up with the question you chose.'}</span>
+    </div>`;
+
   if (type === 'look') {
     const item = looks[index];
     promptEN = item.prompt_en; promptUA = item.prompt_ua;
@@ -556,7 +417,18 @@ function renderModalContent(type, index) {
         <p style="line-height:1.6; color:#bbb; font-size:0.95rem; margin-bottom:1.5rem;">${isUA ? item.desc_ua : item.desc_en}</p>
         <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
         <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; color:var(--white); margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
-        <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
+        ${shareSection}
+      </div>`;
+  } else if (type === 'beginner') {
+    const item = beginners[index];
+    promptEN = item.prompt_en; promptUA = item.prompt_ua;
+    c.innerHTML = `
+      <div class="modal-content-box" style="padding-top:3rem;">
+        <div style="font-size:3rem; margin-bottom:1rem; opacity:0.8;">☕</div>
+        <h2 style="font-family:'Inter',sans-serif; font-weight:500; font-size:1.4rem; line-height:1.4; margin-bottom:2rem;">${isUA ? item.text_ua : item.text_en}</h2>
+        <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
+        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
+        ${shareSection}
       </div>`;
   } else if (type === 'quote') {
     const item = quotes[index];
@@ -567,7 +439,7 @@ function renderModalContent(type, index) {
         <p style="color:var(--dim);">— ${item.author}</p>
         <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
         <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
-        <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
+        ${shareSection}
       </div>`;
   } else {
     const item = provocations[index];
@@ -580,7 +452,7 @@ function renderModalContent(type, index) {
           ${isUA ? item.example_ua : item.example_en}
         </div>
         <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
-        <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
+        ${shareSection}
       </div>`;
   }
   document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
@@ -604,7 +476,6 @@ let lastTs = null;
 let lastStageTs = null;
 let isFirstLoad = true;
 
-// Init — read current state without triggering updates
 Promise.all([
   fetch(DB_URL).then(r => r.json()).catch(() => null),
   fetch(STAGE_URL).then(r => r.json()).catch(() => null)
@@ -620,14 +491,12 @@ Promise.all([
 setInterval(async () => {
   if (isFirstLoad) return;
   try {
-    // Poll questions
     const qRes = await fetch(DB_URL);
     const qData = await qRes.json();
     if (qData && qData.ts !== lastTs) {
       lastTs = qData.ts;
       showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index);
     }
-    // Poll final stage
     const sRes = await fetch(STAGE_URL);
     const sData = await sRes.json();
     if (sData && sData.ts !== lastStageTs) {
@@ -652,12 +521,17 @@ function shareWithEveryone(textEN, textUA, type, index, btnEl) {
 function showNotification(questionObj, type, index) {
   currentSharedItem = { type, index, en: questionObj.en, ua: questionObj.ua };
   document.getElementById('notif-text').textContent = isUA ? questionObj.ua : questionObj.en;
+  
+  // Show backdrop and centered banner
+  document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
+  
   if (navigator.vibrate) navigator.vibrate(100);
 }
 
 function dismissNotif(e) {
   if (e) e.stopPropagation();
+  document.getElementById('notif-backdrop').classList.remove('show');
   document.getElementById('notif-banner').classList.remove('show');
 }
 
