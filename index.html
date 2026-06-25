@@ -6,7 +6,6 @@
 <title>Queer Fashion Speaking Club — VOGUE?</title>
 
 <style>
-  /* Added Bodoni Moda to perfectly replicate the Vogue magazine Didot/Bodoni style */
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,7 +76,6 @@
   #hero-header { padding: 4rem 1.8rem 2rem; background: #0a0a0a; text-align: center; border-bottom: 1px solid #1a1a1a;}
   .club-label { font-family: 'Barlow Condensed'; font-weight: 400; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--dim); margin-bottom: 1.5rem; display: block; }
   
-  /* The Vogue-style Title */
   .cover-title { 
     font-family: 'Bodoni Moda', 'Playfair Display', serif; 
     font-weight: 600; 
@@ -85,7 +83,7 @@
     text-transform: uppercase; 
     line-height: 0.9; 
     margin-bottom: 1rem; 
-    letter-spacing: -0.02em; /* Tight letter spacing typical of fashion covers */
+    letter-spacing: -0.02em; 
   }
   
   .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--accent); }
@@ -104,7 +102,6 @@
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 320px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
   
-  /* Beginner Specific Carousel/Cards */
   .carousel-row.beginner-row { height: 180px; }
   .card-wrapper { flex: 0 0 80vw; height: 100%; scroll-snap-align: start; padding-right: 1.5rem; }
   
@@ -132,16 +129,18 @@
   .modal-back { cursor: pointer; color: var(--dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; }
   .modal-content-box { padding: 2rem 1.5rem 6rem; }
 
+  /* Modal Typography & Containers */
+  .context-box { background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.2rem; margin-bottom: 1.5rem; }
+  .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--accent); letter-spacing: 0.1em; font-size: 0.75rem; display: block; margin-bottom: 0.6rem; }
+  .context-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #aaa; line-height: 1.5; }
+  .the-question { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1.15rem; line-height: 1.5; color: var(--white); margin-bottom: 2rem; }
+
   .look-image-area { width: 100%; height: 72vw; max-height: 420px; overflow: hidden; background: #111; cursor: zoom-in; }
   .look-image-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .look-thumbnails { display: flex; gap: 2px; margin-top: 2px; }
   .look-thumb { flex: 1; height: 60px; background: #141414; opacity: 0.4; overflow: hidden; cursor: pointer; }
   .look-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .look-thumb.active { opacity: 1; border-bottom: 2px solid var(--white); }
-
-  .provocation-example { border-left: 1px solid var(--accent); padding: 1rem 1.2rem; margin-top: 1.5rem; color: #999; font-size: 0.85rem; line-height: 1.6; background: #111; }
-  .provocation-example strong { display: block; color: var(--accent); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
-  .bring-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin-top: 2.5rem; margin-bottom: 0.8rem; display: block; }
 
   .share-container { margin-top: 3rem; background: #0f0f0f; border: 1px solid #222; padding: 1.2rem; border-radius: 6px; text-align: center; }
   .share-to-table-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 1rem; background: var(--accent); color: #1a1612; border: none; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.15s; width: 100%; }
@@ -342,11 +341,41 @@ function surpriseMe() {
 
 // ── DATA (Bilingual) ──
 const beginners = [
-  { emoji: "👗", text_en: "What is your absolute favorite piece of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], structures: ["My favorite piece of clothing is...", "I love it because..."] },
-  { emoji: "👟", text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], structures: ["I usually prefer to wear...", "For me, comfort is more important because..."] },
-  { emoji: "🧢", text_en: "How has your personal style changed since you were a teenager?", text_ua: "Як змінився ваш особистий стиль з підліткових років?", vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }, { en: "To experiment", ua: "Експериментувати" }], structures: ["When I was a teenager, I used to wear...", "Now, my style is more..."] },
-  { emoji: "🛍️", text_en: "Do you like shopping for clothes? Why or why not?", text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Waste of time", ua: "Марна трата часу" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], structures: ["I enjoy shopping because...", "I prefer buying clothes online because..."] },
-  { emoji: "👕", text_en: "What colors do you wear the most and why?", text_ua: "Які кольори ви носите найчастіше і чому?", vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }, { en: "To match", ua: "Пасувати / Поєднуватися" }], structures: ["My wardrobe is mostly...", "I feel confident when I wear..."] }
+  { 
+    emoji: "👗", 
+    text_en: "What is your absolute favorite piece of clothing and why?", 
+    text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", 
+    vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], 
+    structures: [{ en: "My favorite piece of clothing is...", ua: "Моя улюблена річ з одягу — це..." }, { en: "I love it because...", ua: "Я люблю її, тому що..." }] 
+  },
+  { 
+    emoji: "👟", 
+    text_en: "Do you dress more for comfort or for style?", 
+    text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", 
+    vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], 
+    structures: [{ en: "I usually prefer to wear...", ua: "Зазвичай я віддаю перевагу..." }, { en: "For me, comfort is more important because...", ua: "Для мене комфорт важливіший, тому що..." }] 
+  },
+  { 
+    emoji: "🧢", 
+    text_en: "How has your personal style changed since you were a teenager?", 
+    text_ua: "Як змінився ваш особистий стиль з підліткових років?", 
+    vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }, { en: "To experiment", ua: "Експериментувати" }], 
+    structures: [{ en: "When I was a teenager, I used to wear...", ua: "Коли я був/ла підлітком, я носив/ла..." }, { en: "Now, my style is more...", ua: "Зараз мій стиль більш..." }] 
+  },
+  { 
+    emoji: "🛍️", 
+    text_en: "Do you like shopping for clothes? Why or why not?", 
+    text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", 
+    vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Waste of time", ua: "Марна трата часу" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], 
+    structures: [{ en: "I enjoy shopping because...", ua: "Мені подобається шопінг, тому що..." }, { en: "I prefer buying clothes online because...", ua: "Я віддаю перевагу купівлі одягу онлайн, тому що..." }] 
+  },
+  { 
+    emoji: "👕", 
+    text_en: "What colors do you wear the most and why?", 
+    text_ua: "Які кольори ви носите найчастіше і чому?", 
+    vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }, { en: "To match", ua: "Пасувати / Поєднуватися" }], 
+    structures: [{ en: "My wardrobe is mostly...", ua: "Мій гардероб складається переважно з..." }, { en: "I feel confident when I wear...", ua: "Я відчуваю себе впевнено, коли ношу..." }] 
+  }
 ];
 
 const looks = [
@@ -417,7 +446,6 @@ function renderModalContent(type, index) {
   const c = document.getElementById('modal-body-container');
   let promptEN = '', promptUA = '';
   
-  // Shared explanation block for the button (Only for non-beginners)
   const shareSection = `
     <div class="share-container">
       <button id="dynamic-share-btn" class="share-to-table-btn">✦ ${isUA ? 'Поділитися з усіма за столом' : 'Share with everyone at the table'}</button>
@@ -430,15 +458,21 @@ function renderModalContent(type, index) {
     const thumbs = item.images.map((img, i) =>
       `<div class="look-thumb ${i===0?'active':''}" onclick="switchImage('${img}', this)"><img src="${img}" onerror="this.style.display='none'"></div>`
     ).join('');
+    
     c.innerHTML = `
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
         <p style="color:var(--dim); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;">${item.designer}</p>
-        <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; text-transform:uppercase; margin-bottom:1rem;">${item.name}</h2>
-        <p style="line-height:1.6; color:#bbb; font-size:0.95rem; margin-bottom:1.5rem;">${isUA ? item.desc_ua : item.desc_en}</p>
-        <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
-        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; color:var(--white); margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
+        <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; text-transform:uppercase; margin-bottom:1.5rem; line-height:1.1;">${item.name}</h2>
+        
+        <div class="context-box">
+          <span class="context-label">${isUA ? 'Контекст' : 'The Context'}</span>
+          <p class="context-text">${isUA ? item.desc_ua : item.desc_en}</p>
+        </div>
+
+        <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
+        
         ${shareSection}
       </div>`;
     
@@ -446,24 +480,30 @@ function renderModalContent(type, index) {
 
   } else if (type === 'beginner') {
     const item = beginners[index];
-    
     const vocabList = item.vocab.map(v => `<li style="margin-bottom:0.5rem;"><strong>${v.en}</strong> &mdash; <span style="opacity:0.6">${v.ua}</span></li>`).join('');
-    const structuresList = item.structures.map(s => `<li style="margin-bottom:0.5rem;">${s}</li>`).join('');
+    
+    // Updated structuresList to display English, with a line break and muted Ukrainian translation below
+    const structuresList = item.structures.map(s => `
+      <li style="margin-bottom:0.8rem; line-height:1.3;">
+        <strong>${s.en}</strong><br>
+        <span style="opacity:0.6; font-size:0.85rem;">${s.ua}</span>
+      </li>
+    `).join('');
 
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:2rem;">
         <div style="font-size:3.5rem; margin-bottom:1rem; opacity:0.9;">${item.emoji}</div>
         <h2 style="font-family:'Inter',sans-serif; font-weight:500; font-size:1.5rem; line-height:1.4; margin-bottom:2.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
         
-        <div style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem;">
-          <h4 style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; color:var(--accent); letter-spacing:0.1em; font-size:0.85rem; margin-bottom:1.2rem;">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
+        <div class="context-box" style="margin-bottom: 1.5rem;">
+          <h4 class="context-label">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
           <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${vocabList}
           </ul>
         </div>
 
-        <div style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1.5rem;">
-          <h4 style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; color:var(--accent); letter-spacing:0.1em; font-size:0.85rem; margin-bottom:1.2rem;">${isUA ? 'Як почати речення' : 'How to start'}</h4>
+        <div class="context-box">
+          <h4 class="context-label">${isUA ? 'Як почати речення' : 'How to start'}</h4>
           <ul style="list-style:disc; padding-left:1.2rem; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${structuresList}
           </ul>
@@ -473,29 +513,37 @@ function renderModalContent(type, index) {
   } else if (type === 'quote') {
     const item = quotes[index];
     promptEN = item.prompt_en; promptUA = item.prompt_ua;
+    
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:3rem;">
-        <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.6rem; line-height:1.4; margin-bottom:1rem;">"${isUA ? item.text_ua : item.text_en}"</h2>
-        <p style="color:var(--dim);">— ${item.author}</p>
-        <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
-        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; line-height:1.6; margin-bottom:0;">${isUA ? item.prompt_ua : item.prompt_en}</p>
+        <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.8rem; line-height:1.3; margin-bottom:1rem;">"${isUA ? item.text_ua : item.text_en}"</h2>
+        <p style="color:var(--dim); margin-bottom: 2.5rem;">— ${item.author}</p>
+        
+        <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
+        
         ${shareSection}
       </div>`;
+      
       document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
   } else {
     const item = provocations[index];
     promptEN = item.text_en; promptUA = item.text_ua;
+    
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:3rem;">
-        <h2 style="font-family:'Barlow Condensed'; font-size:1.8rem; text-transform:uppercase; line-height:1.15; margin-bottom:1.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
-        <div class="provocation-example">
-          <strong>${isUA ? 'Наприклад' : 'For example'}</strong>
-          ${isUA ? item.example_ua : item.example_en}
+        <h2 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:2rem; text-transform:uppercase; line-height:1.15; margin-bottom:1.5rem;">${isUA ? item.text_ua : item.text_en}</h2>
+        
+        <div class="context-box">
+          <span class="context-label">${isUA ? 'Наприклад' : 'For Example'}</span>
+          <p class="context-text">${isUA ? item.example_ua : item.example_en}</p>
         </div>
-        <span class="bring-label">${isUA ? 'Обговоріть це з партнером або винесіть на стіл' : 'Discuss it with your partner or bring it to the table'}</span>
+        
+        <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
+        
         ${shareSection}
       </div>`;
+      
       document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
   }
 }
