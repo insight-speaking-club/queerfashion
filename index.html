@@ -121,8 +121,8 @@
   
   .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--dim); margin-bottom: 2rem; }
   
-  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6; font-weight: 300; max-width: 300px; margin: 0 auto; }
-  .hero-instructions span { color: var(--white); font-weight: 400; }
+  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--white); line-height: 1.6; font-weight: 400; max-width: 320px; margin: 0 auto; }
+  .hero-instructions span { color: var(--dim); font-weight: 300; display: block; margin-top: 0.5rem; }
 
   /* ── SCROLL INDICATOR ── */
   #scroll-ind {
@@ -157,8 +157,8 @@
   .row-header h3 { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.2; }
   .row-header span { color: var(--dim); font-size: 0.75rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; }
 
-  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Barlow Condensed'; }
-  .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
+  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.4; }
+  .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); flex-shrink: 0; }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 380px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
@@ -345,45 +345,45 @@
   <div class="hero-overlay"></div>
   <span class="club-label" id="secret-host-trigger">Queer Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
-  <p class="cover-title-italic">Discussion Questions.</p>
-  <p class="hero-instructions">Tap any card to get a question. Then talk.</p>
+  <p class="cover-title-italic">A Conversation in Several Parts.</p>
+  <p class="hero-instructions">Swipe through. Tap anything you like. Start talking.<span>There's no right place to start.</span></p>
 </header>
 
 <section id="closet-section">
   
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()">Give me a question</button>
+    <button class="surprise-btn" onclick="surpriseMe()">Pick one for me</button>
     <p class="scroll-down-hint">Or browse and choose your own ↓</p>
   </div>
 
   <div class="row-container">
-    <div class="row-header"><span>Start here</span><h3>Shorter questions. Easier words.</h3></div>
+    <div class="row-header"><span>A1-A2</span><h3>Warm up here.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> Simpler questions — and extra words and phrases to help you along.
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
   <div class="row-container">
-    <div class="row-header"><span>A look</span><h3>Talk about what someone wore — and why it mattered.</h3></div>
+    <div class="row-header"><span>Icons</span><h3>A look.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> Tap a card, see the story behind it, then discuss.
     </div>
     <div class="carousel-row" id="row-looks"></div>
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>A quote</span><h3>Something a designer or icon actually said.</h3></div>
+    <div class="row-header"><span>Quotes</span><h3>A quote.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> Something a designer or icon actually said.
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
   
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>A big question</span><h3>More challenging. Worth it.</h3></div>
+    <div class="row-header"><span>Big questions</span><h3>Go further.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> More challenging. Completely worth it.
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
