@@ -76,18 +76,6 @@
   #lightbox.show { display: flex; }
   #lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 
-  /* ── FINAL STAGE OVERLAY ── */
-  #final-stage { display: none; position: fixed; inset: 0; background: var(--black); z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2.5rem 2rem; cursor: default;}
-  #final-stage.show { display: flex; }
-  #final-stage-inner { max-width: 400px; pointer-events: none; }
-  .fs-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 3rem; cursor: pointer; pointer-events: auto; padding: 1rem; }
-  .fs-heading { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.2rem, 5vw, 1.8rem); color: var(--white); line-height: 1.4; margin-bottom: 0.8rem; }
-  .fs-divider { width: 1px; height: 50px; background: var(--border); margin: 2rem auto; }
-  .fs-body { font-family: 'Inter', sans-serif; font-weight: 300; font-size: clamp(0.9rem, 4vw, 1rem); color: var(--dim); line-height: 1.6; margin-bottom: 0.5rem; }
-  .fs-sub { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #666; line-height: 1.6; margin-bottom: 4rem; font-weight: 300; }
-  .fs-cta { display: inline-block; padding: 1.2rem 2.5rem; background: var(--white); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; border-radius: 50px; transition: opacity 0.3s; pointer-events: auto; }
-  .fs-cta:hover { opacity: 0.8; }
-
   /* ── COMPACT HERO SECTION ── */
   #hero-header { 
     padding: 6rem 1.8rem 3rem; 
@@ -109,7 +97,7 @@
   }
   .club-label, .cover-title, .cover-title-italic, .hero-instructions { position: relative; z-index: 2; }
 
-  .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
+  .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; cursor: pointer; }
   
   .cover-title { 
     font-family: 'Bodoni Moda', 'Playfair Display', serif; 
@@ -190,6 +178,69 @@
   .surprise-btn:hover { background: var(--white); color: var(--black); }
   .scroll-down-hint { text-align: center; color: var(--dim); font-size: 0.8rem; margin-top: 1.5rem; font-family: 'Inter', sans-serif; font-weight: 300; }
 
+  /* ── CLOSET ENTRY SECTION (INLINE) ── */
+  .final-closet-section { 
+    border-top: 1px solid var(--border); 
+    padding-top: 4rem; 
+    margin-top: 2rem; 
+  }
+  .closet-desc { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.9rem; 
+    color: var(--dim); 
+    margin-bottom: 2rem; 
+    font-weight: 300; 
+  }
+  .closet-door { 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.8rem; 
+    padding: 1.2rem 3rem; 
+    background: transparent; 
+    border: 1px solid var(--border); 
+    border-radius: 50px; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+  }
+  .closet-door.locked { 
+    border-color: rgba(255,255,255,0.1); 
+    color: #555; 
+    background: rgba(0,0,0,0.5); 
+  }
+  .closet-door:not(.locked) { 
+    color: var(--white); 
+    border-color: var(--white); 
+  }
+  .closet-door:not(.locked):hover { 
+    background: var(--white); 
+    color: var(--black); 
+  }
+
+  /* ── TOAST NOTIFICATION ── */
+  #toast-msg { 
+    position: fixed; 
+    bottom: -100px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background: var(--white); 
+    color: var(--black); 
+    padding: 1rem 2rem; 
+    border-radius: 50px; 
+    font-family: 'Barlow Condensed', sans-serif; 
+    font-weight: 500; 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+    transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    z-index: 10001; 
+    text-align: center; 
+    pointer-events: none; 
+    white-space: nowrap; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+  }
+  #toast-msg.show { bottom: 3rem; }
+
   /* ── MODAL ── */
   .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 100; transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; overflow-x: hidden; }
   .modal.open { top: 0; }
@@ -242,19 +293,6 @@
 </head>
 <body>
 
-<div id="final-stage">
-  <div id="final-stage-inner">
-    <p class="fs-eyebrow" id="fs-eyebrow-trigger">The last stage</p>
-    <p class="fs-heading">Thank you for sharing your thoughts.</p>
-    <div class="fs-divider"></div>
-    <p class="fs-body">You've been talking about what clothes mean.<br>Now make something that means something.</p>
-    <p class="fs-sub" id="fs-sub-text">Your outfit, your rules. No right answers.</p>
-    <div style="margin-top: 3rem;">
-      <a href="https://insight-speaking-club.github.io/create-your-outfit/" target="_blank" class="fs-cta" id="fs-cta-text">Enter the closet</a>
-    </div>
-  </div>
-</div>
-
 <div id="notif-backdrop" onclick="dismissNotif(event)"></div>
 <div id="notif-banner">
   <div id="notif-inner" onclick="openSharedModal()">
@@ -281,8 +319,8 @@
 <header id="hero-header">
   <img class="hero-bg-img" src="vogue.jpg" alt="" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
-  <span class="club-label">Queer Fashion Speaking Club</span>
-  <h1 class="cover-title" id="secret-title">VOGUE?</h1>
+  <span class="club-label" id="secret-host-trigger">Queer Fashion Speaking Club</span>
+  <h1 class="cover-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
   <p class="hero-instructions">Tap a card. Discuss with your partner or <span>share</span> with the table.</p>
 </header>
@@ -325,6 +363,20 @@
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
+
+  <div class="row-container final-closet-section" style="margin-bottom: 4rem; text-align: center; padding: 0 1.8rem;">
+    <div class="row-header">
+      <span class="context-label" style="margin-bottom: 0.5rem; display: block;">The Final Stage</span>
+      <h3 id="closet-title-text">Create your outfit.</h3>
+    </div>
+    <p class="closet-desc" id="closet-desc-text">You've talked the talk. Now it's time to build a look that speaks for itself.</p>
+    
+    <div id="closet-door" class="closet-door locked" onclick="handleClosetClick()">
+      <span class="lock-icon" id="closet-lock-icon">🔒</span>
+      <span class="door-text" id="closet-btn-text">Enter the closet</span>
+    </div>
+  </div>
+
 </section>
 
 <footer class="site-footer">
@@ -332,6 +384,8 @@
   <div class="footer-overlay"></div>
   <p class="footer-text" onclick="handleFooterTap(event)">The script is dead.<br>Dress accordingly.</p>
 </footer>
+
+<div id="toast-msg"></div>
 
 <div class="modal" id="item-modal">
   <div class="modal-nav">
@@ -348,7 +402,7 @@
 let isUA = false;
 let currentModalData = null;
 let currentSharedItem = null;
-let isCurrentlyDiscussingNotif = false; // Tracks if the popup is for a pre-existing active question
+let isCurrentlyDiscussingNotif = false; 
 
 function toggleLang(e) {
   if (e) e.stopPropagation();
@@ -358,10 +412,12 @@ function toggleLang(e) {
     btn.textContent = isUA ? 'Translate' : 'Перекласти';
   });
   
-  document.getElementById('fs-sub-text').textContent = isUA ? 'Твій образ, твої правила. Правильних відповідей немає.' : 'Your outfit, your rules. No right answers.';
-  document.getElementById('fs-cta-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
-  document.querySelector('.fs-heading').textContent = isUA ? 'Дякуємо, що поділились своїми думками.' : 'Thank you for sharing your thoughts.';
-  document.querySelector('.fs-body').innerHTML = isUA ? 'Ви говорили про те, що означає одяг.<br>Тепер створіть щось, що означає щось.' : 'You\'ve been talking about what clothes mean.<br>Now make something that means something.';
+  // Update the new inline closet section
+  document.getElementById('closet-title-text').textContent = isUA ? 'Створіть свій образ.' : 'Create your outfit.';
+  document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look.";
+  document.getElementById('closet-btn-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
+  
+  // Footer text
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
@@ -405,19 +461,19 @@ function playNotifSound() {
   sound.play().catch(e => console.log("Audio play failed (browser block):", e));
 }
 
-// ── SECRET HOST BUTTON LOGIC ──
+// ── SECRET HOST BUTTON LOGIC (Tap "Queer Fashion Speaking Club" 10 times) ──
 let finalStageActive = false;
-let titleTaps = 0, titleTimer = null;
-let closeTaps = 0, closeTimer = null;
+let hostTaps = 0, hostTimer = null;
 
-document.getElementById('fs-eyebrow-trigger').addEventListener('click', () => {
-  closeTaps++;
-  clearTimeout(closeTimer);
-  if (closeTaps >= 10) {
-    closeTaps = 0;
-    if (finalStageActive) pushFinalStage(false);
+document.getElementById('secret-host-trigger').addEventListener('click', () => {
+  hostTaps++;
+  clearTimeout(hostTimer);
+  if (hostTaps >= 10) {
+    hostTaps = 0;
+    pushFinalStage(!finalStageActive);
+    showToast(isUA ? (finalStageActive ? "Розблоковано" : "Заблоковано") : (finalStageActive ? "Unlocked" : "Locked"));
   } else {
-    closeTimer = setTimeout(() => { closeTaps = 0; }, 1500);
+    hostTimer = setTimeout(() => { hostTaps = 0; }, 1500);
   }
 });
 
@@ -432,7 +488,40 @@ function pushFinalStage(active) {
 
 function applyFinalStage(active) {
   finalStageActive = active;
-  document.getElementById('final-stage').classList.toggle('show', active);
+  
+  const door = document.getElementById('closet-door');
+  const icon = document.getElementById('closet-lock-icon');
+  
+  if (door && icon) {
+    if (active) {
+      door.classList.remove('locked');
+      icon.textContent = '🔓';
+    } else {
+      door.classList.add('locked');
+      icon.textContent = '🔒';
+    }
+  }
+}
+
+// ── CLOSET DOOR CLICK LOGIC & TOAST ──
+let toastTimer;
+
+function handleClosetClick() {
+  if (!finalStageActive) {
+    showToast(isUA 
+      ? "Ви ще не готові. Зачекайте, поки хост відкриє двері." 
+      : "You're not ready yet. Wait until the host opens it.");
+  } else {
+    window.open("https://insight-speaking-club.github.io/create-your-outfit/", "_blank");
+  }
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast-msg');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 3000);
 }
 
 // ── SURPRISE ME ──
@@ -568,14 +657,12 @@ function renderModalContent(type, index) {
       `<div class="look-thumb ${i===0?'active':''}" onclick="switchImage('${img}', this)"><img src="${img}" onerror="this.style.display='none'"></div>`
     ).join('');
     
-    const ruAttr = (item.designer === "RuPaul") ? `id="secret-rupaul-trigger" style="cursor:pointer;"` : '';
-
     c.innerHTML = `
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
         <p style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed';">${item.designer}</p>
-        <h2 ${ruAttr} style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
+        <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
         
         <div class="context-box">
           <span class="context-label">${isUA ? 'Контекст' : 'The Context'}</span>
@@ -588,21 +675,6 @@ function renderModalContent(type, index) {
       </div>`;
     
     document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
-
-    if (item.designer === "RuPaul") {
-      const ruEl = document.getElementById('secret-rupaul-trigger');
-      ruEl.addEventListener('click', () => {
-        titleTaps++;
-        clearTimeout(titleTimer);
-        if (titleTaps >= 10) {
-          titleTaps = 0;
-          closeModal();
-          if (!finalStageActive) pushFinalStage(true);
-        } else {
-          titleTimer = setTimeout(() => { titleTaps = 0; }, 1500);
-        }
-      });
-    }
 
   } else if (type === 'beginner') {
     const item = beginners[index];
@@ -690,7 +762,6 @@ Promise.all([
 ]).then(([qData, stageData]) => {
   if (qData) {
     lastTs = qData.ts;
-    // Check if the question was shared within the last 3 hours (10800000 ms) AND hasn't been cleared
     if (qData.question_en && Date.now() - qData.ts < 10800000) {
       showNotification({ en: qData.question_en || qData.question, ua: qData.question_ua || qData.question }, qData.type, qData.index, true);
     }
@@ -738,7 +809,6 @@ function shareWithEveryone(textEN, textUA, type, index, btnEl) {
   
   showNotification({ en: textEN, ua: textUA }, type, index, false);
 
-  // Reset the share button after 5 seconds
   setTimeout(() => {
     if (btnEl) {
       btnEl.textContent = originalText;
@@ -761,7 +831,6 @@ function showNotification(questionObj, type, index, isCurrentContext = false) {
   document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
   
-  // Play sound only if it's a new push (not the initial sync load)
   if (!isCurrentContext) {
     playNotifSound();
     if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
