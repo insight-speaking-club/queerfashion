@@ -85,7 +85,6 @@
   #global-redirect-screen.show { display: flex; flex-direction: column; }
   .redirect-content h1 { font-family: 'Bodoni Moda', serif; font-size: clamp(2rem, 8vw, 3.5rem); margin-bottom: 1rem; cursor: pointer; color: var(--white); user-select: none; }
   .redirect-content p { font-family: 'Inter', sans-serif; font-size: 1.1rem; color: var(--dim); margin-bottom: 4rem; font-weight: 300; }
-  .redirect-content h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; letter-spacing: 0.15em; margin-bottom: 2.5rem; text-transform: uppercase; color: var(--white); }
 
   /* ── COMPACT HERO SECTION ── */
   #hero-header { 
@@ -211,6 +210,10 @@
     background: transparent; 
     border: 1px solid var(--border); 
     border-radius: 50px; 
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
     cursor: pointer; 
     transition: all 0.3s ease; 
   }
@@ -306,11 +309,10 @@
 
 <div id="global-redirect-screen">
   <div class="redirect-content">
-    <h1 id="redirect-thanks" onclick="handleRevertTap()">Thank you for sharing your thoughts.</h1>
-    <p id="redirect-desc">Thank you for speaking and coming to the event.</p>
-    <h2 id="redirect-action">Now let's make something.</h2>
+    <h1 id="redirect-thanks" onclick="handleRevertTap()">You did it.</h1>
+    <p id="redirect-desc">Now create an outfit that says something about you.</p>
     <div class="closet-door" onclick="window.open('https://insight-speaking-club.github.io/create-your-outfit/', '_blank')" style="border-color: var(--white); color: var(--white);">
-      <span id="redirect-btn-text">Enter the closet</span>
+      <span id="redirect-btn-text">Open the closet</span>
     </div>
   </div>
 </div>
@@ -319,12 +321,12 @@
 <div id="notif-banner">
   <div id="notif-inner" onclick="openSharedModal()">
     <div id="notif-header">
-      <div id="notif-label">Brought to the table</div>
+      <div id="notif-label">Someone shared a question</div>
       <button id="notif-dismiss" onclick="dismissNotif(event)">✕</button>
     </div>
     <div id="notif-text"></div>
     <div>
-      <span class="tap-hint">Tap to open</span>
+      <span class="tap-hint" id="notif-tap-hint">Tap to see it</span>
     </div>
   </div>
 </div>
@@ -344,18 +346,18 @@
   <span class="club-label" id="secret-host-trigger">Queer Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
-  <p class="hero-instructions">Tap a card. Discuss with your partner or <span>share</span> with the table.</p>
+  <p class="hero-instructions">Tap any card to get a question. Then talk.</p>
 </header>
 
 <section id="closet-section">
   
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()">Pick a question for me</button>
-    <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
+    <button class="surprise-btn" onclick="surpriseMe()">Give me a question</button>
+    <p class="scroll-down-hint">Or choose one below ↓</p>
   </div>
 
   <div class="row-container">
-    <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
+    <div class="row-header"><span>Start here</span><h3>Shorter questions. Easier words.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -363,7 +365,7 @@
   </div>
 
   <div class="row-container">
-    <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
+    <div class="row-header"><span>A look</span><h3>Talk about what someone wore — and why it mattered.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -371,7 +373,7 @@
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
+    <div class="row-header"><span>A quote</span><h3>Something a designer or icon actually said.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -379,7 +381,7 @@
   </div>
   
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
+    <div class="row-header"><span>A big question</span><h3>More challenging. Worth it.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -395,7 +397,7 @@
     
     <div id="closet-door" class="closet-door locked" onclick="handleClosetClick()">
       <span class="lock-icon" id="closet-lock-icon">🔒</span>
-      <span class="door-text" id="closet-btn-text">Enter the closet</span>
+      <span class="door-text" id="closet-btn-text">Open the closet</span>
     </div>
   </div>
 
@@ -436,18 +438,18 @@ function toggleLang(e) {
   
   // Update the new inline closet section
   document.getElementById('closet-title-text').textContent = isUA ? 'Створіть свій образ.' : 'Create your outfit.';
-  document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look.";
-  document.getElementById('closet-btn-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
+  document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look that speaks for itself.";
+  document.getElementById('closet-btn-text').textContent = isUA ? 'Відкрити гардероб' : 'Open the closet';
   
   // Footer text
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
   // Global Redirect text
-  document.getElementById('redirect-thanks').textContent = isUA ? 'Дякуємо, що поділилися своїми думками.' : 'Thank you for sharing your thoughts.';
-  document.getElementById('redirect-desc').textContent = isUA ? 'Дякуємо за ваші виступи та за те, що прийшли на захід.' : 'Thank you for speaking and coming to the event.';
-  document.getElementById('redirect-action').textContent = isUA ? 'А ТЕПЕР ДАВАЙТЕ ЩОСЬ СТВОРИМО.' : 'NOW LET\'S MAKE SOMETHING.';
-  document.getElementById('redirect-btn-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
+  document.getElementById('redirect-thanks').textContent = isUA ? 'Ви це зробили.' : 'You did it.';
+  document.getElementById('redirect-desc').textContent = isUA ? 'Тепер створіть образ, який розкаже щось про вас.' : 'Now create an outfit that says something about you.';
+  document.getElementById('redirect-btn-text').textContent = isUA ? 'Відкрити гардероб' : 'Open the closet';
 
+  // Modal Render updates
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
   
   // Handle translation of the notification banner text and label if it's open
@@ -456,8 +458,10 @@ function toggleLang(e) {
     const labelEl = document.getElementById('notif-label');
     labelEl.textContent = isCurrentlyDiscussingNotif 
       ? (isUA ? "Зараз обговорюють" : "Currently discussing")
-      : (isUA ? "Винесено на стіл" : "Brought to the table");
+      : (isUA ? "Хтось поділився запитанням" : "Someone shared a question");
   }
+  
+  document.getElementById('notif-tap-hint').textContent = isUA ? "Торкніться, щоб побачити" : "Tap to see it";
 }
 
 // Hide scroll indicator on scroll
@@ -591,8 +595,8 @@ let toastTimer;
 function handleClosetClick() {
   if (!finalStageActive) {
     showToast(isUA 
-      ? "Ви ще не готові. Зачекайте, поки хост відкриє двері." 
-      : "You're not ready yet. Wait until the host opens it.");
+      ? "Хост відкриє це пізніше — поки що продовжуйте спілкуватися." 
+      : "The host will open this later — keep talking for now.");
   } else {
     window.open("https://insight-speaking-club.github.io/create-your-outfit/", "_blank");
   }
@@ -726,10 +730,13 @@ function renderModalContent(type, index) {
   const c = document.getElementById('modal-body-container');
   let promptEN = '', promptUA = '';
   
+  const shareBtnText = isUA ? 'Надіслати всій групі' : 'Send to the whole group';
+  const shareExpText = isUA ? 'Хочете обговорити це з усіма? Натисніть кнопку — вона надішле це запитання на всі екрани в кімнаті.' : 'Want to discuss this with everyone? Tap the button — it sends this question to all screens in the room.';
+  
   const shareSection = `
     <div class="share-container">
-      <button id="dynamic-share-btn" class="share-to-table-btn">${isUA ? 'Поділитися за столом' : 'Share with the table'}</button>
-      <span class="share-explainer">${isUA ? 'Якщо ви натиснете цю кнопку, всі, хто користується сайтом, побачать спливаюче вікно з обраним вами питанням.' : 'If you click this button, everyone using the website will see a pop-up with the question you chose.'}</span>
+      <button id="dynamic-share-btn" class="share-to-table-btn">${shareBtnText}</button>
+      <span class="share-explainer">${shareExpText}</span>
     </div>`;
 
   if (type === 'look') {
@@ -775,14 +782,14 @@ function renderModalContent(type, index) {
         <h2 style="font-family:'Inter',sans-serif; font-weight:400; font-size:1.6rem; line-height:1.4; margin-bottom:3rem;">${isUA ? item.text_ua : item.text_en}</h2>
         
         <div class="context-box" style="margin-bottom: 2rem;">
-          <h4 class="context-label">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
+          <h4 class="context-label">${isUA ? 'Корисні слова' : 'Helpful words'}</h4>
           <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${vocabList}
           </ul>
         </div>
 
         <div class="context-box">
-          <h4 class="context-label">${isUA ? 'Як почати речення' : 'How to start'}</h4>
+          <h4 class="context-label">${isUA ? 'Спробуйте почати з' : 'Try starting with'}</h4>
           <ul style="list-style:none; padding-left:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${structuresList}
           </ul>
@@ -921,7 +928,7 @@ function showNotification(questionObj, type, index, isCurrentContext = false) {
   const labelEl = document.getElementById('notif-label');
   labelEl.textContent = isCurrentContext 
     ? (isUA ? "Зараз обговорюють" : "Currently discussing")
-    : (isUA ? "Винесено на стіл" : "Brought to the table");
+    : (isUA ? "Хтось поділився запитанням" : "Someone shared a question");
   
   document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
