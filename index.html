@@ -48,7 +48,7 @@
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
   .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
-  /* ── NOTIFICATION MODAL (LIGHT & CEREMONIAL) ── */
+  /* ── NOTIFICATION MODAL (CENTERED) ── */
   #notif-backdrop {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px);
   }
@@ -56,25 +56,20 @@
   
   #notif-banner { 
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 9999; 
-    width: 90%; max-width: 420px; opacity: 0; pointer-events: none; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+    width: 90%; max-width: 400px; opacity: 0; pointer-events: none; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
   }
   #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   
   #notif-inner { 
-    background: linear-gradient(135deg, #fdfbf9 0%, #e3ded8 100%); 
-    border: 1px solid rgba(255,255,255,0.7); 
-    border-radius: 8px;
-    padding: 2.5rem 2rem; 
-    display: flex; flex-direction: column; gap: 1rem; 
-    box-shadow: 0 40px 80px rgba(0,0,0,0.9), inset 0 0 20px rgba(255,255,255,0.5); 
-    cursor: pointer; text-align: center;
+    background: var(--grey); border: 1px solid var(--border); padding: 2rem; 
+    display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 30px 60px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
   }
-  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
-  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #666; display: flex; align-items: center; gap: 0.5rem;}
-  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; color: var(--black); line-height: 1.4; margin: 1rem 0; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
-  #notif-dismiss { background: none; border: none; color: #999; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
-  #notif-dismiss:hover { color: var(--black); }
-  .tap-hint { color: #666; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid rgba(0,0,0,0.2); padding-bottom: 2px;}
+  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: flex; align-items: center; gap: 0.5rem;}
+  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--white); line-height: 1.5; margin: 1rem 0; }
+  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
+  #notif-dismiss:hover { color: var(--white); }
+  .tap-hint { color: var(--dim); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid var(--border); padding-bottom: 2px;}
 
   /* ── LIGHTBOX ── */
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
@@ -88,10 +83,6 @@
     text-align: center; 
     position: relative; 
     overflow: hidden; 
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
   .hero-bg-img {
     position: absolute; inset: 0;
@@ -123,39 +114,31 @@
   .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6; font-weight: 300; max-width: 300px; margin: 0 auto; }
   .hero-instructions span { color: var(--white); font-weight: 400; }
 
-  /* ── SCROLL INDICATOR (PROMINENT ARROW) ── */
+  /* ── SCROLL INDICATOR ── */
   #scroll-ind {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
     z-index: 50;
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
+    gap: 0.5rem;
+    color: var(--dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
     transition: opacity 0.4s ease;
-    padding: 1rem;
+    pointer-events: none;
   }
-  #scroll-ind .arrow {
-    width: 2px;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--white));
-    position: relative;
+  #scroll-ind .line {
+    width: 1px;
+    height: 30px;
+    background: var(--dim);
     animation: drift 2s infinite ease-in-out;
   }
-  #scroll-ind .arrow::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 10px;
-    height: 10px;
-    border-bottom: 2px solid var(--white);
-    border-right: 2px solid var(--white);
-  }
-  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(12px); opacity: 1; } }
+  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.3; } 50% { transform: translateY(8px); opacity: 0.8; } }
 
   /* ── MAIN CONTENT ── */
   #closet-section { padding: 2rem 0 0 0; background: var(--black); }
@@ -328,6 +311,11 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
+<div id="scroll-ind">
+  <span>Scroll</span>
+  <div class="line"></div>
+</div>
+
 <header id="hero-header">
   <img class="hero-bg-img" src="vogue.jpg" alt="" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
@@ -335,10 +323,6 @@
   <h1 class="cover-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
   <p class="hero-instructions">Tap a card. Discuss with your partner or <span>share</span> with the table.</p>
-  
-  <div id="scroll-ind" onclick="document.getElementById('row-looks').scrollIntoView({behavior: 'smooth', block: 'start'})">
-    <div class="arrow"></div>
-  </div>
 </header>
 
 <section id="closet-section">
@@ -348,24 +332,24 @@
     <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
-  <div class="row-container" id="row-a1a2">
-    <div class="row-header"><span>A1-A2 Level</span><h3>You can start here.</h3></div>
+  <div class="row-container">
+    <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
-  <div class="row-container" id="row-looks">
+  <div class="row-container">
     <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
-    <div class="carousel-row" id="row-looks-carousel"></div>
+    <div class="carousel-row" id="row-looks"></div>
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Words that land</span><h3>Something a designer or icon actually said. Tap to see more.</h3></div>
+    <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -453,10 +437,8 @@ window.addEventListener('scroll', () => {
   const indicator = document.getElementById('scroll-ind');
   if (window.scrollY > 50) {
     indicator.style.opacity = '0';
-    indicator.style.pointerEvents = 'none';
   } else {
     indicator.style.opacity = '1';
-    indicator.style.pointerEvents = 'auto';
   }
 });
 
@@ -632,7 +614,7 @@ function populateRow(containerId, data, type) {
 }
 
 populateRow('row-beginners', beginners, 'beginner');
-populateRow('row-looks-carousel', looks, 'look');
+populateRow('row-looks', looks, 'look');
 populateRow('row-quotes', quotes, 'quote');
 populateRow('row-provocations', provocations, 'provocation');
 
