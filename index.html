@@ -161,10 +161,10 @@
   #closet-section { padding: 2rem 0 0 0; background: var(--black); }
   .row-container { margin-bottom: 6rem; }
   .row-header { padding: 0 1.8rem; margin-bottom: 1.5rem; }
-  .row-header h3 { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.2; }
-  .row-header span { color: var(--dim); font-size: 0.75rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; }
+  .row-header h3 { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.2; margin-top: 0.5rem; }
+  .row-header span { color: var(--dim); font-size: 0.75rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.4rem; }
 
-  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Barlow Condensed'; }
+  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Barlow Condensed'; }
   .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 380px; align-items: center; padding-left: 1.8rem; }
@@ -368,33 +368,45 @@
   </div>
 
   <div class="row-container" id="row-a1a2">
-    <div class="row-header"><span>A1-A2 Level</span><h3>You can start here.</h3></div>
+    <div class="row-header">
+      <span id="r1-span">A1–A2 level.</span>
+      <h3 id="r1-h3">Simple questions with vocabulary help in Ukrainian and English.</h3>
+    </div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> <span class="swipe-hint">Swipe to browse. Tap a card to open it.</span>
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
   <div class="row-container" id="row-looks">
-    <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
+    <div class="row-header">
+      <span id="r2-span">Pick a look and discuss it.</span>
+      <h3 id="r2-h3">Each card has context and a discussion question inside.</h3>
+    </div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> <span class="swipe-hint">Swipe to browse. Tap a card to open it.</span>
     </div>
     <div class="carousel-row" id="row-looks-carousel"></div>
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Words that land</span><h3>Something a designer or icon actually said. Tap to see more.</h3></div>
+    <div class="row-header">
+      <span id="r3-span">Read the quote. Discuss it.</span>
+      <h3 id="r3-h3">Something a designer or icon actually said — with a question attached.</h3>
+    </div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> <span class="swipe-hint">Swipe to browse. Tap a card to open it.</span>
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
   
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
+    <div class="row-header">
+      <span id="r4-span">These ones will start an argument.</span>
+      <h3 id="r4-h3">A statement, some context, and one uncomfortable question.</h3>
+    </div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Swipe to explore
+      <div class="hint-line"></div> <span class="swipe-hint">Swipe to browse. Tap a card to open it.</span>
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
@@ -456,6 +468,23 @@ function toggleLang(e) {
     btn.textContent = isUA ? 'Translate' : 'Перекласти';
   });
   
+  // Row Headers copy
+  document.getElementById('r1-span').textContent = isUA ? 'Рівень A1–A2.' : 'A1–A2 level.';
+  document.getElementById('r1-h3').textContent = isUA ? 'Прості запитання з підказками лексики українською та англійською.' : 'Simple questions with vocabulary help in Ukrainian and English.';
+  
+  document.getElementById('r2-span').textContent = isUA ? 'Оберіть образ та обговоріть його.' : 'Pick a look and discuss it.';
+  document.getElementById('r2-h3').textContent = isUA ? 'Кожна картка містить контекст та питання для обговорення.' : 'Each card has context and a discussion question inside.';
+  
+  document.getElementById('r3-span').textContent = isUA ? 'Прочитайте цитату. Обговоріть її.' : 'Read the quote. Discuss it.';
+  document.getElementById('r3-h3').textContent = isUA ? 'Те, що дійсно сказав дизайнер або ікона стилю — з доданим питанням.' : 'Something a designer or icon actually said — with a question attached.';
+  
+  document.getElementById('r4-span').textContent = isUA ? 'Ці питання можуть викликати суперечку.' : 'These ones will start an argument.';
+  document.getElementById('r4-h3').textContent = isUA ? 'Твердження, трохи контексту та одне незручне запитання.' : 'A statement, some context, and one uncomfortable question.';
+
+  document.querySelectorAll('.swipe-hint').forEach(el => {
+    el.textContent = isUA ? 'Гортайте. Натисніть на картку, щоб відкрити.' : 'Swipe to browse. Tap a card to open it.';
+  });
+
   // Content updates
   document.getElementById('closet-title-text').textContent = isUA ? 'Створіть свій образ.' : 'Create your outfit.';
   document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look.";
@@ -747,7 +776,7 @@ function renderModalContent(type, index) {
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
-        <p style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed';">${item.designer}</p>
+        <p id="designer-credit-tap" style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed'; cursor:default; transition: color 0.2s ease;">${item.designer}</p>
         <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
         
         <div class="context-box">
@@ -760,6 +789,36 @@ function renderModalContent(type, index) {
         ${shareSection}
       </div>`;
     
+    // SECRET RUPAUL TRIGGER
+    if (item.designer === 'RuPaul') {
+      let ruTaps = 0, ruTimer = null;
+      const ruEl = document.getElementById('designer-credit-tap');
+      if (ruEl) {
+        ruEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          ruTaps++;
+          ruEl.style.color = `rgba(244,244,244,${0.3 + (ruTaps / 10) * 0.7})`;
+          clearTimeout(ruTimer);
+          if (ruTaps >= 10) {
+            ruTaps = 0;
+            ruEl.style.color = '';
+            closeModal();
+            // Trigger global overlay via Firebase
+            fetch(STAGE_URL, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ active: true, closet_open: true, ts: Date.now() })
+            });
+          } else {
+            ruTimer = setTimeout(() => {
+              ruTaps = 0;
+              ruEl.style.color = '';
+            }, 2000);
+          }
+        });
+      }
+    }
+
     document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
   } else if (type === 'beginner') {
