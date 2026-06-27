@@ -315,8 +315,8 @@
   }
   #global-closet-overlay.open { transform: translateY(0); }
   .gco-content { text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center;}
-  #gco-line1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); color: var(--white); margin-bottom: 0.5rem; }
-  #gco-line2 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); color: var(--white); margin-bottom: 3rem; transition: color 0.2s ease; cursor: default; }
+  #gco-line1, #gco-line1b, #gco-line1c { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.1rem, 3.5vw, 1.6rem); color: #aaa; line-height: 1.6; margin-bottom: 0.3rem; }
+  #gco-line2 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.6rem, 5vw, 2.5rem); color: var(--white); margin-bottom: 3rem; transition: color 0.2s ease; cursor: default; }
   .gco-btn {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 1.2rem 3rem; background: var(--white); color: var(--black);
@@ -444,11 +444,12 @@
   <div id="modal-body-container"></div>
 </div>
 
-<!-- THE GLOBAL CLOSET OVERLAY -->
 <div id="global-closet-overlay">
   <div class="gco-content">
-    <p id="gco-line1">The conversation is over.</p>
-    <p id="gco-line2">The dressing begins.</p>
+    <p id="gco-line1">Every day you look in the mirror</p>
+    <p id="gco-line1b">and decide who you're allowed to be.</p>
+    <p id="gco-line1c">Tonight, no one's deciding that for you.</p>
+    <p id="gco-line2">The script is dead. Dress accordingly.</p>
     <a href="https://insight-speaking-club.github.io/create-your-outfit/" target="_blank" class="gco-btn" id="gco-btn">Open the Dream Closet</a>
   </div>
 </div>
@@ -492,8 +493,10 @@ function toggleLang(e) {
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
   // Global Overlay Translation
-  document.getElementById('gco-line1').textContent = isUA ? 'Розмова закінчена.' : 'The conversation is over.';
-  document.getElementById('gco-line2').textContent = isUA ? 'Починається підбір образу.' : 'The dressing begins.';
+  document.getElementById('gco-line1').textContent = isUA ? 'Щодня ти дивишся у дзеркало' : 'Every day you look in the mirror';
+  document.getElementById('gco-line1b').textContent = isUA ? 'і вирішуєш, ким тобі дозволено бути.' : "and decide who you're allowed to be.";
+  document.getElementById('gco-line1c').textContent = isUA ? 'Сьогодні ввечері це вирішуєш тільки ти.' : "Tonight, no one's deciding that for you.";
+  document.getElementById('gco-line2').textContent = isUA ? 'Сценарій мертвий. Одягайся відповідно.' : 'The script is dead. Dress accordingly.';
   document.getElementById('gco-btn').textContent = isUA ? 'Відкрити гардероб' : 'Open the Dream Closet';
 
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
