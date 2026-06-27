@@ -48,7 +48,7 @@
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
   .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
-  /* ── NOTIFICATION MODAL (CENTERED) ── */
+  /* ── NOTIFICATION MODAL (LIGHT & CEREMONIAL) ── */
   #notif-backdrop {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px);
   }
@@ -56,20 +56,25 @@
   
   #notif-banner { 
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 9999; 
-    width: 90%; max-width: 400px; opacity: 0; pointer-events: none; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+    width: 90%; max-width: 420px; opacity: 0; pointer-events: none; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
   }
   #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   
   #notif-inner { 
-    background: var(--grey); border: 1px solid var(--border); padding: 2rem; 
-    display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 30px 60px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
+    background: linear-gradient(135deg, #fdfbf9 0%, #e3ded8 100%); 
+    border: 1px solid rgba(255,255,255,0.7); 
+    border-radius: 8px;
+    padding: 2.5rem 2rem; 
+    display: flex; flex-direction: column; gap: 1rem; 
+    box-shadow: 0 40px 80px rgba(0,0,0,0.9), inset 0 0 20px rgba(255,255,255,0.5); 
+    cursor: pointer; text-align: center;
   }
-  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: flex; align-items: center; gap: 0.5rem;}
-  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--white); line-height: 1.5; margin: 1rem 0; }
-  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
-  #notif-dismiss:hover { color: var(--white); }
-  .tap-hint { color: var(--dim); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid var(--border); padding-bottom: 2px;}
+  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
+  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #666; display: flex; align-items: center; gap: 0.5rem;}
+  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; color: var(--black); line-height: 1.4; margin: 1rem 0; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
+  #notif-dismiss { background: none; border: none; color: #999; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
+  #notif-dismiss:hover { color: var(--black); }
+  .tap-hint { color: #666; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid rgba(0,0,0,0.2); padding-bottom: 2px;}
 
   /* ── LIGHTBOX ── */
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
@@ -83,6 +88,10 @@
     text-align: center; 
     position: relative; 
     overflow: hidden; 
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .hero-bg-img {
     position: absolute; inset: 0;
@@ -114,31 +123,39 @@
   .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6; font-weight: 300; max-width: 300px; margin: 0 auto; }
   .hero-instructions span { color: var(--white); font-weight: 400; }
 
-  /* ── SCROLL INDICATOR ── */
+  /* ── SCROLL INDICATOR (PROMINENT ARROW) ── */
   #scroll-ind {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 50;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    color: var(--dim);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+    cursor: pointer;
     transition: opacity 0.4s ease;
-    pointer-events: none;
+    padding: 1rem;
   }
-  #scroll-ind .line {
-    width: 1px;
-    height: 30px;
-    background: var(--dim);
+  #scroll-ind .arrow {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+    position: relative;
     animation: drift 2s infinite ease-in-out;
   }
-  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.3; } 50% { transform: translateY(8px); opacity: 0.8; } }
+  #scroll-ind .arrow::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid var(--white);
+    border-right: 2px solid var(--white);
+  }
+  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(12px); opacity: 1; } }
 
   /* ── MAIN CONTENT ── */
   #closet-section { padding: 2rem 0 0 0; background: var(--black); }
@@ -289,6 +306,90 @@
     z-index: 1;
   }
   .footer-text { font-family: 'Bodoni Moda', serif; font-weight: 400; font-style: italic; font-size: clamp(1.8rem, 8vw, 3rem); color: var(--white); line-height: 1.2; position: relative; z-index: 2; }
+  
+  /* ── OUTFIT OVERLAY ── */
+  #outfit-overlay {
+    position: fixed;
+    inset: 0;
+    background: #030303;
+    z-index: 50000;
+    transform: translateY(100%);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  #outfit-overlay.open {
+    transform: translateY(0);
+  }
+
+  #outfit-topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 1.2rem 1.8rem;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(3,3,3,0.9) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  #outfit-done-btn {
+    pointer-events: auto;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+  }
+  #outfit-done-btn:hover { color: var(--white); }
+
+  #outfit-iframe {
+    width: 100%;
+    flex: 1;
+    border: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  #outfit-iframe.visible { opacity: 1; }
+
+  /* ── CURTAIN MESSAGE (entrance) ── */
+  #outfit-curtain-msg,
+  #outfit-farewell-msg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    pointer-events: none;
+    z-index: 5;
+  }
+  #outfit-curtain-msg p,
+  #outfit-farewell-msg p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    text-align: center;
+    padding: 0 2rem;
+  }
+  #outfit-curtain-msg p.visible,
+  #outfit-farewell-msg p.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #outfit-farewell-msg { display: none; }
 </style>
 </head>
 <body>
@@ -311,11 +412,6 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<div id="scroll-ind">
-  <span>Scroll</span>
-  <div class="line"></div>
-</div>
-
 <header id="hero-header">
   <img class="hero-bg-img" src="vogue.jpg" alt="" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
@@ -323,6 +419,10 @@
   <h1 class="cover-title">VOGUE?</h1>
   <p class="cover-title-italic">Discussion Questions.</p>
   <p class="hero-instructions">Tap a card. Discuss with your partner or <span>share</span> with the table.</p>
+  
+  <div id="scroll-ind" onclick="document.getElementById('row-looks').scrollIntoView({behavior: 'smooth', block: 'start'})">
+    <div class="arrow"></div>
+  </div>
 </header>
 
 <section id="closet-section">
@@ -332,24 +432,24 @@
     <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
-  <div class="row-container">
-    <div class="row-header"><span>A1-A2 Level</span><h3>Start here if you want an easy entry.</h3></div>
+  <div class="row-container" id="row-a1a2">
+    <div class="row-header"><span>A1-A2 Level</span><h3>You can start here.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
-  <div class="row-container">
+  <div class="row-container" id="row-looks">
     <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
-    <div class="carousel-row" id="row-looks"></div>
+    <div class="carousel-row" id="row-looks-carousel"></div>
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Words that land</span><h3>or you could talk about A QUOTE you like,</h3></div>
+    <div class="row-header"><span>Words that land</span><h3>Something a designer or icon actually said. Tap to see more.</h3></div>
     <div class="elegant-scroll-hint">
       <div class="hint-line"></div> Swipe to explore
     </div>
@@ -397,6 +497,21 @@
   <div id="modal-body-container"></div>
 </div>
 
+<div id="outfit-overlay">
+  <div id="outfit-curtain-msg">
+    <p id="outfit-curtain-line1">The conversation is over.</p>
+    <p id="outfit-curtain-line2">The dressing begins.</p>
+  </div>
+  <div id="outfit-farewell-msg">
+    <p id="outfit-farewell-line1">Thank you for speaking.</p>
+    <p id="outfit-farewell-line2">Come back when you're ready.</p>
+  </div>
+  <iframe id="outfit-iframe" src="" allow="fullscreen"></iframe>
+  <div id="outfit-topbar">
+    <span id="outfit-done-btn">Done ✕</span>
+  </div>
+</div>
+
 <script>
 // ── LANGUAGE STATE ──
 let isUA = false;
@@ -437,8 +552,10 @@ window.addEventListener('scroll', () => {
   const indicator = document.getElementById('scroll-ind');
   if (window.scrollY > 50) {
     indicator.style.opacity = '0';
+    indicator.style.pointerEvents = 'none';
   } else {
     indicator.style.opacity = '1';
+    indicator.style.pointerEvents = 'auto';
   }
 });
 
@@ -512,7 +629,7 @@ function handleClosetClick() {
       ? "Ви ще не готові. Зачекайте, поки хост відкриє двері." 
       : "You're not ready yet. Wait until the host opens it.");
   } else {
-    window.open("https://insight-speaking-club.github.io/create-your-outfit/", "_blank");
+    openOutfitOverlay();
   }
 }
 
@@ -614,7 +731,7 @@ function populateRow(containerId, data, type) {
 }
 
 populateRow('row-beginners', beginners, 'beginner');
-populateRow('row-looks', looks, 'look');
+populateRow('row-looks-carousel', looks, 'look');
 populateRow('row-quotes', quotes, 'quote');
 populateRow('row-provocations', provocations, 'provocation');
 
@@ -661,7 +778,7 @@ function renderModalContent(type, index) {
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
-        <p style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed';">${item.designer}</p>
+        <p id="designer-credit-tap" style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed'; cursor:default; transition: color 0.2s ease;">${item.designer}</p>
         <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
         
         <div class="context-box">
@@ -673,6 +790,29 @@ function renderModalContent(type, index) {
         
         ${shareSection}
       </div>`;
+      
+      if (type === 'look' && looks[index].designer === 'RuPaul') {
+        let ruTaps = 0, ruTimer = null;
+        const ruEl = document.getElementById('designer-credit-tap');
+        ruEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          ruTaps++;
+          // Glow feedback
+          ruEl.style.color = `rgba(244,244,244,${0.3 + (ruTaps / 10) * 0.7})`;
+          clearTimeout(ruTimer);
+          if (ruTaps >= 10) {
+            ruTaps = 0;
+            ruEl.style.color = '';
+            closeModal();
+            setTimeout(() => openOutfitOverlay(), 400);
+          } else {
+            ruTimer = setTimeout(() => {
+              ruTaps = 0;
+              ruEl.style.color = '';
+            }, 2000);
+          }
+        });
+      }
     
     document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
@@ -875,6 +1015,99 @@ function openSharedModal() {
 
 function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('show'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('show'); }
+
+// ── OUTFIT OVERLAY ──
+let outfitExitTaps = 0, outfitExitTimer = null;
+
+function openOutfitOverlay() {
+  const overlay = document.getElementById('outfit-overlay');
+  const curtain = document.getElementById('outfit-curtain-msg');
+  const farewell = document.getElementById('outfit-farewell-msg');
+  const iframe = document.getElementById('outfit-iframe');
+  const line1 = document.getElementById('outfit-curtain-line1');
+  const line2 = document.getElementById('outfit-curtain-line2');
+
+  // Reset state
+  iframe.src = '';
+  iframe.classList.remove('visible');
+  curtain.style.display = 'flex';
+  farewell.style.display = 'none';
+  line1.classList.remove('visible');
+  line2.classList.remove('visible');
+
+  // Open overlay
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Entrance sequence
+  setTimeout(() => { line1.classList.add('visible'); }, 300);
+  setTimeout(() => { line2.classList.add('visible'); }, 800);
+  setTimeout(() => {
+    line1.classList.remove('visible');
+    line2.classList.remove('visible');
+  }, 2200);
+  setTimeout(() => {
+    curtain.style.display = 'none';
+    iframe.src = 'https://insight-speaking-club.github.io/create-your-outfit/';
+    setTimeout(() => { iframe.classList.add('visible'); }, 300);
+  }, 2800);
+
+  // Attach exit tap counter to overlay
+  outfitExitTaps = 0;
+  overlay.addEventListener('click', handleOutfitExitTap);
+  document.getElementById('outfit-done-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeOutfitOverlay();
+  });
+}
+
+function handleOutfitExitTap(e) {
+  outfitExitTaps++;
+  clearTimeout(outfitExitTimer);
+  if (outfitExitTaps >= 10) {
+    outfitExitTaps = 0;
+    closeOutfitOverlay();
+  } else {
+    outfitExitTimer = setTimeout(() => { outfitExitTaps = 0; }, 2000);
+  }
+}
+
+function closeOutfitOverlay() {
+  const overlay = document.getElementById('outfit-overlay');
+  const iframe = document.getElementById('outfit-iframe');
+  const curtain = document.getElementById('outfit-curtain-msg');
+  const farewell = document.getElementById('outfit-farewell-msg');
+  const fl1 = document.getElementById('outfit-farewell-line1');
+  const fl2 = document.getElementById('outfit-farewell-line2');
+
+  // Remove tap listener
+  overlay.removeEventListener('click', handleOutfitExitTap);
+
+  // Fade iframe out
+  iframe.classList.remove('visible');
+
+  // Show farewell
+  setTimeout(() => {
+    curtain.style.display = 'none';
+    farewell.style.display = 'flex';
+    fl1.classList.remove('visible');
+    fl2.classList.remove('visible');
+    setTimeout(() => { fl1.classList.add('visible'); }, 200);
+    setTimeout(() => { fl2.classList.add('visible'); }, 700);
+  }, 400);
+
+  // Slide overlay back down
+  setTimeout(() => {
+    fl1.classList.remove('visible');
+    fl2.classList.remove('visible');
+    setTimeout(() => {
+      overlay.classList.remove('open');
+      iframe.src = '';
+      document.body.style.overflow = '';
+      farewell.style.display = 'none';
+    }, 500);
+  }, 2800);
+}
 </script>
 </body>
 </html>
