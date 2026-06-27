@@ -48,7 +48,7 @@
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
   .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
-  /* ── NOTIFICATION MODAL (CENTERED) ── */
+  /* ── NOTIFICATION MODAL (LIGHT & CEREMONIAL) ── */
   #notif-backdrop {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9998; backdrop-filter: blur(5px);
   }
@@ -56,35 +56,30 @@
   
   #notif-banner { 
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 9999; 
-    width: 90%; max-width: 400px; opacity: 0; pointer-events: none; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+    width: 90%; max-width: 420px; opacity: 0; pointer-events: none; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
   }
   #notif-banner.show { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   
   #notif-inner { 
-    background: var(--grey); border: 1px solid var(--border); padding: 2rem; 
-    display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 30px 60px rgba(0,0,0,0.9); cursor: pointer; text-align: center;
+    background: linear-gradient(135deg, #fdfbf9 0%, #e3ded8 100%); 
+    border: 1px solid rgba(255,255,255,0.7); 
+    border-radius: 8px;
+    padding: 2.5rem 2rem; 
+    display: flex; flex-direction: column; gap: 1rem; 
+    box-shadow: 0 40px 80px rgba(0,0,0,0.9), inset 0 0 20px rgba(255,255,255,0.5); 
+    cursor: pointer; text-align: center;
   }
-  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: flex; align-items: center; gap: 0.5rem;}
-  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--white); line-height: 1.5; margin: 1rem 0; }
-  #notif-dismiss { background: none; border: none; color: var(--dim); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
-  #notif-dismiss:hover { color: var(--white); }
-  .tap-hint { color: var(--dim); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid var(--border); padding-bottom: 2px;}
+  #notif-header { display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
+  #notif-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #666; display: flex; align-items: center; gap: 0.5rem;}
+  #notif-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; color: var(--black); line-height: 1.4; margin: 1rem 0; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
+  #notif-dismiss { background: none; border: none; color: #999; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; padding: 0.5rem;}
+  #notif-dismiss:hover { color: var(--black); }
+  .tap-hint { color: #666; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; border-bottom: 1px solid rgba(0,0,0,0.2); padding-bottom: 2px;}
 
   /* ── LIGHTBOX ── */
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
   #lightbox.show { display: flex; }
   #lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-
-  /* ── GLOBAL REDIRECT SCREEN ── */
-  #global-redirect-screen {
-    display: none; position: fixed; inset: 0; background: var(--black); z-index: 100000;
-    align-items: center; justify-content: center; text-align: center; padding: 2rem;
-    overflow-y: auto;
-  }
-  #global-redirect-screen.show { display: flex; flex-direction: column; }
-  .redirect-content h1 { font-family: 'Bodoni Moda', serif; font-size: clamp(2rem, 8vw, 3.5rem); margin-bottom: 1rem; cursor: pointer; color: var(--white); user-select: none; }
-  .redirect-content p { font-family: 'Inter', sans-serif; font-size: 1.1rem; color: var(--dim); margin-bottom: 4rem; font-weight: 300; }
 
   /* ── COMPACT HERO SECTION ── */
   #hero-header { 
@@ -93,6 +88,10 @@
     text-align: center; 
     position: relative; 
     overflow: hidden; 
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .hero-bg-img {
     position: absolute; inset: 0;
@@ -121,34 +120,42 @@
   
   .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--dim); margin-bottom: 2rem; }
   
-  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--white); line-height: 1.6; font-weight: 400; max-width: 320px; margin: 0 auto; }
-  .hero-instructions span { color: var(--dim); font-weight: 300; display: block; margin-top: 0.5rem; }
+  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6; font-weight: 300; max-width: 300px; margin: 0 auto; }
+  .hero-instructions span { color: var(--white); font-weight: 400; }
 
-  /* ── SCROLL INDICATOR ── */
+  /* ── SCROLL INDICATOR (PROMINENT ARROW) ── */
   #scroll-ind {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 50;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    color: var(--dim);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+    cursor: pointer;
     transition: opacity 0.4s ease;
-    pointer-events: none;
+    padding: 1rem;
   }
-  #scroll-ind .line {
-    width: 1px;
-    height: 30px;
-    background: var(--dim);
+  #scroll-ind .arrow {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+    position: relative;
     animation: drift 2s infinite ease-in-out;
   }
-  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.3; } 50% { transform: translateY(8px); opacity: 0.8; } }
+  #scroll-ind .arrow::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid var(--white);
+    border-right: 2px solid var(--white);
+  }
+  @keyframes drift { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(12px); opacity: 1; } }
 
   /* ── MAIN CONTENT ── */
   #closet-section { padding: 2rem 0 0 0; background: var(--black); }
@@ -157,8 +164,8 @@
   .row-header h3 { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.2; }
   .row-header span { color: var(--dim); font-size: 0.75rem; font-family: 'Barlow Condensed'; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; }
 
-  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.4; }
-  .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); flex-shrink: 0; }
+  .elegant-scroll-hint { display: flex; align-items: center; gap: 1rem; padding: 0 1.8rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Barlow Condensed'; }
+  .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
 
   .carousel-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 380px; align-items: center; padding-left: 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
@@ -210,10 +217,6 @@
     background: transparent; 
     border: 1px solid var(--border); 
     border-radius: 50px; 
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
     cursor: pointer; 
     transition: all 0.3s ease; 
   }
@@ -307,26 +310,16 @@
 </head>
 <body>
 
-<div id="global-redirect-screen">
-  <div class="redirect-content">
-    <h1 id="redirect-thanks" onclick="handleRevertTap()">You did it.</h1>
-    <p id="redirect-desc">Now create an outfit that says something about you.</p>
-    <div class="closet-door" onclick="window.open('https://insight-speaking-club.github.io/create-your-outfit/', '_blank')" style="border-color: var(--white); color: var(--white);">
-      <span id="redirect-btn-text">Open the closet</span>
-    </div>
-  </div>
-</div>
-
 <div id="notif-backdrop" onclick="dismissNotif(event)"></div>
 <div id="notif-banner">
   <div id="notif-inner" onclick="openSharedModal()">
     <div id="notif-header">
-      <div id="notif-label">Someone shared a question</div>
+      <div id="notif-label">Brought to the table</div>
       <button id="notif-dismiss" onclick="dismissNotif(event)">✕</button>
     </div>
     <div id="notif-text"></div>
     <div>
-      <span class="tap-hint" id="notif-tap-hint">Tap to see it</span>
+      <span class="tap-hint">Tap to open</span>
     </div>
   </div>
 </div>
@@ -335,55 +328,54 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<div id="scroll-ind">
-  <span>Scroll</span>
-  <div class="line"></div>
-</div>
-
 <header id="hero-header">
   <img class="hero-bg-img" src="vogue.jpg" alt="" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
   <span class="club-label" id="secret-host-trigger">Queer Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
-  <p class="cover-title-italic">A Conversation in Several Parts.</p>
-  <p class="hero-instructions">Swipe through. Tap anything you like. Start talking.<span>There's no right place to start.</span></p>
+  <p class="cover-title-italic">Discussion Questions.</p>
+  <p class="hero-instructions">Tap a card. Discuss with your partner or <span>share</span> with the table.</p>
+  
+  <div id="scroll-ind" onclick="document.getElementById('row-looks').scrollIntoView({behavior: 'smooth', block: 'start'})">
+    <div class="arrow"></div>
+  </div>
 </header>
 
 <section id="closet-section">
   
   <div class="surprise-block">
-    <button class="surprise-btn" onclick="surpriseMe()">Pick one for me</button>
-    <p class="scroll-down-hint">Or browse and choose your own ↓</p>
+    <button class="surprise-btn" onclick="surpriseMe()">Pick a question for me</button>
+    <p class="scroll-down-hint">Or scroll down to choose the questions yourself ↓</p>
   </div>
 
-  <div class="row-container">
-    <div class="row-header"><span>A1-A2</span><h3>Warm up here.</h3></div>
+  <div class="row-container" id="row-a1a2">
+    <div class="row-header"><span>A1-A2 Level</span><h3>You can start here.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Simpler questions — and extra words and phrases to help you along.
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row beginner-row" id="row-beginners"></div>
   </div>
 
-  <div class="row-container">
-    <div class="row-header"><span>Icons</span><h3>A look.</h3></div>
+  <div class="row-container" id="row-looks">
+    <div class="row-header"><span>The Icons</span><h3>You could discuss A LOOK,</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Tap a card, see the story behind it, then discuss.
+      <div class="hint-line"></div> Swipe to explore
     </div>
-    <div class="carousel-row" id="row-looks"></div>
+    <div class="carousel-row" id="row-looks-carousel"></div>
   </div>
   
   <div class="row-container">
-    <div class="row-header"><span>Quotes</span><h3>A quote.</h3></div>
+    <div class="row-header"><span>Words that land</span><h3>Something a designer or icon actually said. Tap to see more.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> Something a designer or icon actually said.
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row" id="row-quotes"></div>
   </div>
   
   <div class="row-container" style="margin-bottom: 0;">
-    <div class="row-header"><span>Big questions</span><h3>Go further.</h3></div>
+    <div class="row-header"><span>No cushioning</span><h3>and if you're feeling bolder, pick a PROVOCATION.</h3></div>
     <div class="elegant-scroll-hint">
-      <div class="hint-line"></div> More challenging. Completely worth it.
+      <div class="hint-line"></div> Swipe to explore
     </div>
     <div class="carousel-row" id="row-provocations"></div>
   </div>
@@ -397,7 +389,7 @@
     
     <div id="closet-door" class="closet-door locked" onclick="handleClosetClick()">
       <span class="lock-icon" id="closet-lock-icon">🔒</span>
-      <span class="door-text" id="closet-btn-text">Open the closet</span>
+      <span class="door-text" id="closet-btn-text">Enter the closet</span>
     </div>
   </div>
 
@@ -438,18 +430,12 @@ function toggleLang(e) {
   
   // Update the new inline closet section
   document.getElementById('closet-title-text').textContent = isUA ? 'Створіть свій образ.' : 'Create your outfit.';
-  document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look that speaks for itself.";
-  document.getElementById('closet-btn-text').textContent = isUA ? 'Відкрити гардероб' : 'Open the closet';
+  document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look.";
+  document.getElementById('closet-btn-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
   
   // Footer text
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
-  // Global Redirect text
-  document.getElementById('redirect-thanks').textContent = isUA ? 'Ви це зробили.' : 'You did it.';
-  document.getElementById('redirect-desc').textContent = isUA ? 'Тепер створіть образ, який розкаже щось про вас.' : 'Now create an outfit that says something about you.';
-  document.getElementById('redirect-btn-text').textContent = isUA ? 'Відкрити гардероб' : 'Open the closet';
-
-  // Modal Render updates
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
   
   // Handle translation of the notification banner text and label if it's open
@@ -458,10 +444,8 @@ function toggleLang(e) {
     const labelEl = document.getElementById('notif-label');
     labelEl.textContent = isCurrentlyDiscussingNotif 
       ? (isUA ? "Зараз обговорюють" : "Currently discussing")
-      : (isUA ? "Хтось поділився запитанням" : "Someone shared a question");
+      : (isUA ? "Винесено на стіл" : "Brought to the table");
   }
-  
-  document.getElementById('notif-tap-hint').textContent = isUA ? "Торкніться, щоб побачити" : "Tap to see it";
 }
 
 // Hide scroll indicator on scroll
@@ -469,8 +453,10 @@ window.addEventListener('scroll', () => {
   const indicator = document.getElementById('scroll-ind');
   if (window.scrollY > 50) {
     indicator.style.opacity = '0';
+    indicator.style.pointerEvents = 'none';
   } else {
     indicator.style.opacity = '1';
+    indicator.style.pointerEvents = 'auto';
   }
 });
 
@@ -491,60 +477,6 @@ function playNotifSound() {
   const sound = new Audio('notification.mp3');
   sound.volume = 0.7;
   sound.play().catch(e => console.log("Audio play failed (browser block):", e));
-}
-
-// ── GLOBAL REDIRECT LOGIC (RuPaul Easter Egg) ──
-const REDIRECT_URL = 'https://speaking-13ce0-default-rtdb.firebaseio.com/global-redirect.json';
-let redirectTs = null;
-
-let rupaulTaps = 0;
-let rupaulTimer = null;
-
-function handleSecretTap(name) {
-  if (name.includes('RuPaul')) {
-    rupaulTaps++;
-    clearTimeout(rupaulTimer);
-    if (rupaulTaps >= 10) {
-      rupaulTaps = 0;
-      pushGlobalRedirect(true);
-    } else {
-      rupaulTimer = setTimeout(() => { rupaulTaps = 0; }, 1500);
-    }
-  }
-}
-
-let revertTaps = 0;
-let revertTimer = null;
-
-function handleRevertTap() {
-  revertTaps++;
-  clearTimeout(revertTimer);
-  if (revertTaps >= 10) {
-    revertTaps = 0;
-    pushGlobalRedirect(false);
-  } else {
-    revertTimer = setTimeout(() => { revertTaps = 0; }, 1500);
-  }
-}
-
-function pushGlobalRedirect(active) {
-  fetch(REDIRECT_URL, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ active, ts: Date.now() })
-  });
-  applyGlobalRedirect(active);
-}
-
-function applyGlobalRedirect(active) {
-  const screen = document.getElementById('global-redirect-screen');
-  if (active) {
-    screen.classList.add('show');
-    closeModal(true);
-    dismissNotif();
-  } else {
-    screen.classList.remove('show');
-  }
 }
 
 // ── SECRET HOST BUTTON LOGIC (Tap "Queer Fashion Speaking Club" 10 times) ──
@@ -595,8 +527,8 @@ let toastTimer;
 function handleClosetClick() {
   if (!finalStageActive) {
     showToast(isUA 
-      ? "Хост відкриє це пізніше — поки що продовжуйте спілкуватися." 
-      : "The host will open this later — keep talking for now.");
+      ? "Ви ще не готові. Зачекайте, поки хост відкриє двері." 
+      : "You're not ready yet. Wait until the host opens it.");
   } else {
     window.open("https://insight-speaking-club.github.io/create-your-outfit/", "_blank");
   }
@@ -700,7 +632,7 @@ function populateRow(containerId, data, type) {
 }
 
 populateRow('row-beginners', beginners, 'beginner');
-populateRow('row-looks', looks, 'look');
+populateRow('row-looks-carousel', looks, 'look');
 populateRow('row-quotes', quotes, 'quote');
 populateRow('row-provocations', provocations, 'provocation');
 
@@ -730,13 +662,10 @@ function renderModalContent(type, index) {
   const c = document.getElementById('modal-body-container');
   let promptEN = '', promptUA = '';
   
-  const shareBtnText = isUA ? 'Надіслати всій групі' : 'Send to the whole group';
-  const shareExpText = isUA ? 'Хочете обговорити це з усіма? Натисніть кнопку — вона надішле це запитання на всі екрани в кімнаті.' : 'Want to discuss this with everyone? Tap the button — it sends this question to all screens in the room.';
-  
   const shareSection = `
     <div class="share-container">
-      <button id="dynamic-share-btn" class="share-to-table-btn">${shareBtnText}</button>
-      <span class="share-explainer">${shareExpText}</span>
+      <button id="dynamic-share-btn" class="share-to-table-btn">${isUA ? 'Поділитися за столом' : 'Share with the table'}</button>
+      <span class="share-explainer">${isUA ? 'Якщо ви натиснете цю кнопку, всі, хто користується сайтом, побачать спливаюче вікно з обраним вами питанням.' : 'If you click this button, everyone using the website will see a pop-up with the question you chose.'}</span>
     </div>`;
 
   if (type === 'look') {
@@ -750,7 +679,7 @@ function renderModalContent(type, index) {
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
-        <p onclick="handleSecretTap('${item.designer}')" style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed'; cursor: pointer;">${item.designer}</p>
+        <p style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed';">${item.designer}</p>
         <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
         
         <div class="context-box">
@@ -782,14 +711,14 @@ function renderModalContent(type, index) {
         <h2 style="font-family:'Inter',sans-serif; font-weight:400; font-size:1.6rem; line-height:1.4; margin-bottom:3rem;">${isUA ? item.text_ua : item.text_en}</h2>
         
         <div class="context-box" style="margin-bottom: 2rem;">
-          <h4 class="context-label">${isUA ? 'Корисні слова' : 'Helpful words'}</h4>
+          <h4 class="context-label">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
           <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${vocabList}
           </ul>
         </div>
 
         <div class="context-box">
-          <h4 class="context-label">${isUA ? 'Спробуйте почати з' : 'Try starting with'}</h4>
+          <h4 class="context-label">${isUA ? 'Як почати речення' : 'How to start'}</h4>
           <ul style="list-style:none; padding-left:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">
             ${structuresList}
           </ul>
@@ -803,7 +732,7 @@ function renderModalContent(type, index) {
     c.innerHTML = `
       <div class="modal-content-box" style="padding-top:4rem;">
         <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:2.2rem; line-height:1.3; margin-bottom:1.5rem;">"${isUA ? item.text_ua : item.text_en}"</h2>
-        <p onclick="handleSecretTap('${item.author}')" style="color:var(--dim); font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.1em; cursor: pointer;">— ${item.author}</p>
+        <p style="color:var(--dim); font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.1em;">— ${item.author}</p>
         
         <div class="the-question">${isUA ? item.prompt_ua : item.prompt_en}</div>
         
@@ -847,9 +776,8 @@ let isFirstLoad = true;
 
 Promise.all([
   fetch(DB_URL).then(r => r.json()).catch(() => null),
-  fetch(STAGE_URL).then(r => r.json()).catch(() => null),
-  fetch(REDIRECT_URL).then(r => r.json()).catch(() => null)
-]).then(([qData, stageData, rData]) => {
+  fetch(STAGE_URL).then(r => r.json()).catch(() => null)
+]).then(([qData, stageData]) => {
   if (qData) {
     lastTs = qData.ts;
     if (qData.question_en && Date.now() - qData.ts < 10800000) {
@@ -859,10 +787,6 @@ Promise.all([
   if (stageData) {
     lastStageTs = stageData.ts;
     applyFinalStage(stageData.active);
-  }
-  if (rData) {
-    redirectTs = rData.ts;
-    applyGlobalRedirect(rData.active);
   }
   isFirstLoad = false;
 });
@@ -880,19 +804,11 @@ setInterval(async () => {
         dismissNotif();
       }
     }
-    
     const sRes = await fetch(STAGE_URL);
     const sData = await sRes.json();
     if (sData && sData.ts !== lastStageTs) {
       lastStageTs = sData.ts;
       applyFinalStage(sData.active);
-    }
-
-    const rRes = await fetch(REDIRECT_URL);
-    const rData = await rRes.json();
-    if (rData && rData.ts !== redirectTs) {
-      redirectTs = rData.ts;
-      applyGlobalRedirect(rData.active);
     }
   } catch (err) {}
 }, 2000);
@@ -928,7 +844,7 @@ function showNotification(questionObj, type, index, isCurrentContext = false) {
   const labelEl = document.getElementById('notif-label');
   labelEl.textContent = isCurrentContext 
     ? (isUA ? "Зараз обговорюють" : "Currently discussing")
-    : (isUA ? "Хтось поділився запитанням" : "Someone shared a question");
+    : (isUA ? "Винесено на стіл" : "Brought to the table");
   
   document.getElementById('notif-backdrop').classList.add('show');
   document.getElementById('notif-banner').classList.add('show');
