@@ -307,89 +307,24 @@
   }
   .footer-text { font-family: 'Bodoni Moda', serif; font-weight: 400; font-style: italic; font-size: clamp(1.8rem, 8vw, 3rem); color: var(--white); line-height: 1.2; position: relative; z-index: 2; }
   
-  /* ── OUTFIT OVERLAY ── */
-  #outfit-overlay {
-    position: fixed;
-    inset: 0;
-    background: #030303;
-    z-index: 50000;
-    transform: translateY(100%);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
+  /* ── GLOBAL CLOSET OVERLAY (SYNCED FOR EVERYONE) ── */
+  #global-closet-overlay {
+    position: fixed; inset: 0; background: var(--black); z-index: 60000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transform: translateY(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  #outfit-overlay.open {
-    transform: translateY(0);
+  #global-closet-overlay.open { transform: translateY(0); }
+  .gco-content { text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center;}
+  #gco-line1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); color: var(--white); margin-bottom: 0.5rem; }
+  #gco-line2 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); color: var(--white); margin-bottom: 3rem; transition: color 0.2s ease; cursor: default; }
+  .gco-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 1.2rem 3rem; background: var(--white); color: var(--black);
+    border-radius: 50px; font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500; font-size: 1.2rem; text-transform: uppercase;
+    letter-spacing: 0.15em; text-decoration: none; transition: transform 0.3s, opacity 0.3s;
   }
-
-  #outfit-topbar {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    padding: 1.2rem 1.8rem;
-    display: flex;
-    justify-content: flex-end;
-    z-index: 10;
-    background: linear-gradient(to bottom, rgba(3,3,3,0.9) 0%, transparent 100%);
-    pointer-events: none;
-  }
-  #outfit-done-btn {
-    pointer-events: auto;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 500;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--dim);
-    cursor: pointer;
-    padding: 0.8rem 1rem;
-    min-width: 44px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease;
-  }
-  #outfit-done-btn:hover { color: var(--white); }
-
-  #outfit-iframe {
-    width: 100%;
-    flex: 1;
-    border: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-  #outfit-iframe.visible { opacity: 1; }
-
-  /* ── CURTAIN MESSAGE (entrance) ── */
-  #outfit-curtain-msg,
-  #outfit-farewell-msg {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    pointer-events: none;
-    z-index: 5;
-  }
-  #outfit-curtain-msg p,
-  #outfit-farewell-msg p {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(1.4rem, 5vw, 2.2rem);
-    color: var(--white);
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    text-align: center;
-    padding: 0 2rem;
-  }
-  #outfit-curtain-msg p.visible,
-  #outfit-farewell-msg p.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  #outfit-farewell-msg { display: none; }
+  .gco-btn:active { transform: scale(0.95); }
 </style>
 </head>
 <body>
@@ -497,18 +432,12 @@
   <div id="modal-body-container"></div>
 </div>
 
-<div id="outfit-overlay">
-  <div id="outfit-curtain-msg">
-    <p id="outfit-curtain-line1">The conversation is over.</p>
-    <p id="outfit-curtain-line2">The dressing begins.</p>
-  </div>
-  <div id="outfit-farewell-msg">
-    <p id="outfit-farewell-line1">Thank you for speaking.</p>
-    <p id="outfit-farewell-line2">Come back when you're ready.</p>
-  </div>
-  <iframe id="outfit-iframe" src="" allow="fullscreen"></iframe>
-  <div id="outfit-topbar">
-    <span id="outfit-done-btn">Done ✕</span>
+<!-- THE GLOBAL CLOSET OVERLAY -->
+<div id="global-closet-overlay">
+  <div class="gco-content">
+    <p id="gco-line1">The conversation is over.</p>
+    <p id="gco-line2">The dressing begins.</p>
+    <a href="https://insight-speaking-club.github.io/create-your-outfit/" target="_blank" class="gco-btn" id="gco-btn">Open the Dream Closet</a>
   </div>
 </div>
 
@@ -527,17 +456,19 @@ function toggleLang(e) {
     btn.textContent = isUA ? 'Translate' : 'Перекласти';
   });
   
-  // Update the new inline closet section
+  // Content updates
   document.getElementById('closet-title-text').textContent = isUA ? 'Створіть свій образ.' : 'Create your outfit.';
   document.getElementById('closet-desc-text').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ.' : "You've talked the talk. Now it's time to build a look.";
   document.getElementById('closet-btn-text').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
-  
-  // Footer text
   document.querySelector('.footer-text').innerHTML = isUA ? 'Сценарій мертвий.<br>Одягайтесь відповідно.' : 'The script is dead.<br>Dress accordingly.';
   
+  // Global Overlay Translation
+  document.getElementById('gco-line1').textContent = isUA ? 'Розмова закінчена.' : 'The conversation is over.';
+  document.getElementById('gco-line2').textContent = isUA ? 'Починається підбір образу.' : 'The dressing begins.';
+  document.getElementById('gco-btn').textContent = isUA ? 'Відкрити гардероб' : 'Open the Dream Closet';
+
   if (currentModalData) renderModalContent(currentModalData.type, currentModalData.index);
   
-  // Handle translation of the notification banner text and label if it's open
   if (currentSharedItem) {
     document.getElementById('notif-text').textContent = isUA ? currentSharedItem.ua : currentSharedItem.en;
     const labelEl = document.getElementById('notif-label');
@@ -595,17 +526,17 @@ document.getElementById('secret-host-trigger').addEventListener('click', () => {
 });
 
 function pushFinalStage(active) {
+  // Reset the closet_open global overlay flag anytime you lock/unlock the door
   fetch(STAGE_URL, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ active, ts: Date.now() })
+    body: JSON.stringify({ active, closet_open: false, ts: Date.now() })
   });
   applyFinalStage(active);
 }
 
 function applyFinalStage(active) {
   finalStageActive = active;
-  
   const door = document.getElementById('closet-door');
   const icon = document.getElementById('closet-lock-icon');
   
@@ -620,7 +551,7 @@ function applyFinalStage(active) {
   }
 }
 
-// ── CLOSET DOOR CLICK LOGIC & TOAST ──
+// ── CLOSET DOOR CLICK LOGIC (TRIGGERS GLOBAL OVERLAY) ──
 let toastTimer;
 
 function handleClosetClick() {
@@ -629,7 +560,12 @@ function handleClosetClick() {
       ? "Ви ще не готові. Зачекайте, поки хост відкриє двері." 
       : "You're not ready yet. Wait until the host opens it.");
   } else {
-    openOutfitOverlay();
+    // Tell Firebase to open the overlay for EVERYONE
+    fetch(STAGE_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: true, closet_open: true, ts: Date.now() })
+    });
   }
 }
 
@@ -639,6 +575,39 @@ function showToast(msg) {
   toast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+
+// ── SECRET DISMISSAL LOGIC (HOST TAPS "The dressing begins." 10 TIMES) ──
+let gcoTaps = 0, gcoTimer = null;
+document.getElementById('gco-line2').addEventListener('click', (e) => {
+  gcoTaps++;
+  clearTimeout(gcoTimer);
+  const el = e.target;
+  // Visual feedback for the host counting taps
+  el.style.color = `rgba(255,255,255, ${0.3 + (gcoTaps/10)*0.7})`; 
+  
+  if (gcoTaps >= 10) {
+    gcoTaps = 0;
+    el.style.color = '';
+    // Tell Firebase to close the overlay for EVERYONE
+    fetch(STAGE_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: true, closet_open: false, ts: Date.now() })
+    });
+  } else {
+    gcoTimer = setTimeout(() => { gcoTaps = 0; el.style.color = ''; }, 2000);
+  }
+});
+
+function showGlobalClosetOverlay() {
+  document.getElementById('global-closet-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function hideGlobalClosetOverlay() {
+  document.getElementById('global-closet-overlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 // ── SURPRISE ME ──
@@ -653,7 +622,7 @@ function surpriseMe() {
   openModal(pool.type, index);
 }
 
-// ── DATA (Bilingual) ──
+// ── DATA ──
 const beginners = [
   { emoji: "✦", text_en: "What is your absolute favorite piece of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], structures: [{ en: "My favorite piece of clothing is...", ua: "Моя улюблена річ з одягу — це..." }, { en: "I love it because...", ua: "Я люблю її, тому що..." }] },
   { emoji: "✦", text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }, { en: "It depends on the day", ua: "Це залежить від дня" }], structures: [{ en: "I usually prefer to wear...", ua: "Зазвичай я віддаю перевагу..." }, { en: "For me, comfort is more important because...", ua: "Для мене комфорт важливіший, тому що..." }] },
@@ -778,7 +747,7 @@ function renderModalContent(type, index) {
       <div class="look-image-area" onclick="openLightbox(document.getElementById('m-img').src)"><img id="m-img" src="${item.images[0]}" onerror="this.style.display='none'"></div>
       <div class="look-thumbnails">${thumbs}</div>
       <div class="modal-content-box">
-        <p id="designer-credit-tap" style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed'; cursor:default; transition: color 0.2s ease;">${item.designer}</p>
+        <p style="color:var(--dim); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-family:'Barlow Condensed';">${item.designer}</p>
         <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2.5rem; line-height:1.1; margin-bottom:2rem;">${item.name}</h2>
         
         <div class="context-box">
@@ -790,29 +759,6 @@ function renderModalContent(type, index) {
         
         ${shareSection}
       </div>`;
-      
-      if (type === 'look' && looks[index].designer === 'RuPaul') {
-        let ruTaps = 0, ruTimer = null;
-        const ruEl = document.getElementById('designer-credit-tap');
-        ruEl.addEventListener('click', (e) => {
-          e.stopPropagation();
-          ruTaps++;
-          // Glow feedback
-          ruEl.style.color = `rgba(244,244,244,${0.3 + (ruTaps / 10) * 0.7})`;
-          clearTimeout(ruTimer);
-          if (ruTaps >= 10) {
-            ruTaps = 0;
-            ruEl.style.color = '';
-            closeModal();
-            setTimeout(() => openOutfitOverlay(), 400);
-          } else {
-            ruTimer = setTimeout(() => {
-              ruTaps = 0;
-              ruEl.style.color = '';
-            }, 2000);
-          }
-        });
-      }
     
     document.getElementById('dynamic-share-btn').onclick = function() { shareWithEveryone(promptEN, promptUA, type, index, this); };
 
@@ -909,6 +855,9 @@ Promise.all([
   if (stageData) {
     lastStageTs = stageData.ts;
     applyFinalStage(stageData.active);
+    if (stageData.closet_open) {
+      showGlobalClosetOverlay();
+    }
   }
   isFirstLoad = false;
 });
@@ -931,6 +880,13 @@ setInterval(async () => {
     if (sData && sData.ts !== lastStageTs) {
       lastStageTs = sData.ts;
       applyFinalStage(sData.active);
+      
+      // SYNC THE GLOBAL OVERLAY FLAG
+      if (sData.closet_open) {
+        showGlobalClosetOverlay();
+      } else {
+        hideGlobalClosetOverlay();
+      }
     }
   } catch (err) {}
 }, 2000);
@@ -1016,98 +972,6 @@ function openSharedModal() {
 function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('show'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('show'); }
 
-// ── OUTFIT OVERLAY ──
-let outfitExitTaps = 0, outfitExitTimer = null;
-
-function openOutfitOverlay() {
-  const overlay = document.getElementById('outfit-overlay');
-  const curtain = document.getElementById('outfit-curtain-msg');
-  const farewell = document.getElementById('outfit-farewell-msg');
-  const iframe = document.getElementById('outfit-iframe');
-  const line1 = document.getElementById('outfit-curtain-line1');
-  const line2 = document.getElementById('outfit-curtain-line2');
-
-  // Reset state
-  iframe.src = '';
-  iframe.classList.remove('visible');
-  curtain.style.display = 'flex';
-  farewell.style.display = 'none';
-  line1.classList.remove('visible');
-  line2.classList.remove('visible');
-
-  // Open overlay
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // Entrance sequence
-  setTimeout(() => { line1.classList.add('visible'); }, 300);
-  setTimeout(() => { line2.classList.add('visible'); }, 800);
-  setTimeout(() => {
-    line1.classList.remove('visible');
-    line2.classList.remove('visible');
-  }, 2200);
-  setTimeout(() => {
-    curtain.style.display = 'none';
-    iframe.src = 'https://insight-speaking-club.github.io/create-your-outfit/';
-    setTimeout(() => { iframe.classList.add('visible'); }, 300);
-  }, 2800);
-
-  // Attach exit tap counter to overlay
-  outfitExitTaps = 0;
-  overlay.addEventListener('click', handleOutfitExitTap);
-  document.getElementById('outfit-done-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    closeOutfitOverlay();
-  });
-}
-
-function handleOutfitExitTap(e) {
-  outfitExitTaps++;
-  clearTimeout(outfitExitTimer);
-  if (outfitExitTaps >= 10) {
-    outfitExitTaps = 0;
-    closeOutfitOverlay();
-  } else {
-    outfitExitTimer = setTimeout(() => { outfitExitTaps = 0; }, 2000);
-  }
-}
-
-function closeOutfitOverlay() {
-  const overlay = document.getElementById('outfit-overlay');
-  const iframe = document.getElementById('outfit-iframe');
-  const curtain = document.getElementById('outfit-curtain-msg');
-  const farewell = document.getElementById('outfit-farewell-msg');
-  const fl1 = document.getElementById('outfit-farewell-line1');
-  const fl2 = document.getElementById('outfit-farewell-line2');
-
-  // Remove tap listener
-  overlay.removeEventListener('click', handleOutfitExitTap);
-
-  // Fade iframe out
-  iframe.classList.remove('visible');
-
-  // Show farewell
-  setTimeout(() => {
-    curtain.style.display = 'none';
-    farewell.style.display = 'flex';
-    fl1.classList.remove('visible');
-    fl2.classList.remove('visible');
-    setTimeout(() => { fl1.classList.add('visible'); }, 200);
-    setTimeout(() => { fl2.classList.add('visible'); }, 700);
-  }, 400);
-
-  // Slide overlay back down
-  setTimeout(() => {
-    fl1.classList.remove('visible');
-    fl2.classList.remove('visible');
-    setTimeout(() => {
-      overlay.classList.remove('open');
-      iframe.src = '';
-      document.body.style.overflow = '';
-      farewell.style.display = 'none';
-    }, 500);
-  }, 2800);
-}
 </script>
 </body>
 </html>
