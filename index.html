@@ -580,21 +580,17 @@ function applyFinalStage(active) {
   }
 }
 
-// ── CLOSET DOOR CLICK LOGIC (TRIGGERS GLOBAL OVERLAY) ──
+// ── CLOSET DOOR CLICK LOGIC (LOCAL ONLY) ──
 let toastTimer;
 
 function handleClosetClick() {
   if (!finalStageActive) {
     showToast(isUA 
-      ? "Ви ще не готові. Зачекайте, поки хост відкриє двері." 
-      : "You're not ready yet. Wait until the host opens it.");
+      ? "Продовжуйте розмову... двері ще замкнено." 
+      : "Keep talking... the door is locked.");
   } else {
-    // Tell Firebase to open the overlay for EVERYONE
-    fetch(STAGE_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ active: true, closet_open: true, ts: Date.now() })
-    });
+    // Just open the link locally for the user who tapped it
+    window.open("https://insight-speaking-club.github.io/create-your-outfit/", "_blank");
   }
 }
 
