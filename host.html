@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Host Controls — VOGUE?</title>
+<title>Run of Show — VOGUE?</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  
+
   body {
     background-color: #030303;
     color: #f4f4f4;
@@ -14,64 +14,110 @@
     padding: 1.5rem;
     overscroll-behavior: none;
     -webkit-tap-highlight-color: transparent;
+    padding-bottom: 4rem;
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.3rem;
     text-align: center;
-    color: #999;
+    color: #eee;
   }
 
-  /* Status Panel */
-  .status-panel {
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 1.5rem;
+  .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
     margin-bottom: 2rem;
   }
 
-  .status-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-  .status-row:last-child {
-    margin-bottom: 0;
-  }
-  
-  .status-label {
-    color: #999;
+  /* Run of show phases */
+  .phase {
+    background: #0d0d0d;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 1.4rem;
+    margin-bottom: 1.2rem;
+    position: relative;
   }
 
-  .status-value {
+  .phase-time {
+    font-size: 0.75rem;
+    color: #d4af37;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+  }
+
+  .phase-name {
+    font-size: 1.05rem;
     font-weight: bold;
     text-transform: uppercase;
-  }
-  .status-locked, .status-closed { color: #f87171; } /* Red */
-  .status-unlocked, .status-open { color: #4ade80; } /* Green */
-
-  /* Buttons */
-  .section {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #222;
-    padding-bottom: 2rem;
-  }
-  .section:last-child {
-    border-bottom: none;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
   }
 
+  .phase-meta {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 100px;
+    background: #1a1a1a;
+    color: #aaa;
+    border: 1px solid #2a2a2a;
+  }
+
+  .pill.volume { color: #d4af37; border-color: #3a311a; }
+  .pill.silent { color: #f87171; border-color: #3a1a1a; }
+  .pill.warning { color: #f87171; border-color: #3a1a1a; background: #1a0d0d; }
+
+  .phase-link {
+    display: block;
+    background: #1a1a1a;
+    color: #f4f4f4;
+    text-decoration: none;
+    text-align: center;
+    padding: 0.9rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    border: 1px solid #2a2a2a;
+    word-break: break-word;
+    margin-bottom: 0.6rem;
+  }
+  .phase-link:active { transform: scale(0.97); }
+
+  .no-music {
+    text-align: center;
+    color: #555;
+    font-size: 0.85rem;
+    padding: 0.9rem;
+    font-style: italic;
+  }
+
+  .warning-phase {
+    border-color: #3a1a1a;
+    background: #110a0a;
+  }
+
+  /* Inline closet buttons within a phase */
   button {
     display: block;
     width: 100%;
-    padding: 1.2rem 1rem;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
+    padding: 1rem 1rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -80,28 +126,132 @@
     cursor: pointer;
     transition: transform 0.1s, opacity 0.2s;
   }
-  button:last-child {
-    margin-bottom: 0;
-  }
-  button:active {
-    transform: scale(0.96);
-  }
+  button:last-child { margin-bottom: 0; }
+  button:active { transform: scale(0.96); }
 
-  /* Button Themes */
   .btn-unlock { background: #333; color: #fff; border: 1px solid #555; }
-  .btn-lock { background: #1a1a1a; color: #f87171; border: 1px solid #4a1c1c; }
-  
-  .btn-open-all { background: #e3ded8; color: #000; padding: 1.5rem 1rem; font-size: 1.2rem;}
-  .btn-close-all { background: #1a1a1a; color: #999; border: 1px solid #333; }
-
+  .btn-open-all { background: #e3ded8; color: #000; padding: 1.1rem 1rem; font-size: 1rem; }
   .btn-clear { background: transparent; color: #999; border: 1px dashed #555; }
+  .btn-close-all { background: #1a1a1a; color: #999; border: 1px solid #333; }
+  .btn-lock { background: #1a1a1a; color: #f87171; border: 1px solid #4a1c1c; }
 
+  .closet-buttons-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #666;
+    margin: 1rem 0 0.6rem;
+  }
+
+  .end-of-night-block {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #222;
+  }
+
+  /* Status panel — bottom of page */
+  .status-panel {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .status-row:last-child { margin-bottom: 0; }
+
+  .status-label { color: #999; }
+  .status-value { font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+  .status-locked, .status-closed { color: #f87171; }
+  .status-unlocked, .status-open { color: #4ade80; }
 </style>
 </head>
 <body>
 
-  <h1>Host Controls</h1>
+  <h1>VOGUE? — Run of Show</h1>
+  <div class="subtitle">Host Panel</div>
 
+  <!-- 18:10 -->
+  <div class="phase">
+    <div class="phase-time">18:10</div>
+    <div class="phase-name">Introductions &amp; Warm-Up</div>
+    <div class="phase-meta">
+      <span class="pill silent">No Music</span>
+    </div>
+    <div class="no-music">— silence —</div>
+  </div>
+
+  <!-- 18:20 -->
+  <div class="phase">
+    <div class="phase-time">18:20</div>
+    <div class="phase-name">Discuss in Pairs</div>
+    <div class="phase-meta">
+      <span class="pill">Playlist 2</span>
+      <span class="pill volume">35% Volume</span>
+    </div>
+    <a class="phase-link" href="https://music.youtube.com/playlist?list=PLcp67UDqSlcY&si=BHiD8_JYXmZ_ITnF" target="_blank">Open Playlist →</a>
+  </div>
+
+  <!-- 18:55 -->
+  <div class="phase warning-phase">
+    <div class="phase-time">18:55</div>
+    <div class="phase-name">Warning</div>
+    <div class="phase-meta">
+      <span class="pill warning">Lower Volume — Table Discussion Next</span>
+    </div>
+  </div>
+
+  <!-- 19:00 -->
+  <div class="phase">
+    <div class="phase-time">19:00</div>
+    <div class="phase-name">Table Discussion</div>
+    <div class="phase-meta">
+      <span class="pill">Playlist 3</span>
+      <span class="pill volume">20% Volume</span>
+    </div>
+    <a class="phase-link" href="https://music.youtube.com/playlist?list=PLXxAr8q1ZyPI&si=t_F1Jog_OlZy8w97" target="_blank">Open Playlist →</a>
+  </div>
+
+  <!-- 19:40 -->
+  <div class="phase">
+    <div class="phase-time">19:40</div>
+    <div class="phase-name">Closet — Open in App</div>
+    <div class="phase-meta">
+      <span class="pill">Playlist 4</span>
+      <span class="pill volume">45–50% Volume</span>
+    </div>
+    <a class="phase-link" href="https://music.youtube.com/playlist?list=PLOJzqfLKJMBM&si=0eY4xdRR2g9p4m9Q" target="_blank">Open Playlist →</a>
+
+    <div class="closet-buttons-label">Closet Controls</div>
+    <button class="btn-clear" onclick="clearQuestion(this)">Clear Question</button>
+    <button class="btn-unlock" onclick="unlockCloset(this)">Unlock Closet Door</button>
+    <button class="btn-open-all" onclick="openDreamCloset(this)">Force Open For Everyone</button>
+
+    <div class="end-of-night-block">
+      <div class="closet-buttons-label">End of Night Only</div>
+      <button class="btn-close-all" onclick="closeDreamCloset(this)">Close For Everyone</button>
+      <button class="btn-lock" onclick="lockCloset(this)">Lock Closet Door</button>
+    </div>
+  </div>
+
+  <!-- 19:55 -->
+  <div class="phase">
+    <div class="phase-time">19:55</div>
+    <div class="phase-name">Closer</div>
+    <div class="phase-meta">
+      <span class="pill silent">Music Off</span>
+    </div>
+    <div class="no-music">Turn off music</div>
+  </div>
+
+  <!-- Status panel at the very bottom -->
   <div class="status-panel">
     <div class="status-row">
       <span class="status-label">Closet Door:</span>
@@ -113,25 +263,10 @@
     </div>
   </div>
 
-  <div class="section">
-    <button class="btn-unlock" onclick="unlockCloset(this)">1. Unlock Closet Door</button>
-    <button class="btn-lock" onclick="lockCloset(this)">2. Lock Closet Door</button>
-  </div>
-
-  <div class="section">
-    <button class="btn-open-all" onclick="openDreamCloset(this)">3. Force Open For Everyone</button>
-    <button class="btn-close-all" onclick="closeDreamCloset(this)">4. Close For Everyone</button>
-  </div>
-
-  <div class="section">
-    <button class="btn-clear" onclick="clearQuestion(this)">5. Clear Shared Question</button>
-  </div>
-
 <script>
   const DB_URL = 'https://speaking-13ce0-default-rtdb.firebaseio.com/current-question.json';
   const STAGE_URL = 'https://speaking-13ce0-default-rtdb.firebaseio.com/final-stage.json';
 
-  // Brief visual feedback so you know you tapped it
   function showFeedback(btn) {
     const originalText = btn.innerText;
     btn.innerText = "✓ SENT";
@@ -144,46 +279,39 @@
     }, 1000);
   }
 
-  // 1. Unlock the closet
   function unlockCloset(btn) {
     fetch(STAGE_URL, { method: 'PUT', body: JSON.stringify({ active: true, closet_open: false, ts: Date.now() }) });
     showFeedback(btn);
     pollStatus();
   }
 
-  // 2. Lock the closet
   function lockCloset(btn) {
     fetch(STAGE_URL, { method: 'PUT', body: JSON.stringify({ active: false, closet_open: false, ts: Date.now() }) });
     showFeedback(btn);
     pollStatus();
   }
 
-  // 3. Open Dream Closet for everyone
   function openDreamCloset(btn) {
     fetch(STAGE_URL, { method: 'PUT', body: JSON.stringify({ active: true, closet_open: true, ts: Date.now() }) });
     showFeedback(btn);
     pollStatus();
   }
 
-  // 4. Close Dream Closet for everyone
   function closeDreamCloset(btn) {
     fetch(STAGE_URL, { method: 'PUT', body: JSON.stringify({ active: true, closet_open: false, ts: Date.now() }) });
     showFeedback(btn);
     pollStatus();
   }
 
-  // 5. Clear the shared question
   function clearQuestion(btn) {
     fetch(DB_URL, { method: 'PUT', body: JSON.stringify({ question_en: '', question_ua: '', type: null, index: null, ts: Date.now() }) });
     showFeedback(btn);
   }
 
-  // Poll status every 3 seconds
   async function pollStatus() {
     try {
       const res = await fetch(STAGE_URL);
       const data = await res.json();
-      
       if (data) {
         const doorEl = document.getElementById('status-door');
         const overlayEl = document.getElementById('status-overlay');
@@ -209,10 +337,8 @@
     }
   }
 
-  // Start polling
   setInterval(pollStatus, 3000);
   pollStatus();
-
 </script>
 </body>
 </html>
