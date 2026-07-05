@@ -16,7 +16,7 @@
     --grey: #0a0a0a; 
     --dim: #999999; 
     --border: #333333; 
-    --burnbook-pink: #d89eb7; /* Mean Girls / Thank U, Next Pink */
+    --burnbook-pink: #d89eb7; 
   }
   
   body { 
@@ -48,7 +48,7 @@
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
   .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
-  /* ── COMPACT HERO SECTION (WITH IMAGE) ── */
+  /* ── COMPACT HERO SECTION ── */
   #hero-header { 
     padding: 6rem 1.8rem 3rem; 
     background: var(--black); 
@@ -86,7 +86,7 @@
   .section-header { font-family: 'Bodoni Moda', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; text-align: center; }
   .section-intro { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.95rem; color: var(--dim); text-align: center; margin-bottom: 3rem; }
 
-  /* ── LEVEL SELECTOR (TABS) ── */
+  /* ── LEVEL SELECTOR ── */
   .level-nav {
     display: flex;
     justify-content: center;
@@ -106,45 +106,28 @@
     cursor: pointer;
     transition: all 0.3s;
   }
-  .level-btn.active {
-    background: var(--white);
-    color: var(--black);
-    border-color: var(--white);
-  }
+  .level-btn.active { background: var(--white); color: var(--black); border-color: var(--white); }
 
-  /* ── ELEGANT SCROLL HINT ── */
   .elegant-scroll-hint { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Barlow Condensed'; }
   .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
 
   /* ── CAROUSEL FIELD ── */
   .carousel-row { 
-    display: flex; 
-    overflow-x: auto; 
-    scroll-snap-type: x mandatory; 
-    padding: 1rem 0 2rem; 
-    gap: 1.5rem;
-    margin: 0 -1.8rem;
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
+    padding: 1rem 0 2rem; gap: 1.5rem; margin: 0 -1.8rem;
   }
   .carousel-row::before, .carousel-row::after { content: ''; flex: 0 0 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
   .card-wrapper { flex: 0 0 85vw; scroll-snap-align: center; }
   @media (min-width: 768px) { .card-wrapper { flex: 0 0 40vw; } }
 
-  /* OUTLINED CARDS */
   .item-card { 
-    background: var(--black); 
-    padding: 2.5rem; 
-    border: 1px solid rgba(255, 255, 255, 0.25); 
-    border-radius: 4px;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    background: var(--black); padding: 2.5rem; 
+    border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 4px;
+    min-height: 250px; display: flex; flex-direction: column; justify-content: center;
+    cursor: pointer; transition: border-color 0.3s ease, background 0.3s ease;
   }
   .item-card:hover { border-color: var(--white); background: var(--grey); }
-  
   .card-emoji { font-size: 2rem; margin-bottom: 1rem; opacity: 0.8; }
   .card-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; line-height: 1.5; margin-bottom: 0; color: var(--white); }
   .card-author { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); font-size: 0.85rem; margin-top: 1rem; }
@@ -156,7 +139,6 @@
   .modal-nav > * { pointer-events: auto; }
   .modal-back { cursor: pointer; color: var(--white); text-transform: uppercase; font-family: 'Barlow Condensed'; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem;}
   .modal-content-box { padding: 2rem 1.5rem 6rem; max-width: 600px; margin: 0 auto; }
-
   .context-box { border-left: 1px solid var(--border); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2rem 0; }
   .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--dim); letter-spacing: 0.15em; font-size: 0.75rem; display: block; margin-bottom: 0.8rem; font-weight: 500;}
   .the-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.5; color: var(--white); margin-top: 2rem; }
@@ -164,83 +146,75 @@
   /* ── CLOSET SECTION (BURN BOOK AESTHETIC) ── */
   #closet-section {
     background-color: var(--burnbook-pink);
-    border-top: 1px solid #111;
-    border-bottom: 1px solid #111;
-    position: relative;
-    z-index: 5;
-    padding-bottom: 7rem;
+    border-top: 1px solid #111; border-bottom: 1px solid #111;
+    position: relative; z-index: 5; padding-bottom: 7rem;
+    text-align: center;
   }
   
-  .burn-book-header {
-    font-family: 'Bodoni Moda', serif;
-    font-style: italic;
-    font-weight: 800;
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    color: #111;
-    background: #f4f4f4;
-    display: inline-block;
-    padding: 0.2rem 1rem;
-    transform: rotate(-3deg);
-    box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
-    border: 1px solid #ccc;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
+  .mood-shift {
+    font-family: 'Inter', sans-serif; font-style: italic; color: #111;
+    font-size: 1rem; margin-bottom: 3rem; font-weight: 500;
   }
 
-  #closet-section .section-intro {
-    color: #111;
-    font-weight: 500;
-    font-size: 1.1rem;
-    max-width: 300px;
-    margin: 0 auto 3rem;
+  .burnbook-title { 
+    display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; 
+    position: relative; margin-bottom: 3rem; display: inline-flex;
+  }
+  .cut {
+    background: #fff; color: #111; padding: 0.3rem 0.7rem; 
+    display: inline-block; box-shadow: 2px 3px 6px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 2; /* Keep text above the stamp */
+  }
+  .cut.a { font-family: 'Bodoni Moda', serif; font-size: 2.2rem; transform: rotate(-4deg); }
+  .cut.b { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; text-transform: uppercase; font-size: 2.4rem; transform: rotate(3deg); }
+  .cut.c { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; transform: rotate(-2deg); }
+  
+  .lip-stamp-img {
+    position: absolute;
+    top: -35px;
+    left: -25px;
+    width: 90px;
+    transform: rotate(-15deg);
+    opacity: 0.85;
+    z-index: 10;
+    pointer-events: none;
+    mix-blend-mode: multiply; /* Makes it look stamped directly onto the paper */
   }
 
-  .closet-container { text-align: center; }
-  .closet-door { 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center;
-    gap: 0.8rem; 
-    padding: 1.2rem 3rem; 
-    background: #111; 
-    color: #f4f4f4; 
-    border-radius: 5px; /* Boxier for the ransom note vibe */
-    cursor: pointer; 
-    font-family: 'Barlow Condensed';
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+  .scrap-door {
+    background: #fdfdfd; color: #111; padding: 1.2rem 3rem;
+    transform: rotate(-2deg); box-shadow: 3px 4px 10px rgba(0,0,0,0.35);
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.2rem;
+    text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s;
   }
-  .closet-door:active { 
-    transform: translate(2px, 2px); 
-    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+  .scrap-door::before {
+    content: ''; position: absolute; top: -10px; left: 40%;
+    width: 50px; height: 20px; background: rgba(255,255,200,0.6);
+    transform: rotate(6deg); box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
+  .scrap-door:active { transform: rotate(-2deg) translate(2px, 2px); box-shadow: 1px 2px 5px rgba(0,0,0,0.35); }
 
   /* ── EDITOR's PICKS (RESOURCES) ── */
   .resource-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 800px; margin: 0 auto; }
   @media (min-width: 768px) { .resource-grid { grid-template-columns: 1fr 1fr; } }
   
   .resource-item {
-    padding: 1.5rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: background 0.3s;
-    cursor: pointer;
-    text-align: left;
+    padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;
+    transition: background 0.3s; cursor: pointer; text-align: left;
   }
   .resource-item:hover { background: var(--grey); }
   .res-type { font-family: 'Barlow Condensed'; font-size: 0.75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; display: block;}
   .res-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.5rem; }
-  .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #888; line-height: 1.4; }
+  .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #bbb; line-height: 1.5; }
 
-  /* ── FOOTER (MIRANDA PRIESTLY) ── */
+  /* ── FOOTER ── */
   .site-footer { padding: 4rem 1.8rem 6rem; text-align: center; border-top: 1px solid var(--border); }
   .footer-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--white); }
 
-  /* ── GLOBAL CLOSET OVERLAY (COMIC SCRIPT) ── */
+  /* ── GLOBAL CLOSET OVERLAY ── */
   #global-closet-overlay {
     position: fixed; inset: 0; background: var(--black); z-index: 60000;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -248,16 +222,13 @@
     padding: 2rem;
   }
   #global-closet-overlay.open { transform: translateY(0); }
-  
   .comic-script-box { max-width: 400px; width: 100%; margin-bottom: 4rem; }
   .comic-line { font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; color: #ccc; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .comic-line strong { font-family: 'Bodoni Moda', serif; font-size: 1.3rem; color: var(--white); display: inline-block; width: 30px;}
   .comic-line.visible { opacity: 1; transform: translateY(0); }
-
   .gco-btn { display: inline-flex; padding: 1.2rem 3rem; background: transparent; color: var(--white); border: 1px solid var(--white); border-radius: 50px; font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; opacity: 0; transition: opacity 0.5s ease, background 0.3s, color 0.3s; }
   .gco-btn.visible { opacity: 1; }
   .gco-btn:hover { background: var(--white); color: var(--black); }
-
   .close-overlay-btn { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--dim); font-size: 2rem; cursor: pointer; }
 </style>
 </head>
@@ -294,45 +265,49 @@
 </section>
 
 <section id="closet-section">
-  <div style="text-align: center;">
-    <h2 class="burn-book-header" id="t-create">Create Your Outfit</h2>
-  </div>
-  <p class="section-intro" id="t-desc">You've talked the talk. Now it's time to build a look that speaks for itself.</p>
+  <p class="mood-shift" id="t-mood-shift">Enough talking — let's have some fun.</p>
   
-  <div class="closet-container">
-    <div class="closet-door" onclick="openClosetOverlay()">
+  <h2 class="burnbook-title">
+    <img class="lip-stamp-img" src="kissprint.png" alt="" onerror="this.style.display='none'">
+    <span class="cut a" id="t-cut-a">Create</span>
+    <span class="cut b" id="t-cut-b">Your</span>
+    <span class="cut c" id="t-cut-c">Outfit</span>
+  </h2>
+  
+  <div class="closet-container" style="margin-top: 1rem;">
+    <div class="scrap-door" onclick="openClosetOverlay()">
       <span class="door-text" id="t-enter">Enter the closet</span>
     </div>
   </div>
 </section>
 
 <section id="resources-section">
-  <h2 class="section-header" id="t-resources">The Committee Recommends</h2>
-  <p class="section-intro" id="t-res-intro">Optional deep-dives. Save these for later if you're curious.</p>
+  <h2 class="section-header" id="t-resources">Homework (Optional)</h2>
+  <p class="section-intro" id="t-res-intro">The rabbit holes we fell into while making this club.</p>
 
   <div class="resource-grid">
     <div class="resource-item" onclick="window.open('https://www.youtube.com/watch?v=1bHdzTUNw-4', '_blank')">
       <span class="res-type" id="t-doc">Documentary</span>
       <h3 class="res-title">Paris is Burning (1990)</h3>
-      <p class="res-desc" id="t-res1">The foundational film on ballroom culture, voguing, and the origins of 'reading'.</p>
+      <p class="res-desc" id="t-res1">The documentary that basically invented the vocabulary you used tonight — reading, shade, voguing, all of it.</p>
     </div>
 
     <div class="resource-item" onclick="window.open('https://www.youtube.com/c/hautelemode', '_blank')">
       <span class="res-type" id="t-yt">YouTube Channel</span>
       <h3 class="res-title">HauteLeMode</h3>
-      <p class="res-desc" id="t-res2">Brilliant, accessible deep-dives into high fashion, camp, and industry critique.</p>
+      <p class="res-desc" id="t-res2">If tonight's questions were fun, this channel is the whole rabbit hole.</p>
     </div>
 
     <div class="resource-item" onclick="window.open('https://blog.metmuseum.org/alexandermcqueen/about/', '_blank')">
       <span class="res-type" id="t-exhibit">Exhibition Archive</span>
       <h3 class="res-title">McQueen: Savage Beauty</h3>
-      <p class="res-desc" id="t-res3">Explore the actual runway shows that blurred the line between fashion and provocation.</p>
+      <p class="res-desc" id="t-res3">See the actual runway that made the press call it "obscene."</p>
     </div>
 
     <div class="resource-item" onclick="window.open('https://faculty.georgetown.edu/irvinem/theory/Sontag-NotesOnCamp-1964.html', '_blank')">
       <span class="res-type" id="t-essay">Essay</span>
       <h3 class="res-title">Notes on "Camp"</h3>
-      <p class="res-desc" id="t-res4">Susan Sontag's legendary essay explaining the aesthetic of "it's so bad that it's good".</p>
+      <p class="res-desc" id="t-res4">The essay that explains why "so bad it's good" is actually a whole aesthetic philosophy.</p>
     </div>
   </div>
 </section>
@@ -390,12 +365,14 @@ function toggleLang() {
   document.getElementById('t-more-q-intro').textContent = isUA ? 'Закінчилися за столом? Обирайте рівень і продовжуйте.' : 'Ran out at the table? Pick a level and keep going.';
   document.getElementById('t-swipe-hint').textContent = isUA ? 'Гортайте. Натисніть на картку, щоб відкрити.' : 'Swipe to browse. Tap a card to open it.';
   
-  document.getElementById('t-create').textContent = isUA ? 'Створіть свій образ' : 'Create Your Outfit';
-  document.getElementById('t-desc').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ, який говорить сам за себе.' : "You've talked the talk. Now it's time to build a look that speaks for itself.";
+  document.getElementById('t-mood-shift').textContent = isUA ? 'Досить розмов — давайте розважатись.' : 'Enough talking — let\'s have some fun.';
+  document.getElementById('t-cut-a').textContent = isUA ? 'Створіть' : 'Create';
+  document.getElementById('t-cut-b').textContent = isUA ? 'Свій' : 'Your';
+  document.getElementById('t-cut-c').textContent = isUA ? 'Образ' : 'Outfit';
   document.getElementById('t-enter').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
 
-  document.getElementById('t-resources').textContent = isUA ? 'Комітет рекомендує' : "The Committee Recommends";
-  document.getElementById('t-res-intro').textContent = isUA ? 'Додаткові матеріали. Збережіть на потім, якщо вам цікаво.' : "Optional deep-dives. Save these for later if you're curious.";
+  document.getElementById('t-resources').textContent = isUA ? 'Домашнє завдання (за бажанням)' : "Homework (Optional)";
+  document.getElementById('t-res-intro').textContent = isUA ? 'Кролячі нори, в які ми провалилися під час створення цього клубу.' : "The rabbit holes we fell into while making this club.";
 
   document.getElementById('t-footer').textContent = isUA ? 'Це все.' : "That's all.";
   document.getElementById('t-close-btn').textContent = isUA ? 'Закрити' : 'Close';
@@ -404,13 +381,13 @@ function toggleLang() {
   
   // Resource Items
   document.getElementById('t-doc').textContent = isUA ? 'Документальний фільм' : 'Documentary';
-  document.getElementById('t-res1').textContent = isUA ? 'Фундаментальний фільм про бальну культуру, вогінг та походження "reading".' : "The foundational film on ballroom culture, voguing, and the origins of 'reading'.";
+  document.getElementById('t-res1').textContent = isUA ? 'Документальний фільм, який фактично винайшов словник, що ви використовували сьогодні — reading, shade, voguing тощо.' : "The documentary that basically invented the vocabulary you used tonight — reading, shade, voguing, all of it.";
   document.getElementById('t-yt').textContent = isUA ? 'YouTube Канал' : 'YouTube Channel';
-  document.getElementById('t-res2').textContent = isUA ? 'Блискучі, доступні огляди високої моди, кемпу та критика індустрії.' : 'Brilliant, accessible deep-dives into high fashion, camp, and industry critique.';
+  document.getElementById('t-res2').textContent = isUA ? 'Якщо сьогоднішні питання були цікавими, цей канал — суцільна кроляча нора.' : 'If tonight\'s questions were fun, this channel is the whole rabbit hole.';
   document.getElementById('t-exhibit').textContent = isUA ? 'Архів виставки' : 'Exhibition Archive';
-  document.getElementById('t-res3').textContent = isUA ? 'Дослідіть справжні покази, які стерли межу між модою та провокацією.' : 'Explore the actual runway shows that blurred the line between fashion and provocation.';
+  document.getElementById('t-res3').textContent = isUA ? 'Подивіться той самий показ, який преса назвала «непристойним».' : 'See the actual runway that made the press call it "obscene."';
   document.getElementById('t-essay').textContent = isUA ? 'Есе' : 'Essay';
-  document.getElementById('t-res4').textContent = isUA ? 'Легендарне есе Сьюзен Зонтаг, що пояснює естетику "так погано, що аж добре".' : 'Susan Sontag\'s legendary essay explaining the aesthetic of "it\'s so bad that it\'s good".';
+  document.getElementById('t-res4').textContent = isUA ? 'Есе, яке пояснює, чому «так погано, що аж добре» — це насправді ціла естетична філософія.' : 'The essay that explains why "so bad it\'s good" is actually a whole aesthetic philosophy.';
 
   // Comic Script Translations
   document.getElementById('t-s').textContent = isUA ? 'Окей, мій мозок офіційно закипів від усієї цієї модної теорії.' : 'Okay, my brain is officially fried from all that fashion theory.';
