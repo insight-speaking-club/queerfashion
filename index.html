@@ -15,7 +15,7 @@
     --white: #f4f4f4; 
     --grey: #0a0a0a; 
     --dim: #999999; 
-    --border: #222222;
+    --border: #333333; /* Slightly lighter for crisp outlines */
   }
   
   body { 
@@ -94,6 +94,10 @@
     border-color: var(--white);
   }
 
+  /* ── ELEGANT SCROLL HINT ── */
+  .elegant-scroll-hint { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Barlow Condensed'; }
+  .elegant-scroll-hint .hint-line { height: 1px; width: 40px; background: var(--border); }
+
   /* ── CAROUSEL FIELD ── */
   .carousel-row { 
     display: flex; 
@@ -108,19 +112,36 @@
   .card-wrapper { flex: 0 0 85vw; scroll-snap-align: center; }
   @media (min-width: 768px) { .card-wrapper { flex: 0 0 40vw; } }
 
+  /* OUTLINED CARDS */
   .item-card { 
-    background: var(--grey); 
+    background: var(--black); 
     padding: 2.5rem; 
-    border: 1px solid var(--border); 
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.25); /* Crisp outline */
+    border-radius: 4px;
     min-height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
   }
+  .item-card:hover { border-color: var(--white); background: var(--grey); }
+  
   .card-emoji { font-size: 2rem; margin-bottom: 1rem; opacity: 0.8; }
-  .card-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.5; margin-bottom: 1.5rem; }
-  .card-vocab { border-top: 1px solid var(--border); padding-top: 1rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6;}
+  .card-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; line-height: 1.5; margin-bottom: 0; color: var(--white); }
+  .card-author { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); font-size: 0.85rem; margin-top: 1rem; }
+
+  /* ── MODAL ── */
+  .modal { position: fixed; top: 100%; left: 0; width: 100vw; height: 100vh; background: var(--black); z-index: 200; transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; overflow-x: hidden; }
+  .modal.open { top: 0; }
+  .modal-nav { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: linear-gradient(to bottom, rgba(3,3,3,0.95) 0%, transparent 100%); z-index: 10; pointer-events: none; }
+  .modal-nav > * { pointer-events: auto; }
+  .modal-back { cursor: pointer; color: var(--white); text-transform: uppercase; font-family: 'Barlow Condensed'; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem;}
+  .modal-content-box { padding: 2rem 1.5rem 6rem; max-width: 600px; margin: 0 auto; }
+
+  .context-box { border-left: 1px solid var(--border); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2rem 0; }
+  .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--dim); letter-spacing: 0.15em; font-size: 0.75rem; display: block; margin-bottom: 0.8rem; font-weight: 500;}
+  .the-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.5; color: var(--white); margin-top: 2rem; }
 
   /* ── CLOSET SECTION ── */
   .closet-container { text-align: center; }
@@ -160,17 +181,8 @@
   .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #888; line-height: 1.4; }
 
   /* ── FOOTER ── */
-  .site-footer {
-    padding: 4rem 1.8rem 6rem;
-    text-align: center;
-    border-top: 1px solid var(--border);
-  }
-  .footer-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--dim);
-  }
+  .site-footer { padding: 4rem 1.8rem 6rem; text-align: center; border-top: 1px solid var(--border); }
+  .footer-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--dim); }
 
   /* ── GLOBAL CLOSET OVERLAY (COMIC SCRIPT) ── */
   #global-closet-overlay {
@@ -181,32 +193,16 @@
   }
   #global-closet-overlay.open { transform: translateY(0); }
   
-  .comic-script-box {
-    max-width: 400px; width: 100%;
-    margin-bottom: 4rem;
-  }
-  .comic-line {
-    font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.6;
-    margin-bottom: 1.5rem; color: #ccc;
-    opacity: 0; transform: translateY(10px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
+  .comic-script-box { max-width: 400px; width: 100%; margin-bottom: 4rem; }
+  .comic-line { font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; color: #ccc; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .comic-line strong { font-family: 'Bodoni Moda', serif; font-size: 1.3rem; color: var(--white); display: inline-block; width: 30px;}
   .comic-line.visible { opacity: 1; transform: translateY(0); }
 
-  .gco-btn {
-    display: inline-flex; padding: 1.2rem 3rem; background: transparent; color: var(--white);
-    border: 1px solid var(--white); border-radius: 50px; font-family: 'Barlow Condensed';
-    text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none;
-    opacity: 0; transition: opacity 0.5s ease, background 0.3s, color 0.3s;
-  }
+  .gco-btn { display: inline-flex; padding: 1.2rem 3rem; background: transparent; color: var(--white); border: 1px solid var(--white); border-radius: 50px; font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; opacity: 0; transition: opacity 0.5s ease, background 0.3s, color 0.3s; }
   .gco-btn.visible { opacity: 1; }
   .gco-btn:hover { background: var(--white); color: var(--black); }
 
-  .close-overlay-btn {
-    position: absolute; top: 2rem; right: 2rem;
-    background: none; border: none; color: var(--dim); font-size: 2rem; cursor: pointer;
-  }
+  .close-overlay-btn { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--dim); font-size: 2rem; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -230,6 +226,10 @@
     <button class="level-btn" onclick="renderLevel('adv')" id="btn-adv">Advanced</button>
   </div>
   
+  <div class="elegant-scroll-hint">
+    <div class="hint-line"></div> <span id="t-swipe-hint">Swipe to browse. Tap a card to open it.</span> <div class="hint-line"></div>
+  </div>
+
   <div class="carousel-row" id="carousel-field">
     <!-- Populated by JS -->
   </div>
@@ -248,7 +248,7 @@
 
 <section id="resources-section">
   <h2 class="section-header" id="t-resources">The Committee Recommends</h2>
-  <p class="section-intro" id="t-res-intro">A few things worth watching or reading, if you're curious.</p>
+  <p class="section-intro" id="t-res-intro">Optional deep-dives. Save these for later if you're curious.</p>
 
   <div class="resource-grid">
     <div class="resource-item" onclick="window.open('https://www.youtube.com/watch?v=1bHdzTUNw-4', '_blank')">
@@ -281,7 +281,17 @@
   <p class="footer-text" id="t-footer">That's everything. See you Thursday.</p>
 </footer>
 
-<!-- THE GLOBAL CLOSET OVERLAY -->
+<!-- ── MODAL FOR QUESTIONS ── -->
+<div class="modal" id="item-modal">
+  <div class="modal-nav">
+    <div class="modal-back" onclick="closeModal()">
+      <span>✕</span> <span id="t-close-btn">Close</span>
+    </div>
+  </div>
+  <div id="modal-body-container"></div>
+</div>
+
+<!-- ── GLOBAL CLOSET OVERLAY (COMIC SCRIPT) ── -->
 <div id="global-closet-overlay">
   <button class="close-overlay-btn" onclick="closeClosetOverlay()">×</button>
   
@@ -304,31 +314,32 @@
 // ── LANGUAGE STATE ──
 let isUA = false;
 let currentLevel = 'a1';
+let currentModalIndex = null;
 
 function toggleLang() {
   isUA = !isUA;
   document.querySelector('.lang-toggle').textContent = isUA ? 'Translate' : 'Перекласти';
   document.querySelector('.lang-toggle').classList.toggle('active', isUA);
   
-  // Header Translations
+  // Headers & Text
   document.getElementById('t-club').textContent = isUA ? 'Розмовний клуб про моду' : 'Fashion Speaking Club';
   document.getElementById('t-subtitle').textContent = isUA ? 'Більше для дослідження, якщо бажаєте.' : 'More to explore, if you want it.';
   document.getElementById('t-hero-inst').textContent = isUA ? 'Жодного тиску — все тут за бажанням.' : 'No pressure — everything here is optional.';
   
-  // Section Headers & Intros
   document.getElementById('t-more-q-head').textContent = isUA ? 'Більше запитань' : 'More Questions';
   document.getElementById('t-more-q-intro').textContent = isUA ? 'Закінчилися за столом? Обирайте рівень і продовжуйте.' : 'Ran out at the table? Pick a level and keep going.';
+  document.getElementById('t-swipe-hint').textContent = isUA ? 'Гортайте. Натисніть на картку, щоб відкрити.' : 'Swipe to browse. Tap a card to open it.';
   
   document.getElementById('t-create').textContent = isUA ? 'Створіть свій образ' : 'Create Your Outfit';
   document.getElementById('t-desc').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ, який говорить сам за себе.' : "You've talked the talk. Now it's time to build a look that speaks for itself.";
   document.getElementById('t-enter').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
 
   document.getElementById('t-resources').textContent = isUA ? 'Комітет рекомендує' : "The Committee Recommends";
-  document.getElementById('t-res-intro').textContent = isUA ? 'Кілька речей, які варто подивитися або почитати, якщо вам цікаво.' : "A few things worth watching or reading, if you're curious.";
+  document.getElementById('t-res-intro').textContent = isUA ? 'Додаткові матеріали. Збережіть на потім, якщо вам цікаво.' : "Optional deep-dives. Save these for later if you're curious.";
 
   document.getElementById('t-footer').textContent = isUA ? 'Ось і все. Побачимось у четвер.' : "That's everything. See you Thursday.";
+  document.getElementById('t-close-btn').textContent = isUA ? 'Закрити' : 'Close';
 
-  // Level Tabs
   document.getElementById('btn-adv').textContent = isUA ? 'Просунутий' : 'Advanced';
   
   // Resource Items
@@ -348,24 +359,33 @@ function toggleLang() {
   document.getElementById('t-closet-btn').textContent = isUA ? 'Відкрити гардероб →' : 'Open the Dream Closet →';
 
   renderLevel(currentLevel);
+  if (currentModalIndex !== null) {
+    openModal(currentModalIndex);
+  }
 }
 
-// ── QUESTION DATA ──
+// ── FULL QUESTION DATA (Restored from First Code) ──
 const questions = {
   a1: [
-    { emoji: "👗", en: "What is your absolute favorite piece of clothing and why?", ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", vocabEN: "Useful: It fits perfectly, Special memory, High quality", vocabUA: "Корисно: Ідеально сидить, Особливий спогад, Висока якість" },
-    { emoji: "👟", en: "Do you dress more for comfort or for style?", ua: "Ви одягаєтеся більше для комфорту чи для стилю?", vocabEN: "Useful: Comfortable, Trendy, It depends on the day", vocabUA: "Корисно: Зручний, Модний, Залежить від дня" },
-    { emoji: "🛍️", en: "Do you like shopping for clothes? Why or why not?", ua: "Вам подобається купувати одяг? Чому так чи чому ні?", vocabEN: "Useful: To try on, Waste of time, Window shopping", vocabUA: "Корисно: Міряти, Марна трата часу, Роздивлятися вітрини" }
+    { emoji: "✦", text_en: "What is your absolute favorite piece of clothing and why?", text_ua: "Яка ваша абсолютна улюблена річ з одягу і чому?", vocab: [{ en: "It fits perfectly", ua: "Він ідеально сидить" }, { en: "Special memory", ua: "Особливий спогад" }, { en: "High quality", ua: "Висока якість" }], structures: [{ en: "My favorite piece of clothing is...", ua: "Моя улюблена річ з одягу — це..." }, { en: "I love it because...", ua: "Я люблю її, тому що..." }] },
+    { emoji: "✦", text_en: "Do you dress more for comfort or for style?", text_ua: "Ви одягаєтеся більше для комфорту чи для стилю?", vocab: [{ en: "Comfortable", ua: "Зручний" }, { en: "Trendy / Stylish", ua: "Модний / Стильний" }], structures: [{ en: "I usually prefer to wear...", ua: "Зазвичай я віддаю перевагу..." }, { en: "For me, comfort is more important because...", ua: "Для мене комфорт важливіший, тому що..." }] },
+    { emoji: "✦", text_en: "How has your personal style changed since you were a teenager?", text_ua: "Як змінився ваш особистий стиль з підліткових років?", vocab: [{ en: "To regret", ua: "Шкодувати" }, { en: "Baggy clothes", ua: "Мішкуватий одяг" }], structures: [{ en: "When I was a teenager, I used to wear...", ua: "Коли я був/ла підлітком, я носив/ла..." }, { en: "Now, my style is more...", ua: "Зараз мій стиль більш..." }] },
+    { emoji: "✦", text_en: "Do you like shopping for clothes? Why or why not?", text_ua: "Вам подобається купувати одяг? Чому так чи чому ні?", vocab: [{ en: "To try on", ua: "Міряти" }, { en: "Window shopping", ua: "Роздивлятися вітрини" }], structures: [{ en: "I enjoy shopping because...", ua: "Мені подобається шопінг, тому що..." }, { en: "I prefer buying clothes online because...", ua: "Я віддаю перевагу купівлі онлайн, тому що..." }] },
+    { emoji: "✦", text_en: "What colors do you wear the most and why?", text_ua: "Які кольори ви носите найчастіше і чому?", vocab: [{ en: "Bright colors", ua: "Яскраві кольори" }, { en: "Neutral tones", ua: "Нейтральні відтінки" }], structures: [{ en: "My wardrobe is mostly...", ua: "Мій гардероб складається переважно з..." }, { en: "I feel confident when I wear...", ua: "Я відчуваю себе впевнено, коли ношу..." }] }
   ],
   b1: [
-    { emoji: "💬", en: "\"Clothing is a form of self-expression.\" — Marc Jacobs. Do you agree, or do we just wear what is expected of us?", ua: "\"Одяг — це форма самовираження.\" — Марк Джейкобс. Ви згодні, чи ми просто носимо те, чого від нас очікують?", vocabEN: "Consider: Dress codes, budget, societal expectations.", vocabUA: "Подумайте про: Дрес-код, бюджет, очікування суспільства." },
-    { emoji: "🎭", en: "\"We are all born naked. The rest is drag.\" — RuPaul. Is there an outfit that felt like a costume at first but ended up feeling like the real you?", ua: "\"Ми всі народжуємося голими. Решта — це дрег.\" — РуПол. Чи був у вас образ, який спочатку здавався костюмом, але потім став частиною вас?", vocabEN: "Consider: Identity, performance, growing into a style.", vocabUA: "Подумайте про: Ідентичність, перформанс, розвиток стилю." },
-    { emoji: "📸", en: "Can you actually tell the difference between someone with style and someone who's just wearing expensive trends?", ua: "Чи можете ви відрізнити людину зі стилем від тієї, яка просто носить дорогі тренди?", vocabEN: "Consider: Personal taste vs. brand logos, confidence.", vocabUA: "Подумайте про: Особистий смак vs. логотипи брендів, впевненість." }
+    { author: "RuPaul", text_en: "We are all born naked. The rest is drag.", text_ua: "Ми всі народжуємося голими. Решта — це дрег.", prompt_en: "If all clothing is performance, does that mean nobody is ever just 'being themselves' — or does performing a self eventually make it real?", prompt_ua: "Якщо весь одяг — це перформанс, чи означає це, що ніхто ніколи не є 'просто собою'?" },
+    { author: "Alexander McQueen", text_en: "I want people to be afraid of the women I dress.", text_ua: "Я хочу, щоб люди боялися жінок, яких я одягаю.", prompt_en: "Is there something powerful about making people uncomfortable with how you look? Have you ever dressed to intimidate?", prompt_ua: "Чи є щось могутнє в тому, щоб змушувати інших почуватися некомфортно через ваш вигляд? Ви коли-небудь одягалися, щоб залякати?" },
+    { author: "Marc Jacobs", text_en: "Clothing is a form of self-expression.", text_ua: "Одяг — це форма самовираження.", prompt_en: "How much of what you wear is actually chosen, versus what your job, your budget, your body, or other people expect of you?", prompt_ua: "Скільки з того, що ви носите, насправді є вашим вибором, а не тим, чого вимагають інші?" },
+    { author: "Coco Chanel", text_en: "Fashion is in the sky, in the street.", text_ua: "Мода в небі, на вулиці.", prompt_en: "If fashion comes from real life, why does high fashion so rarely look like real life? Who actually gets to set the rules?", prompt_ua: "Якщо мода береться з реального життя, чому висока мода так рідко схожа на нього? Хто встановлює правила?" },
+    { author: "Tim Gunn", text_en: "Style is a way to say who you are without having to speak.", text_ua: "Стиль — це спосіб сказати, хто ти, без слів.", prompt_en: "If clothes speak before you do, what do you think your everyday outfit says about you to a stranger?", prompt_ua: "Якщо одяг говорить раніше за вас, що ваш повсякденний образ каже про вас незнайомцю?" }
   ],
   adv: [
-    { emoji: "🔥", en: "Harry Styles in a dress = brave. Drag queens in a dress = threat. Is this double standard changing, or is fashion still heavily gatekept?", ua: "Гаррі Стайлз у сукні = сміливість. Дрег-квіни в сукні = загроза. Цей подвійний стандарт змінюється, чи мода досі суворо контролюється?", vocabEN: "Theme: Privilege, double standards, appropriation.", vocabUA: "Тема: Привілеї, подвійні стандарти, привласнення." },
-    { emoji: "💸", en: "Is 'ethical fashion' a real moral choice, or just a luxury price tag for guilt?", ua: "Чи є 'етична мода' реальним моральним вибором, чи просто дорогим цінником за провину?", vocabEN: "Theme: Fast fashion, class privilege, sustainability.", vocabUA: "Тема: Швидка мода, класові привілеї, екологічність." },
-    { emoji: "🏳️‍🌈", en: "Rainbow logos every June, gone by July. Is corporate Pride cynical, harmless, or still useful despite the flaws?", ua: "Веселкові логотипи щочервня, які зникають у липні. Чи є корпоративний Прайд цинічним, нешкідливим, чи все ще корисним?", vocabEN: "Theme: Rainbow capitalism, visibility, exploitation.", vocabUA: "Тема: Веселковий капіталізм, видимість, експлуатація." }
+    { text_en: "Harry Styles in a dress = brave. Drag queens in a dress = threat. Is that double standard real, fair, changing — or have you felt it yourself?", text_ua: "Гаррі Стайлз у сукні = сміливість. Дрег-квіни в сукні = загроза. Чи є цей подвійний стандарт реальним, чи відчували ви його на собі?", example_en: "Harry Styles wore a lace gown on Vogue's cover and was widely praised. That same year, legislation targeted drag performers. Same dress. Very different reaction.", example_ua: "Гаррі одягнув сукню на обкладинці Vogue і отримав похвалу. Того ж року закони були спрямовані проти дрег-артистів. Та сама сукня. Інша реакція." },
+    { text_en: "Is 'ethical fashion' a real ethical category — or mostly a price tag for guilt? Where do you land, and would you pay more for it?", text_ua: "Чи є 'етична мода' реальною категорією — чи здебільшого цінником за провину? До чого схиляєтесь ви, і чи платили б ви більше?", example_en: "A £300 'sustainable' linen shirt. A £6 linen shirt from Shein. One is marketed as conscious consumption. Who can afford a conscience?", example_ua: "Екологічна лляна сорочка за £300 та сорочка за £6. Одна продається як свідоме споживання. Хто може дозволити собі совість?" },
+    { text_en: "Who actually owns a trend — the people who created it, or whoever made it famous? Has this ever happened to something that's 'yours'?", text_ua: "Кому насправді належить тренд — людям, які його створили, чи тому, хто зробив його відомим?", example_en: "Cornrows were 'urban' on Black women, 'edgy' on Kylie Jenner. The look stays the same. The credit moves.", example_ua: "Косички були 'урбаністичними' на чорношкірих жінках, 'модними' на Кайлі Дженнер. Вигляд залишається тим самим. Визнання переходить." },
+    { text_en: "Rainbow logos every June, gone by July — cynical, harmless, or still useful despite the flaws? Has a Pride collection ever meant something to you?", text_ua: "Веселкові логотипи кожного червня, що зникають до липня — цинічно, нешкідливо, чи все ще корисно, незважаючи на недоліки?", example_en: "Pride collections sell out in weeks, donate a small share of profits, and quietly disappear from shelves by August.", example_ua: "Pride-колекції розкуповують за тижні, частина прибутку йде на ініціативи, а до серпня вони тихо зникають з полиць." },
+    { text_en: "Ballroom created voguing and 'reading' decades before fashion took them mainstream. Does crediting the originators matter to you?", text_ua: "Бальна культура створила вогінг та 'reading' за десятиліття до мейнстріму. Чи має для вас значення визнання творців?", example_en: "Madonna's 1990 hit 'Vogue' brought ball culture to a global audience, while the queer performers who built the scene remained largely uncredited.", example_ua: "Хіт Мадонни 'Vogue' показав рухи бальної культури світу, тоді як квір-виконавці залишилися без визнання." }
   ]
 };
 
@@ -378,18 +398,76 @@ function renderLevel(level) {
   const container = document.getElementById('carousel-field');
   container.innerHTML = '';
   
-  questions[level].forEach(q => {
+  questions[level].forEach((q, index) => {
     const card = document.createElement('div');
     card.className = 'card-wrapper';
-    card.innerHTML = `
-      <div class="item-card">
-        <div class="card-emoji">${q.emoji}</div>
-        <div class="card-text">${isUA ? q.ua : q.en}</div>
-        <div class="card-vocab">${isUA ? q.vocabUA : q.vocabEN}</div>
-      </div>
-    `;
+    
+    // Front card content based on level
+    let innerHtml = '';
+    if (level === 'a1') {
+      innerHtml = `<div class="card-emoji">${q.emoji}</div><div class="card-text">${isUA ? q.text_ua : q.text_en}</div>`;
+    } else if (level === 'b1') {
+      innerHtml = `<div class="card-text">"${isUA ? q.text_ua : q.text_en}"</div><div class="card-author">— ${q.author}</div>`;
+    } else {
+      innerHtml = `<div class="card-text">${isUA ? q.text_ua : q.text_en}</div>`;
+    }
+
+    card.innerHTML = `<div class="item-card" onclick="openModal(${index})">${innerHtml}</div>`;
     container.appendChild(card);
   });
+}
+
+// ── MODAL LOGIC ──
+function openModal(index) {
+  currentModalIndex = index;
+  const c = document.getElementById('modal-body-container');
+  const q = questions[currentLevel][index];
+  
+  if (currentLevel === 'a1') {
+    const vocabList = q.vocab.map(v => `<li style="margin-bottom:0.8rem;"><strong>${v.en}</strong><br><span style="color:var(--dim); font-size:0.85rem;">${v.ua}</span></li>`).join('');
+    const structuresList = q.structures.map(s => `<li style="margin-bottom:1rem; line-height:1.4;"><strong>${s.en}</strong><br><span style="color:var(--dim); font-size:0.85rem;">${s.ua}</span></li>`).join('');
+
+    c.innerHTML = `
+      <div class="modal-content-box">
+        <div style="font-size:2.5rem; margin-bottom:1.5rem; opacity:0.8;">${q.emoji}</div>
+        <h2 style="font-family:'Inter',sans-serif; font-weight:400; font-size:1.6rem; line-height:1.4; margin-bottom:3rem;">${isUA ? q.text_ua : q.text_en}</h2>
+        <div class="context-box" style="margin-bottom: 2rem;">
+          <h4 class="context-label">${isUA ? 'Корисна лексика' : 'Useful Vocabulary'}</h4>
+          <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">${vocabList}</ul>
+        </div>
+        <div class="context-box">
+          <h4 class="context-label">${isUA ? 'Як почати речення' : 'How to start'}</h4>
+          <ul style="list-style:none; padding-left:0; margin:0; font-size:0.95rem; line-height:1.4; color:var(--white);">${structuresList}</ul>
+        </div>
+      </div>`;
+  } 
+  else if (currentLevel === 'b1') {
+    c.innerHTML = `
+      <div class="modal-content-box" style="padding-top:2rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-size:2.2rem; line-height:1.3; margin-bottom:1.5rem;">"${isUA ? q.text_ua : q.text_en}"</h2>
+        <p style="color:var(--dim); font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.1em;">— ${q.author}</p>
+        <div class="the-question">${isUA ? q.prompt_ua : q.prompt_en}</div>
+      </div>`;
+  } 
+  else {
+    c.innerHTML = `
+      <div class="modal-content-box" style="padding-top:2rem;">
+        <h2 style="font-family:'Bodoni Moda',serif; font-weight:400; font-size:2rem; line-height:1.2; margin-bottom:2.5rem;">${isUA ? q.text_ua : q.text_en}</h2>
+        <div class="context-box">
+          <span class="context-label">${isUA ? 'Наприклад' : 'For Example'}</span>
+          <p style="font-family:'Inter', sans-serif; font-size:1rem; font-weight:300; color:#bbb; line-height:1.6;">${isUA ? q.example_ua : q.example_en}</p>
+        </div>
+      </div>`;
+  }
+
+  document.getElementById('item-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('item-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  currentModalIndex = null;
 }
 
 // ── COMIC SCRIPT REVEAL LOGIC ──
@@ -398,7 +476,6 @@ function openClosetOverlay() {
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // Reset and play animations
   document.querySelectorAll('.comic-line, .gco-btn').forEach(el => el.classList.remove('visible'));
   setTimeout(() => document.getElementById('line1').classList.add('visible'), 600);
   setTimeout(() => document.getElementById('line2').classList.add('visible'), 2000);
