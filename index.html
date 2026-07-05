@@ -16,6 +16,7 @@
     --grey: #0a0a0a; 
     --dim: #999999; 
     --border: #333333; 
+    --burnbook-pink: #d89eb7; /* Mean Girls / Thank U, Next Pink */
   }
   
   body { 
@@ -160,7 +161,40 @@
   .context-label { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--dim); letter-spacing: 0.15em; font-size: 0.75rem; display: block; margin-bottom: 0.8rem; font-weight: 500;}
   .the-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.5; color: var(--white); margin-top: 2rem; }
 
-  /* ── CLOSET SECTION ── */
+  /* ── CLOSET SECTION (BURN BOOK AESTHETIC) ── */
+  #closet-section {
+    background-color: var(--burnbook-pink);
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #111;
+    position: relative;
+    z-index: 5;
+    padding-bottom: 7rem;
+  }
+  
+  .burn-book-header {
+    font-family: 'Bodoni Moda', serif;
+    font-style: italic;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    color: #111;
+    background: #f4f4f4;
+    display: inline-block;
+    padding: 0.2rem 1rem;
+    transform: rotate(-3deg);
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+    border: 1px solid #ccc;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  #closet-section .section-intro {
+    color: #111;
+    font-weight: 500;
+    font-size: 1.1rem;
+    max-width: 300px;
+    margin: 0 auto 3rem;
+  }
+
   .closet-container { text-align: center; }
   .closet-door { 
     display: inline-flex; 
@@ -168,17 +202,22 @@
     justify-content: center;
     gap: 0.8rem; 
     padding: 1.2rem 3rem; 
-    background: var(--white); 
-    color: var(--black); 
-    border-radius: 50px; 
+    background: #111; 
+    color: #f4f4f4; 
+    border-radius: 5px; /* Boxier for the ransom note vibe */
     cursor: pointer; 
     font-family: 'Barlow Condensed';
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 1.1rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: transform 0.2s;
+    letter-spacing: 0.15em;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
-  .closet-door:active { transform: scale(0.95); }
+  .closet-door:active { 
+    transform: translate(2px, 2px); 
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+  }
 
   /* ── EDITOR's PICKS (RESOURCES) ── */
   .resource-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 800px; margin: 0 auto; }
@@ -197,9 +236,9 @@
   .res-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.5rem; }
   .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #888; line-height: 1.4; }
 
-  /* ── FOOTER ── */
+  /* ── FOOTER (MIRANDA PRIESTLY) ── */
   .site-footer { padding: 4rem 1.8rem 6rem; text-align: center; border-top: 1px solid var(--border); }
-  .footer-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--dim); }
+  .footer-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--white); }
 
   /* ── GLOBAL CLOSET OVERLAY (COMIC SCRIPT) ── */
   #global-closet-overlay {
@@ -232,7 +271,7 @@
   <span class="club-label" id="t-club">Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
   <p class="cover-title-italic" id="t-subtitle">More to explore, if you want it.</p>
-  <p class="hero-instructions" id="t-hero-inst">Additional questions, a game, and educational resources on dashion in one place.</p>
+  <p class="hero-instructions" id="t-hero-inst">More questions, a digital outfit builder, and deep-dive resources.</p>
 </header>
 
 <section id="questions-section">
@@ -255,7 +294,9 @@
 </section>
 
 <section id="closet-section">
-  <h2 class="section-header" id="t-create">Create Your Outfit</h2>
+  <div style="text-align: center;">
+    <h2 class="burn-book-header" id="t-create">Create Your Outfit</h2>
+  </div>
   <p class="section-intro" id="t-desc">You've talked the talk. Now it's time to build a look that speaks for itself.</p>
   
   <div class="closet-container">
@@ -343,7 +384,7 @@ function toggleLang() {
   // Headers & Text
   document.getElementById('t-club').textContent = isUA ? 'Розмовний клуб про моду' : 'Fashion Speaking Club';
   document.getElementById('t-subtitle').textContent = isUA ? 'Більше для дослідження, якщо бажаєте.' : 'More to explore, if you want it.';
-  document.getElementById('t-hero-inst').textContent = isUA ? 'Жодного тиску — все тут за бажанням.' : 'No pressure — everything here is optional.';
+  document.getElementById('t-hero-inst').textContent = isUA ? 'Більше запитань, цифровий гардероб та корисні матеріали.' : 'More questions, a digital outfit builder, and deep-dive resources.';
   
   document.getElementById('t-more-q-head').textContent = isUA ? 'Більше запитань' : 'More Questions';
   document.getElementById('t-more-q-intro').textContent = isUA ? 'Закінчилися за столом? Обирайте рівень і продовжуйте.' : 'Ran out at the table? Pick a level and keep going.';
@@ -356,7 +397,7 @@ function toggleLang() {
   document.getElementById('t-resources').textContent = isUA ? 'Комітет рекомендує' : "The Committee Recommends";
   document.getElementById('t-res-intro').textContent = isUA ? 'Додаткові матеріали. Збережіть на потім, якщо вам цікаво.' : "Optional deep-dives. Save these for later if you're curious.";
 
-  document.getElementById('t-footer').textContent = isUA ? 'Ось і все. Побачимось у четвер.' : "That's everything. See you Thursday.";
+  document.getElementById('t-footer').textContent = isUA ? 'Це все.' : "That's all.";
   document.getElementById('t-close-btn').textContent = isUA ? 'Закрити' : 'Close';
 
   document.getElementById('btn-adv').textContent = isUA ? 'Просунутий' : 'Advanced';
