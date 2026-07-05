@@ -53,21 +53,26 @@
     background: var(--black); 
     text-align: center; 
     position: relative; 
-    min-height: 60vh;
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
   .cover-title { font-family: 'Bodoni Moda', 'Playfair Display', serif; font-weight: 400; font-size: clamp(3.5rem, 16vw, 8rem); text-transform: uppercase; line-height: 0.9; margin-bottom: 1.5rem; }
-  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--dim); margin-bottom: 2rem; }
+  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.4rem; color: var(--white); margin-bottom: 1rem; }
+  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--dim); font-weight: 300; }
+
+  /* ── COMMON SECTION STYLES ── */
+  section { padding: 5rem 1.8rem; border-top: 1px solid var(--border); }
+  .section-header { font-family: 'Bodoni Moda', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; text-align: center; }
+  .section-intro { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.95rem; color: var(--dim); text-align: center; margin-bottom: 3rem; }
 
   /* ── LEVEL SELECTOR (TABS) ── */
   .level-nav {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    padding: 0 1.8rem;
     margin-bottom: 2rem;
   }
   .level-btn {
@@ -94,14 +99,13 @@
     display: flex; 
     overflow-x: auto; 
     scroll-snap-type: x mandatory; 
-    padding: 1rem 1.8rem 3rem; 
+    padding: 1rem 0 2rem; 
     gap: 1.5rem;
+    margin: 0 -1.8rem;
   }
+  .carousel-row::before, .carousel-row::after { content: ''; flex: 0 0 1.8rem; }
   .carousel-row::-webkit-scrollbar { display: none; }
-  .card-wrapper { 
-    flex: 0 0 85vw; 
-    scroll-snap-align: center; 
-  }
+  .card-wrapper { flex: 0 0 85vw; scroll-snap-align: center; }
   @media (min-width: 768px) { .card-wrapper { flex: 0 0 40vw; } }
 
   .item-card { 
@@ -118,37 +122,12 @@
   .card-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.5; margin-bottom: 1.5rem; }
   .card-vocab { border-top: 1px solid var(--border); padding-top: 1rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--dim); line-height: 1.6;}
 
-  /* ── EDITOR's PICKS (RESOURCES) ── */
-  .resources-section { padding: 4rem 1.8rem; border-top: 1px solid var(--border); }
-  .section-header { font-family: 'Bodoni Moda', serif; font-size: 2rem; font-weight: 400; margin-bottom: 2rem; text-align: center;}
-  .resource-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 800px; margin: 0 auto;}
-  @media (min-width: 768px) { .resource-grid { grid-template-columns: 1fr 1fr; } }
-  
-  .resource-item {
-    padding: 1.5rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: background 0.3s;
-    cursor: pointer;
-  }
-  .resource-item:hover { background: var(--grey); }
-  .res-type { font-family: 'Barlow Condensed'; font-size: 0.75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; display: block;}
-  .res-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.5rem; }
-  .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #888; line-height: 1.4; }
-
-  /* ── THE FINAL STAGE ── */
-  .final-closet-section { 
-    text-align: center; 
-    padding: 6rem 1.8rem; 
-    border-top: 1px solid var(--border);
-  }
-  .context-label { font-family: 'Barlow Condensed'; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim); display: block; margin-bottom: 1rem;}
-  .final-closet-section h3 { font-family: 'Bodoni Moda', serif; font-size: 2.5rem; font-weight: 400; margin-bottom: 1rem; }
-  .closet-desc { font-family: 'Inter'; font-weight: 300; color: #bbb; margin-bottom: 3rem; }
-  
+  /* ── CLOSET SECTION ── */
+  .closet-container { text-align: center; }
   .closet-door { 
     display: inline-flex; 
     align-items: center; 
+    justify-content: center;
     gap: 0.8rem; 
     padding: 1.2rem 3rem; 
     background: var(--white); 
@@ -159,30 +138,39 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    transition: all 0.3s ease;
+    transition: transform 0.2s;
   }
   .closet-door:active { transform: scale(0.95); }
-  
-  /* Locked State Styles */
-  .closet-door.locked {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #555;
-    cursor: not-allowed;
-  }
-  .closet-door.locked:active { transform: none; }
 
-  /* ── TOAST MESSAGE ── */
-  #toast-msg {
-    position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%);
-    background: var(--white); color: var(--black);
-    padding: 1rem 2rem; border-radius: 50px;
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem;
-    text-transform: uppercase; letter-spacing: 0.15em;
-    transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none;
+  /* ── EDITOR's PICKS (RESOURCES) ── */
+  .resource-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 800px; margin: 0 auto; }
+  @media (min-width: 768px) { .resource-grid { grid-template-columns: 1fr 1fr; } }
+  
+  .resource-item {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: background 0.3s;
+    cursor: pointer;
+    text-align: left;
   }
-  #toast-msg.show { bottom: 3rem; }
+  .resource-item:hover { background: var(--grey); }
+  .res-type { font-family: 'Barlow Condensed'; font-size: 0.75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; display: block;}
+  .res-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #888; line-height: 1.4; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    padding: 4rem 1.8rem 6rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .footer-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--dim);
+  }
 
   /* ── GLOBAL CLOSET OVERLAY (COMIC SCRIPT) ── */
   #global-closet-overlay {
@@ -228,10 +216,14 @@
 <header id="hero-header">
   <span class="club-label" id="t-club">Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
-  <p class="cover-title-italic" id="t-subtitle">Additional Questions.</p>
+  <p class="cover-title-italic" id="t-subtitle">More to explore, if you want it.</p>
+  <p class="hero-instructions" id="t-hero-inst">No pressure — everything here is optional.</p>
 </header>
 
 <section id="questions-section">
+  <h2 class="section-header" id="t-more-q-head">More Questions</h2>
+  <p class="section-intro" id="t-more-q-intro">Ran out at the table? Pick a level and keep going.</p>
+
   <div class="level-nav">
     <button class="level-btn active" onclick="renderLevel('a1')" id="btn-a1">A1–A2</button>
     <button class="level-btn" onclick="renderLevel('b1')" id="btn-b1">B1–B2</button>
@@ -243,10 +235,22 @@
   </div>
 </section>
 
-<section class="resources-section">
-  <h2 class="section-header" id="t-resources">Editor's Picks</h2>
+<section id="closet-section">
+  <h2 class="section-header" id="t-create">Create Your Outfit</h2>
+  <p class="section-intro" id="t-desc">You've talked the talk. Now it's time to build a look that speaks for itself.</p>
+  
+  <div class="closet-container">
+    <div class="closet-door" onclick="openClosetOverlay()">
+      <span class="door-text" id="t-enter">Enter the closet</span>
+    </div>
+  </div>
+</section>
+
+<section id="resources-section">
+  <h2 class="section-header" id="t-resources">The Committee Recommends</h2>
+  <p class="section-intro" id="t-res-intro">A few things worth watching or reading, if you're curious.</p>
+
   <div class="resource-grid">
-    
     <div class="resource-item" onclick="window.open('https://www.youtube.com/watch?v=1bHdzTUNw-4', '_blank')">
       <span class="res-type" id="t-doc">Documentary</span>
       <h3 class="res-title">Paris is Burning (1990)</h3>
@@ -270,22 +274,12 @@
       <h3 class="res-title">Notes on "Camp"</h3>
       <p class="res-desc" id="t-res4">Susan Sontag's legendary essay explaining the aesthetic of "it's so bad that it's good".</p>
     </div>
-
   </div>
 </section>
 
-<section class="final-closet-section">
-  <span class="context-label" id="t-stage">The Final Stage</span>
-  <h3 id="t-create">Create your outfit.</h3>
-  <p class="closet-desc" id="t-desc">You've talked the talk. Now it's time to build a look that speaks for itself.</p>
-  
-  <div class="closet-door locked" id="closet-door" onclick="handleClosetClick()">
-    <span class="lock-icon" id="door-icon">🔒</span>
-    <span class="door-text" id="t-enter">Enter the closet</span>
-  </div>
-</section>
-
-<div id="toast-msg"></div>
+<footer class="site-footer">
+  <p class="footer-text" id="t-footer">That's everything. See you Thursday.</p>
+</footer>
 
 <!-- THE GLOBAL CLOSET OVERLAY -->
 <div id="global-closet-overlay">
@@ -316,12 +310,28 @@ function toggleLang() {
   document.querySelector('.lang-toggle').textContent = isUA ? 'Translate' : 'Перекласти';
   document.querySelector('.lang-toggle').classList.toggle('active', isUA);
   
-  // UI Translations
+  // Header Translations
   document.getElementById('t-club').textContent = isUA ? 'Розмовний клуб про моду' : 'Fashion Speaking Club';
-  document.getElementById('t-subtitle').textContent = isUA ? 'Додаткові запитання.' : 'Additional Questions.';
-  document.getElementById('btn-adv').textContent = isUA ? 'Просунутий' : 'Advanced';
-  document.getElementById('t-resources').textContent = isUA ? 'Вибір редакції' : "Editor's Picks";
+  document.getElementById('t-subtitle').textContent = isUA ? 'Більше для дослідження, якщо бажаєте.' : 'More to explore, if you want it.';
+  document.getElementById('t-hero-inst').textContent = isUA ? 'Жодного тиску — все тут за бажанням.' : 'No pressure — everything here is optional.';
   
+  // Section Headers & Intros
+  document.getElementById('t-more-q-head').textContent = isUA ? 'Більше запитань' : 'More Questions';
+  document.getElementById('t-more-q-intro').textContent = isUA ? 'Закінчилися за столом? Обирайте рівень і продовжуйте.' : 'Ran out at the table? Pick a level and keep going.';
+  
+  document.getElementById('t-create').textContent = isUA ? 'Створіть свій образ' : 'Create Your Outfit';
+  document.getElementById('t-desc').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ, який говорить сам за себе.' : "You've talked the talk. Now it's time to build a look that speaks for itself.";
+  document.getElementById('t-enter').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
+
+  document.getElementById('t-resources').textContent = isUA ? 'Комітет рекомендує' : "The Committee Recommends";
+  document.getElementById('t-res-intro').textContent = isUA ? 'Кілька речей, які варто подивитися або почитати, якщо вам цікаво.' : "A few things worth watching or reading, if you're curious.";
+
+  document.getElementById('t-footer').textContent = isUA ? 'Ось і все. Побачимось у четвер.' : "That's everything. See you Thursday.";
+
+  // Level Tabs
+  document.getElementById('btn-adv').textContent = isUA ? 'Просунутий' : 'Advanced';
+  
+  // Resource Items
   document.getElementById('t-doc').textContent = isUA ? 'Документальний фільм' : 'Documentary';
   document.getElementById('t-res1').textContent = isUA ? 'Фундаментальний фільм про бальну культуру, вогінг та походження "reading".' : "The foundational film on ballroom culture, voguing, and the origins of 'reading'.";
   document.getElementById('t-yt').textContent = isUA ? 'YouTube Канал' : 'YouTube Channel';
@@ -330,11 +340,6 @@ function toggleLang() {
   document.getElementById('t-res3').textContent = isUA ? 'Дослідіть справжні покази, які стерли межу між модою та провокацією.' : 'Explore the actual runway shows that blurred the line between fashion and provocation.';
   document.getElementById('t-essay').textContent = isUA ? 'Есе' : 'Essay';
   document.getElementById('t-res4').textContent = isUA ? 'Легендарне есе Сьюзен Зонтаг, що пояснює естетику "так погано, що аж добре".' : 'Susan Sontag\'s legendary essay explaining the aesthetic of "it\'s so bad that it\'s good".';
-
-  document.getElementById('t-stage').textContent = isUA ? 'Фінальний етап' : 'The Final Stage';
-  document.getElementById('t-create').textContent = isUA ? 'Створіть свій образ.' : 'Create your outfit.';
-  document.getElementById('t-desc').textContent = isUA ? 'Ви вже поговорили. Тепер час створити образ, який говорить сам за себе.' : "You've talked the talk. Now it's time to build a look that speaks for itself.";
-  document.getElementById('t-enter').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
 
   // Comic Script Translations
   document.getElementById('t-s').textContent = isUA ? 'Окей, мій мозок офіційно закипів від усієї цієї модної теорії.' : 'Okay, my brain is officially fried from all that fashion theory.';
@@ -387,86 +392,11 @@ function renderLevel(level) {
   });
 }
 
-// ── TOAST NOTIFICATION ──
-let toastTimer;
-function showToast(msg) {
-  const toast = document.getElementById('toast-msg');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 3000);
-}
-
-// ── HOST CONTROLS (FIREBASE SYNC) ──
-const STAGE_URL = 'https://speaking-13ce0-default-rtdb.firebaseio.com/final-stage.json';
-let lastStageTs = null;
-let isFirstLoad = true;
-let isClosetUnlocked = false; 
-
-// Initial fetch
-fetch(STAGE_URL).then(r => r.json()).then(data => {
-  if (data) {
-    lastStageTs = data.ts;
-    applyDoorState(data.active);
-    if (data.closet_open) {
-      openClosetOverlay(true); // fast open on load
-    }
-  }
-  isFirstLoad = false;
-}).catch(e => console.log(e));
-
-// Polling for changes from host.html
-setInterval(async () => {
-  if (isFirstLoad) return;
-  try {
-    const res = await fetch(STAGE_URL);
-    const data = await res.json();
-    if (data && data.ts !== lastStageTs) {
-      lastStageTs = data.ts;
-      applyDoorState(data.active);
-      
-      if (data.closet_open) {
-        openClosetOverlay();
-      } else {
-        closeClosetOverlay();
-      }
-    }
-  } catch (err) {}
-}, 2000);
-
-function applyDoorState(isActive) {
-  isClosetUnlocked = isActive;
-  const door = document.getElementById('closet-door');
-  const icon = document.getElementById('door-icon');
-  
-  if (isActive) {
-    door.classList.remove('locked');
-    icon.textContent = '🔓';
-  } else {
-    door.classList.add('locked');
-    icon.textContent = '🔒';
-  }
-}
-
-// ── CLOSET DOOR INTERACTION ──
-function handleClosetClick() {
-  if (isClosetUnlocked) {
-    openClosetOverlay();
-  } else {
-    showToast(isUA ? "Двері ще замкнено." : "The door is currently locked.");
-  }
-}
-
 // ── COMIC SCRIPT REVEAL LOGIC ──
-function openClosetOverlay(fast = false) {
+function openClosetOverlay() {
   const overlay = document.getElementById('global-closet-overlay');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  if (fast) {
-    document.querySelectorAll('.comic-line, .gco-btn').forEach(el => el.classList.add('visible'));
-    return;
-  }
 
   // Reset and play animations
   document.querySelectorAll('.comic-line, .gco-btn').forEach(el => el.classList.remove('visible'));
