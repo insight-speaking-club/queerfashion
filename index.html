@@ -159,9 +159,30 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
   }
   .closet-door:active { transform: scale(0.95); }
+  
+  /* Locked State Styles */
+  .closet-door.locked {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #555;
+    cursor: not-allowed;
+  }
+  .closet-door.locked:active { transform: none; }
+
+  /* ── TOAST MESSAGE ── */
+  #toast-msg {
+    position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%);
+    background: var(--white); color: var(--black);
+    padding: 1rem 2rem; border-radius: 50px;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none;
+  }
+  #toast-msg.show { bottom: 3rem; }
 
   /* ── GLOBAL CLOSET OVERLAY (COMIC SCRIPT) ── */
   #global-closet-overlay {
@@ -211,7 +232,6 @@
 </header>
 
 <section id="questions-section">
-  <!-- The "One Field" Level Selector -->
   <div class="level-nav">
     <button class="level-btn active" onclick="renderLevel('a1')" id="btn-a1">A1–A2</button>
     <button class="level-btn" onclick="renderLevel('b1')" id="btn-b1">B1–B2</button>
@@ -259,11 +279,13 @@
   <h3 id="t-create">Create your outfit.</h3>
   <p class="closet-desc" id="t-desc">You've talked the talk. Now it's time to build a look that speaks for itself.</p>
   
-  <div class="closet-door" onclick="openClosetOverlay()">
-    <span class="lock-icon">🔓</span>
+  <div class="closet-door locked" id="closet-door" onclick="handleClosetClick()">
+    <span class="lock-icon" id="door-icon">🔒</span>
     <span class="door-text" id="t-enter">Enter the closet</span>
   </div>
 </section>
+
+<div id="toast-msg"></div>
 
 <!-- THE GLOBAL CLOSET OVERLAY -->
 <div id="global-closet-overlay">
@@ -320,7 +342,6 @@ function toggleLang() {
   document.getElementById('t-k').textContent = isUA ? 'Залазь, невдахо. Ми йдемо збирати лук. 💅' : "Get in, loser. We're building a look. 💅";
   document.getElementById('t-closet-btn').textContent = isUA ? 'Відкрити гардероб →' : 'Open the Dream Closet →';
 
-  // Re-render current tab
   renderLevel(currentLevel);
 }
 
@@ -346,12 +367,9 @@ const questions = {
 // ── RENDER LEVEL ──
 function renderLevel(level) {
   currentLevel = level;
-  
-  // Update Tabs
   document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
   document.getElementById('btn-' + level).classList.add('active');
 
-  // Populate Field
   const container = document.getElementById('carousel-field');
   container.innerHTML = '';
   
@@ -369,16 +387,89 @@ function renderLevel(level) {
   });
 }
 
+// ── TOAST NOTIFICATION ──
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast-msg');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+
+// ── HOST CONTROLS (FIREBASE SYNC) ──
+const STAGE_URL = 'https://speaking-13ce0-default-rtdb.firebaseio.com/final-stage.json';
+let lastStageTs = null;
+let isFirstLoad = true;
+let isClosetUnlocked = false; 
+
+// Initial fetch
+fetch(STAGE_URL).then(r => r.json()).then(data => {
+  if (data) {
+    lastStageTs = data.ts;
+    applyDoorState(data.active);
+    if (data.closet_open) {
+      openClosetOverlay(true); // fast open on load
+    }
+  }
+  isFirstLoad = false;
+}).catch(e => console.log(e));
+
+// Polling for changes from host.html
+setInterval(async () => {
+  if (isFirstLoad) return;
+  try {
+    const res = await fetch(STAGE_URL);
+    const data = await res.json();
+    if (data && data.ts !== lastStageTs) {
+      lastStageTs = data.ts;
+      applyDoorState(data.active);
+      
+      if (data.closet_open) {
+        openClosetOverlay();
+      } else {
+        closeClosetOverlay();
+      }
+    }
+  } catch (err) {}
+}, 2000);
+
+function applyDoorState(isActive) {
+  isClosetUnlocked = isActive;
+  const door = document.getElementById('closet-door');
+  const icon = document.getElementById('door-icon');
+  
+  if (isActive) {
+    door.classList.remove('locked');
+    icon.textContent = '🔓';
+  } else {
+    door.classList.add('locked');
+    icon.textContent = '🔒';
+  }
+}
+
+// ── CLOSET DOOR INTERACTION ──
+function handleClosetClick() {
+  if (isClosetUnlocked) {
+    openClosetOverlay();
+  } else {
+    showToast(isUA ? "Двері ще замкнено." : "The door is currently locked.");
+  }
+}
+
 // ── COMIC SCRIPT REVEAL LOGIC ──
-function openClosetOverlay() {
+function openClosetOverlay(fast = false) {
   const overlay = document.getElementById('global-closet-overlay');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // Reset animations
-  document.querySelectorAll('.comic-line, .gco-btn').forEach(el => el.classList.remove('visible'));
+  if (fast) {
+    document.querySelectorAll('.comic-line, .gco-btn').forEach(el => el.classList.add('visible'));
+    return;
+  }
 
-  // Reveal lines one by one like a chat
+  // Reset and play animations
+  document.querySelectorAll('.comic-line, .gco-btn').forEach(el => el.classList.remove('visible'));
   setTimeout(() => document.getElementById('line1').classList.add('visible'), 600);
   setTimeout(() => document.getElementById('line2').classList.add('visible'), 2000);
   setTimeout(() => document.getElementById('line3').classList.add('visible'), 3500);
