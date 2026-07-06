@@ -206,7 +206,9 @@
     transition: background 0.3s; cursor: pointer; text-align: left;
   }
   .resource-item:hover { background: var(--grey); }
-  .res-type { font-family: 'Barlow Condensed'; font-size: 0.75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; display: block;}
+  .res-meta { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+  .res-icon { font-size: 1rem; }
+  .res-type { font-family: 'Barlow Condensed'; font-size: 0.75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0; display: block;}
   .res-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.5rem; }
   .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #bbb; line-height: 1.5; }
 
@@ -285,28 +287,49 @@
   <p class="section-intro" id="t-res-intro">The rabbit holes we fell into while making this club.</p>
 
   <div class="resource-grid">
-    <div class="resource-item" onclick="window.open('https://www.youtube.com/watch?v=1bHdzTUNw-4', '_blank')">
-      <span class="res-type" id="t-doc">Documentary</span>
+    <div class="resource-item" onclick="window.open('https://youtu.be/aZrJCw9FIkI?si=K_BCFdCzWr0XvU51', '_blank')">
+      <div class="res-meta">
+        <span class="res-icon">🪩</span>
+        <span class="res-type" id="t-doc">Documentary</span>
+      </div>
       <h3 class="res-title">Paris is Burning (1990)</h3>
       <p class="res-desc" id="t-res1">The documentary that basically invented the vocabulary you used tonight — reading, shade, voguing, all of it.</p>
     </div>
 
     <div class="resource-item" onclick="window.open('https://www.youtube.com/c/hautelemode', '_blank')">
-      <span class="res-type" id="t-yt">YouTube Channel</span>
+      <div class="res-meta">
+        <span class="res-icon">🍿</span>
+        <span class="res-type" id="t-yt">YouTube Channel</span>
+      </div>
       <h3 class="res-title">HauteLeMode</h3>
       <p class="res-desc" id="t-res2">If tonight's questions were fun, this channel is the whole rabbit hole.</p>
     </div>
 
     <div class="resource-item" onclick="window.open('https://blog.metmuseum.org/alexandermcqueen/about/', '_blank')">
-      <span class="res-type" id="t-exhibit">Exhibition Archive</span>
+      <div class="res-meta">
+        <span class="res-icon">🖤</span>
+        <span class="res-type" id="t-exhibit">Exhibition Archive</span>
+      </div>
       <h3 class="res-title">McQueen: Savage Beauty</h3>
       <p class="res-desc" id="t-res3">See the actual runway that made the press call it "obscene."</p>
     </div>
 
-    <div class="resource-item" onclick="window.open('https://faculty.georgetown.edu/irvinem/theory/Sontag-NotesOnCamp-1964.html', '_blank')">
-      <span class="res-type" id="t-essay">Essay</span>
+    <div class="resource-item" onclick="window.open('https://andreaskgeorgiou.com/notes-on-notes-on-camp-by-susan-sontag/', '_blank')">
+      <div class="res-meta">
+        <span class="res-icon">🎀</span>
+        <span class="res-type" id="t-essay">Essay</span>
+      </div>
       <h3 class="res-title">Notes on "Camp"</h3>
       <p class="res-desc" id="t-res4">The essay that explains why "so bad it's good" is actually a whole aesthetic philosophy.</p>
+    </div>
+
+    <div class="resource-item" onclick="window.open('https://youtu.be/-rDTRuCOs9g?si=WUPY-KCmuZtLSIr0', '_blank')">
+      <div class="res-meta">
+        <span class="res-icon">🧥</span>
+        <span class="res-type" id="t-scene">Movie Scene</span>
+      </div>
+      <h3 class="res-title">The Cerulean Sweater</h3>
+      <p class="res-desc" id="t-res5">The holy grail of proving that "fashion is not about clothes." This two-minute monologue explains it all.</p>
     </div>
   </div>
 </section>
@@ -379,12 +402,18 @@ function toggleLang() {
   // Resource Items
   document.getElementById('t-doc').textContent = isUA ? 'Документальний фільм' : 'Documentary';
   document.getElementById('t-res1').textContent = isUA ? 'Документальний фільм, який фактично винайшов словник, що ви використовували сьогодні — reading, shade, voguing тощо.' : "The documentary that basically invented the vocabulary you used tonight — reading, shade, voguing, all of it.";
+  
   document.getElementById('t-yt').textContent = isUA ? 'YouTube Канал' : 'YouTube Channel';
   document.getElementById('t-res2').textContent = isUA ? 'Якщо сьогоднішні питання були цікавими, цей канал — суцільна кроляча нора.' : 'If tonight\'s questions were fun, this channel is the whole rabbit hole.';
+  
   document.getElementById('t-exhibit').textContent = isUA ? 'Архів виставки' : 'Exhibition Archive';
   document.getElementById('t-res3').textContent = isUA ? 'Подивіться той самий показ, який преса назвала «непристойним».' : 'See the actual runway that made the press call it "obscene."';
+  
   document.getElementById('t-essay').textContent = isUA ? 'Есе' : 'Essay';
   document.getElementById('t-res4').textContent = isUA ? 'Есе, яке пояснює, чому «так погано, що аж добре» — це насправді ціла естетична філософія.' : 'The essay that explains why "so bad it\'s good" is actually a whole aesthetic philosophy.';
+  
+  document.getElementById('t-scene').textContent = isUA ? 'Сцена з фільму' : 'Movie Scene';
+  document.getElementById('t-res5').textContent = isUA ? 'Святий Грааль, який доводить, що «мода — це не про одяг». Цей двохвилинний монолог пояснює все.' : 'The holy grail of proving that "fashion is not about clothes." This two-minute monologue explains it all.';
 
   // Comic Script Translations
   document.getElementById('t-s').textContent = isUA ? 'Окей, мій мозок офіційно закипів від усієї цієї модної теорії.' : 'Okay, my brain is officially fried from all that fashion theory.';
@@ -528,3 +557,4 @@ renderLevel('a1');
 </script>
 </body>
 </html>
+
