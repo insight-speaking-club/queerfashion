@@ -304,6 +304,24 @@
       <h3 class="res-title">HauteLeMode</h3>
       <p class="res-desc" id="t-res2">If tonight's questions were fun, this channel is the whole rabbit hole.</p>
     </div>
+    
+    <div class="resource-item" onclick="window.open('https://www.youtube.com/@ModernGurlz', '_blank')">
+      <div class="res-meta">
+        <span class="res-icon">🎬</span>
+        <span class="res-type" id="t-yt2">YouTube Channel</span>
+      </div>
+      <h3 class="res-title">ModernGurlz</h3>
+      <p class="res-desc" id="t-res6">Since we’re heavily channeling 2000s teen movie energy, this channel breaks down the costume design of iconic movies (including Mean Girls) to explain why the characters wore what they wore.</p>
+    </div>
+    
+    <div class="resource-item" onclick="window.open('https://open.spotify.com/search/The%20Cutting%20Room%20Floor', '_blank')">
+      <div class="res-meta">
+        <span class="res-icon">🎙️</span>
+        <span class="res-type" id="t-pod">Podcast</span>
+      </div>
+      <h3 class="res-title">The Cutting Room Floor</h3>
+      <p class="res-desc" id="t-res7">If you want to know what the fashion industry actually sounds like behind closed doors. Pure, unfiltered industry gossip, critique, and history.</p>
+    </div>
 
     <div class="resource-item" onclick="window.open('https://blog.metmuseum.org/alexandermcqueen/about/', '_blank')">
       <div class="res-meta">
@@ -321,6 +339,15 @@
       </div>
       <h3 class="res-title">Notes on "Camp"</h3>
       <p class="res-desc" id="t-res4">The essay that explains why "so bad it's good" is actually a whole aesthetic philosophy.</p>
+    </div>
+    
+    <div class="resource-item" onclick="window.open('https://www.google.com/search?q=The+Legacy+of+Gianni+Versace+fashion+queer', '_blank')">
+      <div class="res-meta">
+        <span class="res-icon">🗞️</span>
+        <span class="res-type" id="t-art">Article / Deep Dive</span>
+      </div>
+      <h3 class="res-title">The Legacy of Gianni Versace</h3>
+      <p class="res-desc" id="t-res8">Before fashion was universally accepted as a queer space, Versace brought unapologetic sexuality and queer club culture directly to the luxury runway.</p>
     </div>
 
     <div class="resource-item" onclick="window.open('https://youtu.be/-rDTRuCOs9g?si=WUPY-KCmuZtLSIr0', '_blank')">
@@ -406,12 +433,21 @@ function toggleLang() {
   document.getElementById('t-yt').textContent = isUA ? 'YouTube Канал' : 'YouTube Channel';
   document.getElementById('t-res2').textContent = isUA ? 'Якщо сьогоднішні питання були цікавими, цей канал — суцільна кроляча нора.' : 'If tonight\'s questions were fun, this channel is the whole rabbit hole.';
   
+  document.getElementById('t-yt2').textContent = isUA ? 'YouTube Канал' : 'YouTube Channel';
+  document.getElementById('t-res6').textContent = isUA ? 'Оскільки ми сильно надихаємося естетикою підліткових фільмів 2000-х, цей канал розбирає дизайн костюмів культових стрічок (включно з «Поганими дівчиськами»), пояснюючи, чому персонажі носили саме те, що носили.' : 'Since we’re heavily channeling 2000s teen movie energy, this channel breaks down the costume design of iconic movies (including Mean Girls) to explain why the characters wore what they wore.';
+
+  document.getElementById('t-pod').textContent = isUA ? 'Подкаст' : 'Podcast';
+  document.getElementById('t-res7').textContent = isUA ? 'Якщо ви хочете дізнатися, як насправді звучить індустрія моди за зачиненими дверима. Чисті, нефільтровані плітки, критика та історія.' : 'If you want to know what the fashion industry actually sounds like behind closed doors. Pure, unfiltered industry gossip, critique, and history.';
+  
   document.getElementById('t-exhibit').textContent = isUA ? 'Архів виставки' : 'Exhibition Archive';
   document.getElementById('t-res3').textContent = isUA ? 'Подивіться той самий показ, який преса назвала «непристойним».' : 'See the actual runway that made the press call it "obscene."';
   
   document.getElementById('t-essay').textContent = isUA ? 'Есе' : 'Essay';
   document.getElementById('t-res4').textContent = isUA ? 'Есе, яке пояснює, чому «так погано, що аж добре» — це насправді ціла естетична філософія.' : 'The essay that explains why "so bad it\'s good" is actually a whole aesthetic philosophy.';
   
+  document.getElementById('t-art').textContent = isUA ? 'Стаття' : 'Article / Deep Dive';
+  document.getElementById('t-res8').textContent = isUA ? 'До того, як мода стала загальноприйнятим квір-простором, Версаче виніс безкомпромісну сексуальність та культуру квір-клубів прямо на люксовий подіум.' : 'Before fashion was universally accepted as a queer space, Versace brought unapologetic sexuality and queer club culture directly to the luxury runway.';
+
   document.getElementById('t-scene').textContent = isUA ? 'Сцена з фільму' : 'Movie Scene';
   document.getElementById('t-res5').textContent = isUA ? 'Святий Грааль, який доводить, що «мода — це не про одяг». Цей двохвилинний монолог пояснює все.' : 'The holy grail of proving that "fashion is not about clothes." This two-minute monologue explains it all.';
 
@@ -438,7 +474,7 @@ const questions = {
   ],
   b1: [
     { author: "RuPaul", text_en: "We are all born naked. The rest is drag.", text_ua: "Ми всі народжуємося голими. Решта — це дрег.", prompt_en: "If all clothing is performance, does that mean nobody is ever just 'being themselves' — or does performing a self eventually make it real?", prompt_ua: "Якщо весь одяг — це перформанс, чи означає це, що ніхто ніколи не є 'просто собою'?" },
-    { author: "Alexander McQueen", text_en: "I want people to be afraid of the women I dress.", text_ua: "Я хочу, щоб люди боялися жінок, яких я одягаю.", prompt_en: "Is there something powerful about making people uncomfortable with how you look? Have you ever dressed to intimidate?", prompt_ua: "Чи є щось могутнє в тому, щоб змушувати інших почуватися некомфортно через ваш вигляд? Ви коли-небудь одягалися, щоб залякати?" },
+    { author: "Alexander McQueen", text_en: "I want people to be afraid of the women I dress.", text_ua: "Я хочу, щоб люди боялися жінок, яких я одягаю.", prompt_en: "Is there something powerful about making people uncomfortable with how you look? Have you ever dressed to intimidate?", prompt_ua: "Чи є щось можутьнє в тому, щоб змушувати інших почуватися некомфортно через ваш вигляд? Ви коли-небудь одягалися, щоб залякати?" },
     { author: "Marc Jacobs", text_en: "Clothing is a form of self-expression.", text_ua: "Одяг — це форма самовираження.", prompt_en: "How much of what you wear is actually chosen, versus what your job, your budget, your body, or other people expect of you?", prompt_ua: "Скільки з того, що ви носите, насправді є вашим вибором, а не тим, чого вимагають інші?" },
     { author: "Coco Chanel", text_en: "Fashion is in the sky, in the street.", text_ua: "Мода в небі, на вулиці.", prompt_en: "If fashion comes from real life, why does high fashion so rarely look like real life? Who actually gets to set the rules?", prompt_ua: "Якщо мода береться з реального життя, чому висока мода так рідко схожа на нього? Хто встановлює правила?" },
     { author: "Tim Gunn", text_en: "Style is a way to say who you are without having to speak.", text_ua: "Стиль — це спосіб сказати, хто ти, без слів.", prompt_en: "If clothes speak before you do, what do you think your everyday outfit says about you to a stranger?", prompt_ua: "Якщо одяг говорить раніше за вас, що ваш повсякденний образ каже про вас незнайомцю?" }
