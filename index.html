@@ -158,9 +158,18 @@
 
   .burnbook-title { 
     display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; 
-    position: relative; margin-bottom: 3rem;
+    position: relative; margin-bottom: 3rem; display: inline-flex;
   }
-
+  .cut {
+    background: #fff; color: #111; padding: 0.3rem 0.7rem; 
+    display: inline-block; box-shadow: 2px 3px 6px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 2; /* Keep text above the stamp */
+  }
+  .cut.a { font-family: 'Bodoni Moda', serif; font-size: 2.2rem; transform: rotate(-4deg); }
+  .cut.b { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; text-transform: uppercase; font-size: 2.4rem; transform: rotate(3deg); }
+  .cut.c { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; transform: rotate(-2deg); }
+  
   .lip-stamp-img {
     position: absolute;
     top: -35px;
@@ -170,7 +179,7 @@
     opacity: 0.85;
     z-index: 10;
     pointer-events: none;
-    mix-blend-mode: multiply;
+    mix-blend-mode: multiply; /* Makes it look stamped directly onto the paper */
   }
 
   .scrap-door {
@@ -235,7 +244,7 @@
   <span class="club-label" id="t-club">Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
   <p class="cover-title-italic" id="t-subtitle">More to explore, if you want it.</p>
-  <p class="hero-instructions" id="t-hero-inst">More questions, a digital closet, and educational fashion resources.</p>
+  <p class="hero-instructions" id="t-hero-inst">More questions, a digital outfit builder, and deep-dive resources.</p>
 </header>
 
 <section id="questions-section">
@@ -259,10 +268,12 @@
 <section id="closet-section">
   <p class="mood-shift" id="t-mood-shift">Enough talking — let's have some fun.</p>
   
-  <div class="burnbook-title">
+  <h2 class="burnbook-title">
     <img class="lip-stamp-img" src="kissprint.png" alt="" onerror="this.style.display='none'">
-    <img src="createyouroutfit.png" alt="Create Your Outfit" style="max-width: 90vw; height: auto;" onerror="this.style.display='none'">
-  </div>
+    <span class="cut a" id="t-cut-a">Create</span>
+    <span class="cut b" id="t-cut-b">Your</span>
+    <span class="cut c" id="t-cut-c">Outfit</span>
+  </h2>
   
   <div class="closet-container" style="margin-top: 1rem;">
     <div class="scrap-door" onclick="openClosetOverlay()">
@@ -395,13 +406,16 @@ function toggleLang() {
   // Headers & Text
   document.getElementById('t-club').textContent = isUA ? 'Розмовний клуб про моду' : 'Fashion Speaking Club';
   document.getElementById('t-subtitle').textContent = isUA ? 'Більше для дослідження, якщо бажаєте.' : 'More to explore, if you want it.';
-  document.getElementById('t-hero-inst').textContent = isUA ? 'Більше запитань, цифровий гардероб та освітні матеріали про моду.' : 'More questions, a digital closet, and educational fashion resources.';
+  document.getElementById('t-hero-inst').textContent = isUA ? 'Більше запитань, цифровий гардероб та корисні матеріали.' : 'More questions, a digital outfit builder, and deep-dive resources.';
   
   document.getElementById('t-more-q-head').textContent = isUA ? 'Більше запитань' : 'More Questions';
   document.getElementById('t-more-q-intro').textContent = isUA ? 'Закінчилися за столом? Обирайте рівень і продовжуйте.' : 'Ran out at the table? Pick a level and keep going.';
   document.getElementById('t-swipe-hint').textContent = isUA ? 'Гортайте. Натисніть на картку, щоб відкрити.' : 'Swipe to browse. Tap a card to open it.';
   
   document.getElementById('t-mood-shift').textContent = isUA ? 'Досить розмов — давайте розважатись.' : 'Enough talking — let\'s have some fun.';
+  document.getElementById('t-cut-a').textContent = isUA ? 'Створіть' : 'Create';
+  document.getElementById('t-cut-b').textContent = isUA ? 'Свій' : 'Your';
+  document.getElementById('t-cut-c').textContent = isUA ? 'Образ' : 'Outfit';
   document.getElementById('t-enter').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
 
   document.getElementById('t-resources').textContent = isUA ? 'Домашнє завдання (за бажанням)' : "Homework (Optional)";
@@ -460,7 +474,7 @@ const questions = {
   ],
   b1: [
     { author: "RuPaul", text_en: "We are all born naked. The rest is drag.", text_ua: "Ми всі народжуємося голими. Решта — це дрег.", prompt_en: "If all clothing is performance, does that mean nobody is ever just 'being themselves' — or does performing a self eventually make it real?", prompt_ua: "Якщо весь одяг — це перформанс, чи означає це, що ніхто ніколи не є 'просто собою'?" },
-    { author: "Alexander McQueen", text_en: "I want people to be afraid of the women I dress.", text_ua: "Я хочу, щоб люди боялися жінок, яких я одягаю.", prompt_en: "Is there something powerful about making people uncomfortable with how you look? Have you ever dressed to intimidate?", prompt_ua: "Чи є щось могутнє в тому, щоб змушувати інших почуватися некомфортно через ваш вигляд? Ви коли-небудь одягалися, щоб залякати?" },
+    { author: "Alexander McQueen", text_en: "I want people to be afraid of the women I dress.", text_ua: "Я хочу, щоб люди боялися жінок, яких я одягаю.", prompt_en: "Is there something powerful about making people uncomfortable with how you look? Have you ever dressed to intimidate?", prompt_ua: "Чи є щось можутьнє в тому, щоб змушувати інших почуватися некомфортно через ваш вигляд? Ви коли-небудь одягалися, щоб залякати?" },
     { author: "Marc Jacobs", text_en: "Clothing is a form of self-expression.", text_ua: "Одяг — це форма самовираження.", prompt_en: "How much of what you wear is actually chosen, versus what your job, your budget, your body, or other people expect of you?", prompt_ua: "Скільки з того, що ви носите, насправді є вашим вибором, а не тим, чого вимагають інші?" },
     { author: "Coco Chanel", text_en: "Fashion is in the sky, in the street.", text_ua: "Мода в небі, на вулиці.", prompt_en: "If fashion comes from real life, why does high fashion so rarely look like real life? Who actually gets to set the rules?", prompt_ua: "Якщо мода береться з реального життя, чому висока мода так рідко схожа на нього? Хто встановлює правила?" },
     { author: "Tim Gunn", text_en: "Style is a way to say who you are without having to speak.", text_ua: "Стиль — це спосіб сказати, хто ти, без слів.", prompt_en: "If clothes speak before you do, what do you think your everyday outfit says about you to a stranger?", prompt_ua: "Якщо одяг говорить раніше за вас, що ваш повсякденний образ каже про вас незнайомцю?" }
