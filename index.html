@@ -17,6 +17,10 @@
     --dim: #999999; 
     --border: #333333; 
     --burnbook-pink: #d89eb7; 
+    --glow-pink: #eb9dbd;
+    --glow-gold: #e3ae4a;
+    --glow-deep: #a8456d;
+    --glow-paper: #f7ecd9;
   }
   
   body { 
@@ -48,6 +52,53 @@
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
   .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
+  /* ── QUICK NAV (editorial index) ── */
+  .quick-nav {
+    position: relative; z-index: 2;
+    display: flex; flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.9rem 1.6rem;
+    margin-top: 2.2rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--border);
+  }
+  .quick-nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    color: var(--white);
+    text-decoration: none;
+    padding-bottom: 0.3rem;
+  }
+  .quick-nav-link .qn-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: normal; font-weight: 500;
+    font-size: 0.65rem; letter-spacing: 0.05em;
+    color: var(--dim);
+  }
+  .quick-nav-link::after {
+    content: '';
+    position: absolute; left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: var(--white);
+    transform: scaleX(0.18);
+    transform-origin: left;
+    opacity: 0.5;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  }
+  .quick-nav-link:hover::after, .quick-nav-link:active::after { transform: scaleX(1); opacity: 1; }
+  .quick-nav-link:hover, .quick-nav-link:active { color: var(--white); }
+  .quick-nav-link.glow-link { color: var(--glow-gold); }
+  .quick-nav-link.glow-link::after { background: var(--glow-gold); }
+  .quick-nav-link.glow-link .qn-num { color: var(--glow-gold); opacity: 0.6; }
+
   /* ── COMPACT HERO SECTION ── */
   #hero-header { 
     padding: 6rem 1.8rem 3rem; 
@@ -71,15 +122,14 @@
     background: linear-gradient(to bottom, rgba(3,3,3,0.2) 0%, rgba(3,3,3,0.95) 100%);
     z-index: 1;
   }
-  .club-label, .cover-title, .cover-title-italic, .hero-instructions { 
+  .club-label, .cover-title, .hero-instructions { 
     position: relative; 
     z-index: 2; 
   }
 
   .club-label { font-family: 'Barlow Condensed'; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2rem; display: block; }
   .cover-title { font-family: 'Bodoni Moda', 'Playfair Display', serif; font-weight: 400; font-size: clamp(3.5rem, 16vw, 8rem); text-transform: uppercase; line-height: 0.9; margin-bottom: 1.5rem; }
-  .cover-title-italic { font-family: 'Playfair Display'; font-style: italic; font-size: 1.4rem; color: var(--white); margin-bottom: 1rem; }
-  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--dim); font-weight: 300; }
+  .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--dim); font-weight: 300; margin-top: 1.8rem; }
 
   /* ── COMMON SECTION STYLES ── */
   section { padding: 5rem 1.8rem; border-top: 1px solid var(--border); }
@@ -197,6 +247,38 @@
   }
   .scrap-door:active { transform: rotate(-2deg) translate(2px, 2px); box-shadow: 1px 2px 5px rgba(0,0,0,0.35); }
 
+  /* ── GLOW BOOK SECTION ── */
+  #glow-section {
+    background: var(--glow-paper);
+    color: #1c1714;
+    text-align: center;
+    position: relative; z-index: 4;
+  }
+  .glow-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 500;
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--glow-deep); margin-bottom: 1rem; display: block;
+  }
+  .glow-title {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+    font-size: clamp(2.2rem, 8vw, 3rem); margin-bottom: 1rem; color: #1c1714;
+  }
+  .glow-desc {
+    font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.95rem;
+    color: #5a4d46; max-width: 420px; margin: 0 auto 2.2rem;
+    line-height: 1.6;
+  }
+  .glow-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--glow-deep); color: var(--glow-paper);
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em; font-size: 1rem;
+    padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none;
+    box-shadow: 0 8px 20px rgba(168,69,109,0.35);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .glow-btn:hover { background: #1c1714; transform: translateY(-2px); }
+
   /* ── EDITOR's PICKS (RESOURCES) ── */
   .resource-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 800px; margin: 0 auto; }
   @media (min-width: 768px) { .resource-grid { grid-template-columns: 1fr 1fr; } }
@@ -243,8 +325,12 @@
   <div class="hero-overlay"></div>
   <span class="club-label" id="t-club">Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
-  <p class="cover-title-italic" id="t-subtitle">More to explore, if you want it.</p>
-  <p class="hero-instructions" id="t-hero-inst">More questions, a digital outfit builder, and deep-dive resources.</p>
+  <nav class="quick-nav">
+    <a href="#questions-section" class="quick-nav-link"><span class="qn-num">01</span><span id="t-nav-questions">Questions</span></a>
+    <a href="#closet-section" class="quick-nav-link"><span class="qn-num">02</span><span id="t-nav-closet">Create Your Outfit</span></a>
+    <a href="#glow-section" class="quick-nav-link glow-link"><span class="qn-num">03</span><span id="t-nav-glow">Glow Book 💌</span></a>
+    <a href="#resources-section" class="quick-nav-link"><span class="qn-num">04</span><span id="t-nav-resources">Homework</span></a>
+  </nav>
 </header>
 
 <section id="questions-section">
@@ -282,6 +368,13 @@
   </div>
 </section>
 
+<section id="glow-section">
+  <span class="glow-eyebrow" id="t-glow-eyebrow">One More Thing</span>
+  <h2 class="glow-title" id="t-glow-title">The Glow Book 💌</h2>
+  <p class="glow-desc" id="t-glow-desc">No burns, just glow. Leave someone in the group a genuine compliment — anonymously or not — and read what people have said about you.</p>
+  <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">Open the Glow Book →</a>
+</section>
+
 <section id="resources-section">
   <h2 class="section-header" id="t-resources">Homework (Optional)</h2>
   <p class="section-intro" id="t-res-intro">The rabbit holes we fell into while making this club.</p>
@@ -305,7 +398,7 @@
       <p class="res-desc" id="t-res2">If tonight's questions were fun, this channel is the whole rabbit hole.</p>
     </div>
     
-    <div class="resource-item" onclick="window.open('YOUR_VIDEO_LINK_HERE', '_blank')">
+    <div class="resource-item" onclick="window.open('https://youtu.be/UcvKdNiA7uc?si=a4yMaeSkp2i0PaFg', '_blank')">
       <div class="res-meta">
         <span class="res-icon">🎬</span>
         <span class="res-type" id="t-yt2">YouTube Video</span>
@@ -389,7 +482,7 @@
     </div>
   </div>
 
-  <a href="https://insight-speaking-club.github.io/create-your-outfit/" target="_blank" class="gco-btn" id="t-closet-btn">Open the Dream Closet →</a>
+  <a href="https://insight-speaking-club.github.io/glass-closet/" target="_blank" class="gco-btn" id="t-closet-btn">GET IN... THE CLOSET.</a>
 </div>
 
 <script>
@@ -405,8 +498,6 @@ function toggleLang() {
   
   // Headers & Text
   document.getElementById('t-club').textContent = isUA ? 'Розмовний клуб про моду' : 'Fashion Speaking Club';
-  document.getElementById('t-subtitle').textContent = isUA ? 'Більше для дослідження, якщо бажаєте.' : 'More to explore, if you want it.';
-  document.getElementById('t-hero-inst').textContent = isUA ? 'Більше запитань, цифровий гардероб та корисні матеріали.' : 'More questions, a digital outfit builder, and deep-dive resources.';
   
   document.getElementById('t-more-q-head').textContent = isUA ? 'Більше запитань' : 'More Questions';
   document.getElementById('t-more-q-intro').textContent = isUA ? 'Закінчилися за столом? Обирайте рівень і продовжуйте.' : 'Ran out at the table? Pick a level and keep going.';
@@ -455,7 +546,19 @@ function toggleLang() {
   document.getElementById('t-s').textContent = isUA ? 'Окей, мій мозок офіційно закипів від усієї цієї модної теорії.' : 'Okay, my brain is officially fried from all that fashion theory.';
   document.getElementById('t-g').textContent = isUA ? 'Те саме. Можемо ми тепер просто подивитися на гарний одяг?' : 'Same. Can we please just look at pretty clothes now?';
   document.getElementById('t-k').textContent = isUA ? 'Залазь, невдахо. Ми йдемо збирати лук. 💅' : "Get in, loser. We're building a look. 💅";
-  document.getElementById('t-closet-btn').textContent = isUA ? 'Відкрити гардероб →' : 'Open the Dream Closet →';
+  document.getElementById('t-closet-btn').textContent = isUA ? 'ЗАХОДЬ... В ШАФУ.' : 'GET IN... THE CLOSET.';
+
+  // Quick Nav
+  document.getElementById('t-nav-questions').textContent = isUA ? 'Питання' : 'Questions';
+  document.getElementById('t-nav-closet').textContent = isUA ? 'Створи Образ' : 'Create Your Outfit';
+  document.getElementById('t-nav-glow').textContent = isUA ? 'Книга Похвал 💌' : 'Glow Book 💌';
+  document.getElementById('t-nav-resources').textContent = isUA ? 'Домашнє завдання' : 'Homework';
+
+  // Glow Book Section
+  document.getElementById('t-glow-eyebrow').textContent = isUA ? 'І ще дещо' : 'One More Thing';
+  document.getElementById('t-glow-title').textContent = isUA ? 'Книга Похвал 💌' : 'The Glow Book 💌';
+  document.getElementById('t-glow-desc').textContent = isUA ? 'Ніяких образ, лише приємні слова. Залиште комусь із групи щиру похвалу — анонімно чи ні — і подивіться, що написали про вас.' : 'No burns, just glow. Leave someone in the group a genuine compliment — anonymously or not — and read what people have said about you.';
+  document.getElementById('t-glow-btn').textContent = isUA ? 'Відкрити Книгу Похвал →' : 'Open the Glow Book →';
 
   renderLevel(currentLevel);
   if (currentModalIndex !== null) {
