@@ -328,7 +328,7 @@
   <nav class="quick-nav">
     <a href="#questions-section" class="quick-nav-link"><span class="qn-num">01</span><span id="t-nav-questions">Questions</span></a>
     <a href="#closet-section" class="quick-nav-link"><span class="qn-num">02</span><span id="t-nav-closet">Create Your Outfit</span></a>
-    <a href="#glow-section" class="quick-nav-link glow-link"><span class="qn-num">03</span><span id="t-nav-glow">Glow Book 💌</span></a>
+    <a href="#glow-section" class="quick-nav-link glow-link"><span class="qn-num">03</span><span id="t-nav-glow">Glow Book 📸</span></a>
     <a href="#resources-section" class="quick-nav-link"><span class="qn-num">04</span><span id="t-nav-resources">Homework</span></a>
   </nav>
 </header>
@@ -369,10 +369,10 @@
 </section>
 
 <section id="glow-section">
-  <span class="glow-eyebrow" id="t-glow-eyebrow">One More Thing</span>
-  <h2 class="glow-title" id="t-glow-title">The Glow Book 💌</h2>
-  <p class="glow-desc" id="t-glow-desc">No burns, just glow. Leave someone in the group a genuine compliment — anonymously or not — and read what people have said about you.</p>
-  <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">Open the Glow Book →</a>
+  <span class="glow-eyebrow" id="t-glow-eyebrow">Breaking News</span>
+  <h2 class="glow-title" id="t-glow-title">The Glow Book 📸</h2>
+  <p class="glow-desc" id="t-glow-desc">This isn't a diary, it's a tabloid. File a style report on someone in the group — signed or anonymous — then check your own file to see who's already talking about you.</p>
+  <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">File Your Story →</a>
 </section>
 
 <section id="resources-section">
@@ -551,14 +551,14 @@ function toggleLang() {
   // Quick Nav
   document.getElementById('t-nav-questions').textContent = isUA ? 'Питання' : 'Questions';
   document.getElementById('t-nav-closet').textContent = isUA ? 'Створи Образ' : 'Create Your Outfit';
-  document.getElementById('t-nav-glow').textContent = isUA ? 'Книга Похвал 💌' : 'Glow Book 💌';
+  document.getElementById('t-nav-glow').textContent = isUA ? 'Книга Похвал 📸' : 'Glow Book 📸';
   document.getElementById('t-nav-resources').textContent = isUA ? 'Домашнє завдання' : 'Homework';
 
   // Glow Book Section
-  document.getElementById('t-glow-eyebrow').textContent = isUA ? 'І ще дещо' : 'One More Thing';
-  document.getElementById('t-glow-title').textContent = isUA ? 'Книга Похвал 💌' : 'The Glow Book 💌';
-  document.getElementById('t-glow-desc').textContent = isUA ? 'Ніяких образ, лише приємні слова. Залиште комусь із групи щиру похвалу — анонімно чи ні — і подивіться, що написали про вас.' : 'No burns, just glow. Leave someone in the group a genuine compliment — anonymously or not — and read what people have said about you.';
-  document.getElementById('t-glow-btn').textContent = isUA ? 'Відкрити Книгу Похвал →' : 'Open the Glow Book →';
+  document.getElementById('t-glow-eyebrow').textContent = isUA ? 'Термінові новини' : 'Breaking News';
+  document.getElementById('t-glow-title').textContent = isUA ? 'Книга Похвал 📸' : 'The Glow Book 📸';
+  document.getElementById('t-glow-desc').textContent = isUA ? 'Це не щоденник, а таблоїд. Напишіть репортаж про когось із групи — підписаний чи анонімний — а потім перевірте власний файл і подивіться, хто вже говорить про вас.' : "This isn't a diary, it's a tabloid. File a style report on someone in the group — signed or anonymous — then check your own file to see who's already talking about you.";
+  document.getElementById('t-glow-btn').textContent = isUA ? 'Подати матеріал →' : 'File Your Story →';
 
   renderLevel(currentLevel);
   if (currentModalIndex !== null) {
