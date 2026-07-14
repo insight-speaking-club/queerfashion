@@ -312,8 +312,17 @@
   .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #bbb; line-height: 1.5; }
 
   /* ── FOOTER ── */
-  .site-footer { padding: 4rem 1.8rem 6rem; text-align: center; border-top: 1px solid var(--border); }
-  .footer-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--white); }
+  .site-footer { padding: 4rem 1.8rem 6rem; text-align: center; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+  .footer-mark-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -55%);
+    width: 220px; height: auto;
+    opacity: 0.18;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .footer-text { position: relative; z-index: 1; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--white); }
   .made-by-sig {
     font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
@@ -483,6 +492,7 @@
 </section>
 
 <footer class="site-footer">
+  <img src="footer-mark.png" alt="" class="footer-mark-bg">
   <p class="footer-text" id="t-footer">That's all.</p>
   <p class="made-by-sig" id="t-made-by">created by<br>𝒪𝓁𝓮𝓀𝓈𝒶𝓃𝒹𝓇 𝐵.</p>
 </footer>
