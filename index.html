@@ -282,13 +282,8 @@
   }
   .glow-desc {
     font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.95rem;
-    color: #5a4d46; max-width: 420px; margin: 0 auto 2rem;
+    color: #5a4d46; max-width: 420px; margin: 0 auto 2.2rem;
     line-height: 1.6;
-  }
-  .glow-qr {
-    display: block; width: 190px; height: 190px; margin: 0 auto 2rem;
-    border-radius: 14px; box-shadow: 0 10px 26px rgba(28,23,20,0.22);
-    border: 6px solid #fff;
   }
   .glow-btn {
     display: inline-flex; align-items: center; gap: 0.5rem;
@@ -414,7 +409,6 @@
   <span class="glow-eyebrow" id="t-glow-eyebrow">Before the final question</span>
   <h2 class="glow-title" id="t-glow-title">The Glow Book 📸</h2>
   <p class="glow-desc" id="t-glow-desc">Take 2–3 minutes to leave a few anonymous compliments. Scan the QR code, tap Glow Book, and write something kind and honest.</p>
-  <img class="glow-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=12&color=28-23-20&bgcolor=247-215-224&data=https://insight-speaking-club.github.io/glass-closet/glow-book.html" alt="QR code to The Glow Book" onerror="this.style.display='none'">
   <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">Tap Glow Book →</a>
 </section>
 
@@ -513,7 +507,7 @@
 </div>
 
 <div id="global-closet-overlay">
-  <button class="close-overlay-btn" onclick="closeClosetOverlay()">×</button>
+  <button class="close-overlay-btn" onclick="skipClosetOverlay()">×</button>
   
   <div class="comic-script-box">
     <div class="comic-line" id="line1">
@@ -733,6 +727,11 @@ function openClosetOverlay() {
 function closeClosetOverlay() {
   document.getElementById('global-closet-overlay').classList.remove('open');
   document.body.style.overflow = '';
+}
+
+function skipClosetOverlay() {
+  window.open('https://insight-speaking-club.github.io/glass-closet/', '_blank');
+  closeClosetOverlay();
 }
 
 // Init
