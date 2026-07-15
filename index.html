@@ -282,8 +282,13 @@
   }
   .glow-desc {
     font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.95rem;
-    color: #5a4d46; max-width: 420px; margin: 0 auto 2.2rem;
+    color: #5a4d46; max-width: 420px; margin: 0 auto 2rem;
     line-height: 1.6;
+  }
+  .glow-qr {
+    display: block; width: 190px; height: 190px; margin: 0 auto 2rem;
+    border-radius: 14px; box-shadow: 0 10px 26px rgba(28,23,20,0.22);
+    border: 6px solid #fff;
   }
   .glow-btn {
     display: inline-flex; align-items: center; gap: 0.5rem;
@@ -406,10 +411,11 @@
 </section>
 
 <section id="glow-section">
-  <span class="glow-eyebrow" id="t-glow-eyebrow">Breaking News</span>
+  <span class="glow-eyebrow" id="t-glow-eyebrow">Before the final question</span>
   <h2 class="glow-title" id="t-glow-title">The Glow Book 📸</h2>
-  <p class="glow-desc" id="t-glow-desc">This isn't a diary, it's a tabloid. File a style report on someone in the group — signed or anonymous — then check your own file to see who's already talking about you.</p>
-  <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">File Your Story →</a>
+  <p class="glow-desc" id="t-glow-desc">Take 2–3 minutes to leave a few anonymous compliments. Scan the QR code, tap Glow Book, and write something kind and honest.</p>
+  <img class="glow-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=12&color=28-23-20&bgcolor=247-215-224&data=https://insight-speaking-club.github.io/glass-closet/glow-book.html" alt="QR code to The Glow Book" onerror="this.style.display='none'">
+  <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">Tap Glow Book →</a>
 </section>
 
 <section id="resources-section">
@@ -594,10 +600,10 @@ function toggleLang() {
   document.getElementById('t-nav-resources').textContent = isUA ? 'Домашнє завдання' : 'Homework';
 
   // Glow Book Section
-  document.getElementById('t-glow-eyebrow').textContent = isUA ? 'Термінові новини' : 'Breaking News';
+  document.getElementById('t-glow-eyebrow').textContent = isUA ? 'Перед фінальним питанням' : 'Before the final question';
   document.getElementById('t-glow-title').textContent = isUA ? 'Книга Похвал 📸' : 'The Glow Book 📸';
-  document.getElementById('t-glow-desc').textContent = isUA ? 'Це не щоденник, а таблоїд. Напишіть репортаж про когось із групи — підписаний чи анонімний — а потім перевірте власний файл і подивіться, хто вже говорить про вас.' : "This isn't a diary, it's a tabloid. File a style report on someone in the group — signed or anonymous — then check your own file to see who's already talking about you.";
-  document.getElementById('t-glow-btn').textContent = isUA ? 'Подати матеріал →' : 'File Your Story →';
+  document.getElementById('t-glow-desc').textContent = isUA ? 'Приділіть 2–3 хвилини, щоб залишити кілька анонімних компліментів. Відскануйте QR-код, натисніть Glow Book і напишіть щось добре і щире.' : 'Take 2–3 minutes to leave a few anonymous compliments. Scan the QR code, tap Glow Book, and write something kind and honest.';
+  document.getElementById('t-glow-btn').textContent = isUA ? 'Натисніть Glow Book →' : 'Tap Glow Book →';
 
   renderLevel(currentLevel);
   if (currentModalIndex !== null) {
