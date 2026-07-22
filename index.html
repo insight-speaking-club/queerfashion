@@ -6,7 +6,7 @@
 <title>Fashion Speaking Club — VOGUE?</title>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
@@ -53,11 +53,11 @@
     background: transparent;
     border: 1px solid var(--border);
     color: var(--dim);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -65,9 +65,12 @@
     top: 1.5rem;
     right: 1.5rem;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
-  .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
+  .lang-toggle.active { background: var(--white); color: var(--black); }
 
   /* ── QUICK NAV (worksheet-style numbered index) ── */
   .quick-nav {
@@ -132,7 +135,6 @@
   .quick-nav-link.glow-link .qn-title { color: var(--glow-gold); }
 
   /* ── COVER / MAIN MENU ── */
-  html, body { height: 100%; }
   #hero-header { 
     padding: 6rem 1.8rem 3rem; 
     background: var(--black); 
@@ -142,8 +144,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden; /* keeps background image perfectly bound to this section */
   }
   .hero-bg-img {
     position: absolute; inset: 0;
@@ -359,14 +360,14 @@
   .res-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.5rem; }
   .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #bbb; line-height: 1.5; }
 
-  /* ── FOOTER ── */
+  /* ── FOOTER (OUTSIDE MAIN HERO) ── */
   .site-footer { 
     position: relative; 
     z-index: 2; 
-    padding: 4rem 1.8rem 2rem; 
+    padding: 6rem 1.8rem; 
     text-align: center; 
-    margin-top: auto; 
     overflow: hidden; 
+    background: var(--black);
   }
   .footer-mark-bg {
     position: absolute;
@@ -379,6 +380,8 @@
   }
   .footer-text { position: relative; z-index: 1; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--white); }
   .made-by-sig {
+    position: relative;
+    z-index: 1;
     font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
     font-weight: 300;
@@ -410,7 +413,14 @@
 <body>
 
 <div class="corner-sig">𝒪𝐵</div>
-<button class="lang-toggle" onclick="toggleLang()">Перекласти</button>
+<button class="lang-toggle" onclick="toggleLang()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    <path d="M2 12h20"></path>
+  </svg>
+  <span id="lang-btn-text">UA</span>
+</button>
 
 <header id="hero-header">
   <img class="hero-bg-img" src="vogue.jpg" alt="" onerror="this.style.display='none'">
@@ -452,13 +462,13 @@
       <span class="qn-arrow">→</span>
     </button>
   </nav>
-
-  <footer class="site-footer">
-    <img src="footer-mark-2.png" alt="" class="footer-mark-bg">
-    <p class="footer-text" id="t-footer">That's all.</p>
-    <p class="made-by-sig" id="t-made-by">created by<br>𝒪𝓁𝓮𝓀𝓈𝒶𝓃𝒹𝓇 𝐵.</p>
-  </footer>
 </header>
+
+<footer class="site-footer">
+  <img src="footer-mark-2.png" alt="" class="footer-mark-bg">
+  <p class="footer-text" id="t-footer">That's all.</p>
+  <p class="made-by-sig" id="t-made-by">created by<br>𝒪𝓁𝓮𝓀𝓈𝒶𝓃𝒹𝓇 𝐵.</p>
+</footer>
 
 <section id="questions-section" class="app-page" style="background: var(--black);">
   <div class="page-topbar page-topbar-dark">
@@ -642,7 +652,7 @@ function closePage(id) {
 
 function toggleLang() {
   isUA = !isUA;
-  document.querySelector('.lang-toggle').textContent = isUA ? 'Translate' : 'Перекласти';
+  document.getElementById('lang-btn-text').textContent = isUA ? 'EN' : 'UA';
   document.querySelector('.lang-toggle').classList.toggle('active', isUA);
   
   // Headers & Text
