@@ -69,64 +69,81 @@
   .lang-toggle:hover { border-color: var(--white); color: var(--white); }
   .lang-toggle.active { background: var(--white); color: var(--black); font-style: normal; }
 
-  /* ── QUICK NAV (editorial index) ── */
+  /* ── QUICK NAV (worksheet-style numbered index) ── */
   .quick-nav {
     position: relative; z-index: 2;
-    display: flex; flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0.9rem 1.6rem;
-    margin-top: 2.2rem;
-    padding-top: 1.6rem;
+    display: flex; flex-direction: column;
+    width: 100%; max-width: 460px;
+    margin: 2.6rem auto 0;
     border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
   .quick-nav-link {
     position: relative;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 1.15rem 0.3rem;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--white);
+    transition: background 0.25s ease, padding-left 0.25s ease;
+  }
+  .quick-nav-link:first-child { border-top: none; }
+  .quick-nav-link:hover, .quick-nav-link:active { background: rgba(255,255,255,0.04); padding-left: 0.7rem; }
+  .quick-nav-link .qn-num {
+    font-family: 'Bodoni Moda', serif;
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--dim);
+    flex: 0 0 auto;
+    width: 1.6rem;
+  }
+  .qn-text { display: flex; flex-direction: column; gap: 0.25rem; flex: 1 1 auto; }
+  .qn-title {
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-weight: 400;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     letter-spacing: 0.01em;
-    color: var(--white);
-    text-decoration: none;
-    padding-bottom: 0.3rem;
   }
-  .quick-nav-link .qn-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-style: normal; font-weight: 500;
-    font-size: 0.65rem; letter-spacing: 0.05em;
+  .qn-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
     color: var(--dim);
+    letter-spacing: 0.01em;
   }
-  .quick-nav-link::after {
-    content: '';
-    position: absolute; left: 0; bottom: 0;
-    width: 100%; height: 1px;
-    background: var(--white);
-    transform: scaleX(0.18);
-    transform-origin: left;
-    opacity: 0.5;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  .qn-arrow {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--dim);
+    flex: 0 0 auto;
+    transition: transform 0.25s ease;
   }
-  .quick-nav-link:hover::after, .quick-nav-link:active::after { transform: scaleX(1); opacity: 1; }
-  .quick-nav-link:hover, .quick-nav-link:active { color: var(--white); }
-  .quick-nav-link.glow-link { color: var(--glow-gold); }
-  .quick-nav-link.glow-link::after { background: var(--glow-gold); }
-  .quick-nav-link.glow-link .qn-num { color: var(--glow-gold); opacity: 0.6; }
+  .quick-nav-link:hover .qn-arrow, .quick-nav-link:active .qn-arrow { transform: translateX(3px); color: var(--white); }
+  .quick-nav-link.glow-link .qn-num,
+  .quick-nav-link.glow-link .qn-title { color: var(--glow-gold); }
 
-  /* ── COMPACT HERO SECTION ── */
+  /* ── COVER / MAIN MENU ── */
+  html, body { height: 100%; }
   #hero-header { 
     padding: 6rem 1.8rem 3rem; 
     background: var(--black); 
     text-align: center; 
     position: relative; 
-    min-height: 50vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   .hero-bg-img {
     position: absolute; inset: 0;
@@ -148,8 +165,42 @@
   .cover-title { font-family: 'Bodoni Moda', 'Playfair Display', serif; font-weight: 400; font-size: clamp(3.5rem, 16vw, 8rem); text-transform: uppercase; line-height: 0.9; margin-bottom: 1.5rem; }
   .hero-instructions { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--dim); font-weight: 300; margin-top: 1.8rem; }
 
+  /* ── APP PAGES (each section becomes its own full-screen page) ── */
+  .app-page {
+    position: fixed; top: 100%; left: 0;
+    width: 100vw; height: 100vh; height: 100dvh;
+    overflow-y: auto; overflow-x: hidden;
+    z-index: 150;
+    transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .app-page.open { top: 0; }
+  .page-topbar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 1.4rem 1.6rem;
+  }
+  .page-topbar-dark { background: linear-gradient(to bottom, rgba(3,3,3,0.95) 0%, rgba(3,3,3,0.75) 75%, transparent 100%); }
+  .page-topbar-light { background: linear-gradient(to bottom, rgba(255,255,255,0.55) 0%, transparent 100%); }
+  .page-back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: none; border: none; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    padding: 0.4rem 0;
+  }
+  .page-topbar-dark .page-back { color: var(--white); }
+  .page-topbar-light .page-back { color: #1c1714; }
+  .page-topbar .page-label {
+    margin-left: auto;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--dim);
+  }
+  .page-topbar-light .page-label { color: #8a746c; }
+
   /* ── COMMON SECTION STYLES ── */
-  section { padding: 5rem 1.8rem; border-top: 1px solid var(--border); }
+  section { padding: 1rem 1.8rem 5rem; }
   .section-header { font-family: 'Bodoni Moda', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; text-align: center; }
   .section-intro { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.95rem; color: var(--dim); text-align: center; margin-bottom: 3rem; }
 
@@ -213,8 +264,7 @@
   /* ── CLOSET SECTION (BURN BOOK AESTHETIC) ── */
   #closet-section {
     background-color: var(--burnbook-pink);
-    border-top: 1px solid #111; border-bottom: 1px solid #111;
-    position: relative; z-index: 5; padding-bottom: 7rem;
+    padding-bottom: 7rem;
     text-align: center;
   }
   
@@ -235,7 +285,6 @@
   }
   .cut.a { font-family: 'Bodoni Moda', serif; font-size: 2.2rem; transform: rotate(-4deg); }
   .cut.b { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; text-transform: uppercase; font-size: 2.4rem; transform: rotate(3deg); }
-  .cut.c { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; transform: rotate(-2deg); }
   
   .lip-stamp-img {
     position: absolute;
@@ -269,7 +318,6 @@
     background: #f7d7e0;
     color: #1c1714;
     text-align: center;
-    position: relative; z-index: 4;
   }
   .glow-eyebrow {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 500;
@@ -312,7 +360,14 @@
   .res-desc { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 0.9rem; color: #bbb; line-height: 1.5; }
 
   /* ── FOOTER ── */
-  .site-footer { padding: 4rem 1.8rem 6rem; text-align: center; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+  .site-footer { 
+    position: relative; 
+    z-index: 2; 
+    padding: 4rem 1.8rem 2rem; 
+    text-align: center; 
+    margin-top: auto; 
+    overflow: hidden; 
+  }
   .footer-mark-bg {
     position: absolute;
     top: 50%; left: 50%;
@@ -362,15 +417,54 @@
   <div class="hero-overlay"></div>
   <span class="club-label" id="t-club">Fashion Speaking Club</span>
   <h1 class="cover-title">VOGUE?</h1>
+  <p class="hero-instructions" id="t-hero-instructions">Tap a section to open it.</p>
   <nav class="quick-nav">
-    <a href="#questions-section" class="quick-nav-link"><span class="qn-num">01</span><span id="t-nav-questions">Questions</span></a>
-    <a href="#closet-section" class="quick-nav-link"><span class="qn-num">02</span><span id="t-nav-closet">Create Your Outfit</span></a>
-    <a href="#glow-section" class="quick-nav-link glow-link"><span class="qn-num">03</span><span id="t-nav-glow">Glow Book 📸</span></a>
-    <a href="#resources-section" class="quick-nav-link"><span class="qn-num">04</span><span id="t-nav-resources">Homework</span></a>
+    <button class="quick-nav-link" onclick="openPage('questions-section')">
+      <span class="qn-num">01</span>
+      <span class="qn-text">
+        <span class="qn-title" id="t-nav-questions">Questions</span>
+        <span class="qn-sub" id="t-nav-questions-sub">More prompts, three levels</span>
+      </span>
+      <span class="qn-arrow">→</span>
+    </button>
+    <button class="quick-nav-link" onclick="openPage('closet-section')">
+      <span class="qn-num">02</span>
+      <span class="qn-text">
+        <span class="qn-title" id="t-nav-closet">Digital Closet</span>
+        <span class="qn-sub" id="t-nav-closet-sub">A little detour</span>
+      </span>
+      <span class="qn-arrow">→</span>
+    </button>
+    <button class="quick-nav-link glow-link" onclick="openPage('glow-section')">
+      <span class="qn-num">03</span>
+      <span class="qn-text">
+        <span class="qn-title" id="t-nav-glow">Glow Book 📸</span>
+        <span class="qn-sub" id="t-nav-glow-sub">Leave someone a compliment</span>
+      </span>
+      <span class="qn-arrow">→</span>
+    </button>
+    <button class="quick-nav-link" onclick="openPage('resources-section')">
+      <span class="qn-num">04</span>
+      <span class="qn-text">
+        <span class="qn-title" id="t-nav-resources">Homework</span>
+        <span class="qn-sub" id="t-nav-resources-sub">Optional rabbit holes</span>
+      </span>
+      <span class="qn-arrow">→</span>
+    </button>
   </nav>
+
+  <footer class="site-footer">
+    <img src="footer-mark-2.png" alt="" class="footer-mark-bg">
+    <p class="footer-text" id="t-footer">That's all.</p>
+    <p class="made-by-sig" id="t-made-by">created by<br>𝒪𝓁𝓮𝓀𝓈𝒶𝓃𝒹𝓇 𝐵.</p>
+  </footer>
 </header>
 
-<section id="questions-section">
+<section id="questions-section" class="app-page" style="background: var(--black);">
+  <div class="page-topbar page-topbar-dark">
+    <button class="page-back" onclick="closePage('questions-section')"><span>←</span> <span id="t-back-1">Back to main page</span></button>
+    <span class="page-label">01 / 04</span>
+  </div>
   <h2 class="section-header" id="t-more-q-head">More Questions</h2>
   <p class="section-intro" id="t-more-q-intro">Ran out at the table? Pick a level and keep going.</p>
 
@@ -388,14 +482,17 @@
     </div>
 </section>
 
-<section id="closet-section">
+<section id="closet-section" class="app-page">
+  <div class="page-topbar page-topbar-light">
+    <button class="page-back" onclick="closePage('closet-section')"><span>←</span> <span id="t-back-2">Back to main page</span></button>
+    <span class="page-label">02 / 04</span>
+  </div>
   <p class="mood-shift" id="t-mood-shift">Enough talking — let's have some fun.</p>
   
   <h2 class="burnbook-title">
     <img class="lip-stamp-img" src="kissprint.png" alt="" onerror="this.style.display='none'">
-    <span class="cut a" id="t-cut-a">Create</span>
-    <span class="cut b" id="t-cut-b">Your</span>
-    <span class="cut c" id="t-cut-c">Outfit</span>
+    <span class="cut a" id="t-cut-a">Digital</span>
+    <span class="cut b" id="t-cut-b">Closet</span>
   </h2>
   
   <div class="closet-container" style="margin-top: 1rem;">
@@ -405,14 +502,22 @@
   </div>
 </section>
 
-<section id="glow-section">
+<section id="glow-section" class="app-page">
+  <div class="page-topbar page-topbar-light">
+    <button class="page-back" onclick="closePage('glow-section')"><span>←</span> <span id="t-back-3">Back to main page</span></button>
+    <span class="page-label">03 / 04</span>
+  </div>
   <span class="glow-eyebrow" id="t-glow-eyebrow">Before the final question</span>
   <h2 class="glow-title" id="t-glow-title">The Glow Book 📸</h2>
   <p class="glow-desc" id="t-glow-desc">Take 2–3 minutes to leave a few anonymous compliments. Scan the QR code, tap Glow Book, and write something kind and honest.</p>
   <a href="https://insight-speaking-club.github.io/glass-closet/glow-book.html" target="_blank" class="glow-btn" id="t-glow-btn">Tap Glow Book →</a>
 </section>
 
-<section id="resources-section">
+<section id="resources-section" class="app-page" style="background: var(--black);">
+  <div class="page-topbar page-topbar-dark">
+    <button class="page-back" onclick="closePage('resources-section')"><span>←</span> <span id="t-back-4">Back to main page</span></button>
+    <span class="page-label">04 / 04</span>
+  </div>
   <h2 class="section-header" id="t-resources">Homework (Optional)</h2>
   <p class="section-intro" id="t-res-intro">The rabbit holes we fell into while making this club.</p>
 
@@ -491,12 +596,6 @@
   </div>
 </section>
 
-<footer class="site-footer">
-  <img src="footer-mark-2.png" alt="" class="footer-mark-bg">
-  <p class="footer-text" id="t-footer">That's all.</p>
-  <p class="made-by-sig" id="t-made-by">created by<br>𝒪𝓁𝓮𝓀𝓈𝒶𝓃𝒹𝓇 𝐵.</p>
-</footer>
-
 <div class="modal" id="item-modal">
   <div class="modal-nav">
     <div class="modal-back" onclick="closeModal()">
@@ -530,6 +629,17 @@ let isUA = false;
 let currentLevel = 'a1';
 let currentModalIndex = null;
 
+// ── PAGE NAVIGATION (menu → full page → back) ──
+function openPage(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById(id).scrollTop = 0;
+}
+function closePage(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function toggleLang() {
   isUA = !isUA;
   document.querySelector('.lang-toggle').textContent = isUA ? 'Translate' : 'Перекласти';
@@ -543,9 +653,8 @@ function toggleLang() {
   document.getElementById('t-swipe-hint').textContent = isUA ? 'Гортайте. Натисніть на картку, щоб відкрити.' : 'Swipe to browse. Tap a card to open it.';
   
   document.getElementById('t-mood-shift').textContent = isUA ? 'Досить розмов — давайте розважатись.' : 'Enough talking — let\'s have some fun.';
-  document.getElementById('t-cut-a').textContent = isUA ? 'Створіть' : 'Create';
-  document.getElementById('t-cut-b').textContent = isUA ? 'Свій' : 'Your';
-  document.getElementById('t-cut-c').textContent = isUA ? 'Образ' : 'Outfit';
+  document.getElementById('t-cut-a').textContent = isUA ? 'Цифрова' : 'Digital';
+  document.getElementById('t-cut-b').textContent = isUA ? 'Шафа' : 'Closet';
   document.getElementById('t-enter').textContent = isUA ? 'Увійти до гардеробу' : 'Enter the closet';
 
   document.getElementById('t-resources').textContent = isUA ? 'Домашнє завдання (за бажанням)' : "Homework (Optional)";
@@ -588,10 +697,20 @@ function toggleLang() {
   document.getElementById('t-closet-btn').textContent = isUA ? 'ЗАХОДЬ... В ШАФУ.' : 'GET IN... THE CLOSET.';
 
   // Quick Nav
+  document.getElementById('t-hero-instructions').textContent = isUA ? 'Натисніть на розділ, щоб відкрити.' : 'Tap a section to open it.';
   document.getElementById('t-nav-questions').textContent = isUA ? 'Питання' : 'Questions';
-  document.getElementById('t-nav-closet').textContent = isUA ? 'Створи Образ' : 'Create Your Outfit';
+  document.getElementById('t-nav-questions-sub').textContent = isUA ? 'Більше запитань, три рівні' : 'More prompts, three levels';
+  document.getElementById('t-nav-closet').textContent = isUA ? 'Цифрова Шафа' : 'Digital Closet';
+  document.getElementById('t-nav-closet-sub').textContent = isUA ? 'Невеличкий відступ' : 'A little detour';
   document.getElementById('t-nav-glow').textContent = isUA ? 'Книга Похвал 📸' : 'Glow Book 📸';
+  document.getElementById('t-nav-glow-sub').textContent = isUA ? 'Залиште комусь комплімент' : 'Leave someone a compliment';
   document.getElementById('t-nav-resources').textContent = isUA ? 'Домашнє завдання' : 'Homework';
+  document.getElementById('t-nav-resources-sub').textContent = isUA ? 'Необов’язкові кролячі нори' : 'Optional rabbit holes';
+
+  // Back buttons
+  ['t-back-1', 't-back-2', 't-back-3', 't-back-4'].forEach(id => {
+    document.getElementById(id).textContent = isUA ? 'На головну' : 'Back to main page';
+  });
 
   // Glow Book Section
   document.getElementById('t-glow-eyebrow').textContent = isUA ? 'Перед фінальним питанням' : 'Before the final question';
